@@ -1,0 +1,26 @@
+services:
+#  app:
+#    build:
+#      context: .
+#    container_name: nextjs_app
+#    ports:
+#      - "3000:3000"
+#    env_file:
+#      - .env
+#    depends_on:
+#      - postgres
+
+  postgres:
+    image: postgres
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: pg_database
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

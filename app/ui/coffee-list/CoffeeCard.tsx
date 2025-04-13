@@ -1,0 +1,96 @@
+'use client';
+
+import {useState} from 'react';
+import {Visit} from '@/app/lib/types';
+import {HomeActionType, OrderType} from '@/app/lib/enums';
+import {EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
+import clsx from 'clsx';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+
+interface CoffeeCardProps {
+  visit: Visit;
+}
+
+export default function CoffeeCard(props: CoffeeCardProps) {
+  const {visit} = props;
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const {replace} = useRouter();
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const handleClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleEditClick = () => {
+    const params = new URLSearchParams(searchParams);
+    params.set('action', HomeActionType.Edit);
+    params.set('visitId', visit.id);
+    replace(`${pathname}?${params.toString()}`);
+  };
+
+  return (
+    <article
+      className={clsx(
+        'border-2 border-slate-200 p-2 px-3 rounded-md text-lg text-slate-700 text-left transition cursor-pointer',
+        {'shadow-lg': isExpanded},
+      )}
+      onClick={handleClick}
+      aria-expanded={isExpanded}
+      role='row'
+    >
+      <header className='flex justify-between'>
+        <span className='flex gap-2'>
+          {visit.orderType === OrderType.ForHere ? (
+            <MugIcon className='text-slate-600' />
+          ) : (
+            <ToGoCupIcon className='text-slate-600' />
+          )}
+          <p className='font-semibold text-lg'>{visit.shop}</p>
+        </span>
+        <span className='flex gap-2'>
+          {isExpanded && (
+            <button
+              onClick={handleEditClick}
+              aria-label='Edit visit'
+              className='flex justify-center items-center h-8 w-8 bg-slate-100 border-2 border-slate-200 rounded-md text-slate-500'
+            >
+              <EditIcon strokeWidth={2} height={22} width={22} />
+            </button>
+          )}
+          <p>
+            <span className='font-bold text-2xl'>{visit.rating}</span>
+            /5
+          </p>
+        </span>
+      </header>
+      <p>
+        {visit.size}oz {visit.drink}
+      </p>
+      {/* TODO: Make this accessible, the description is still visible to screen-readers */}
+      <div
+        className={clsx('grid transition-all', {
+          'grid-rows-[1fr]': isExpanded,
+          'grid-rows-[0fr]': !isExpanded,
+        })}
+      >
+        <div className='overflow-hidden'>
+          {/* This is required for shrinking cards to work */}
+          <p className='bg-slate-100 rounded-md p-2 text-sm my-1.5'>
+            {visit.notes ? (
+              visit.notes
+            ) : (
+              <span className='text-slate-400'>No notes</span>
+            )}
+          </p>
+        </div>
+      </div>
+      <div className='flex justify-between items-baseline'>
+        <p className='text-sm'>Visited {visit.date}</p>
+        <p>${visit.price}</p>
+      </div>
+    </article>
+  );
+}
