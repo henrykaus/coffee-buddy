@@ -16,7 +16,7 @@ datasource db {
 
 model Users {
   id     String @id @default(uuid())
-  email  String
+  email  String @unique
 
   visits Visits[]
 }

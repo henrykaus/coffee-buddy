@@ -7,7 +7,7 @@ export default function Page() {
       <form
         action={async () => {
           'use server';
-          await signIn('google', {redirectTo: '/seed'});
+          await signIn('google', {redirectTo: '/home'});
         }}
       >
         <button

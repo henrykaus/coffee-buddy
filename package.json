@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/prisma-adapter": "^2.9.0",
     "@prisma/client": "^6.6.0",
     "clsx": "^2.1.1",
     "lodash": "^4.17.21",

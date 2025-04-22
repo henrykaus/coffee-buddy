@@ -1,9 +1,19 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import {prisma} from '@/app/server/prisma';
-import {PrismaAdapter} from '@auth/prisma-adapter';
+import {addUser} from '@/app/server/users/actions';
 
 export const {handlers, signIn, signOut, auth} = NextAuth({
-  adapter: PrismaAdapter(prisma),
   providers: [Google],
+  callbacks: {
+    async signIn({user, account, profile, email, credentials}) {
+      const userEmail = user?.email;
+
+      if (userEmail) {
+        await addUser(userEmail);
+        return true;
+      }
+
+      return false;
+    },
+  },
 });

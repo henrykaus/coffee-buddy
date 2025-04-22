@@ -3,15 +3,14 @@
 import {PrismaClient} from '@prisma/client';
 import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
-import {addUser} from '@/app/server/users/actions';
+import {getUser} from '@/app/server/users/actions';
+import {getValidSession} from '@/app/server/common';
 
 const prisma = new PrismaClient();
 
 const seedData = async () => {
-  const userEmail = 'henry@test.com';
-
-  const user = await addUser({email: userEmail});
-
+  const session = await getValidSession();
+  const user = await getUser(session.user?.email as string);
   if (!user || !user.id) {
     return;
   }
@@ -20,6 +19,7 @@ const seedData = async () => {
 
   const visitList: Visit[] = [
     {
+      id: 'N/A',
       notes: 'It was pretty decent for a first drink ngl',
       drink: 'Vanilla Latte',
       date: 'Mar. 17, 2025',
@@ -31,6 +31,7 @@ const seedData = async () => {
       userId: userId,
     },
     {
+      id: 'N/A',
       notes: 'The art was great and the people were neat',
       drink: 'Vanilla Flat White',
       date: 'Mar. 23, 2025',
@@ -42,6 +43,7 @@ const seedData = async () => {
       userId: userId,
     },
     {
+      id: 'N/A',
       notes: 'Actually not the best unfortunately',
       drink: 'Vanilla Latte',
       date: 'Mar. 22, 2025',
