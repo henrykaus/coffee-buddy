@@ -1,11 +1,19 @@
 'use client';
 
 import React, {useState} from 'react';
-import {EllipsisIcon, LogOutIcon, UserIcon} from '@/app/ui/icons';
+import {EllipsisIcon, LogOutIcon} from '@/app/ui/icons';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {HomeActionType} from '@/app/lib/enums';
+import {signOut} from 'next-auth/react';
+import {UserAvatar} from '@/app/ui/user-menu/UserAvatar';
 
-export default function UserMenu() {
+interface UserMenuProps {
+  imageUrl?: string | null;
+}
+
+export default function UserMenu(props: UserMenuProps) {
+  const {imageUrl} = props;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const searchParams = useSearchParams();
@@ -24,16 +32,14 @@ export default function UserMenu() {
         className='rounded-full p-1 transition hover:bg-slate-200/80'
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
-        <UserIcon height={30} width={30} />
+        <UserAvatar imageUrl={imageUrl} />
       </button>
       {isMenuOpen && (
         <ul className='bg-white rounded-lg shadow-xl w-fit absolute right-0 transition'>
           <li className='hover:bg-slate-100 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
             <button
               className='flex justify-between p-2 gap-2 w-full whitespace-nowrap'
-              onClick={() =>
-                console.error('FIXME: button not hooked up to Sign Out')
-              }
+              onClick={() => signOut({redirectTo: '/login'})}
             >
               <span>Sign Out</span>
               <LogOutIcon />

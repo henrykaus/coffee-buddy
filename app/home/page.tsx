@@ -1,4 +1,3 @@
-import {UserIcon} from '@/app/ui/icons';
 import CoffeeCard from '@/app/ui/coffee-list/CoffeeCard';
 import Toolbar from '@/app/ui/common/toolbar';
 import React from 'react';
@@ -11,6 +10,7 @@ import EditVisitPopup from '@/app/ui/coffee-list/EditVisitPopup';
 import UserMenu from '@/app/ui/user-menu/UserMenu';
 import MoreOptionsPopup from '@/app/ui/user-menu/MoreOptionsPopup';
 import DeleteAccountPopup from '@/app/ui/user-menu/DeleteAccountPopup';
+import {auth} from '@/auth';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -28,6 +28,8 @@ export default async function Page(props: PageProps) {
 
   const visits: Visit[] = [];
 
+  const session = await auth();
+
   const users = await listUsers();
   if (users.length === 0 || !users[0].id) {
     console.error('Not enough users, found 0:', users);
@@ -44,7 +46,7 @@ export default async function Page(props: PageProps) {
     <>
       <header className='flex sticky top-0 items-center justify-between w-full py-6 px-8 sm:px-20 bg-white'>
         <h1 className='text-2xl font-medium'>Recent visits</h1>
-        <UserMenu />
+        <UserMenu imageUrl={session?.user?.image} />
       </header>
       <div className='flex gap-y-3 flex-col mb-24 pb-6 px-8 sm:px-20'>
         {visits.map((visit) => (

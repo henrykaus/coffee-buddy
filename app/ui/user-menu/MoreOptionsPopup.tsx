@@ -5,6 +5,7 @@ import React from 'react';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {GhostIcon, LogOutIcon} from '@/app/ui/icons';
 import {HomeActionType} from '@/app/lib/enums';
+import {signOut} from 'next-auth/react';
 
 export default function MoreOptionsPopup() {
   const searchParams = useSearchParams();
@@ -30,9 +31,7 @@ export default function MoreOptionsPopup() {
           <button
             type='button'
             className='flex justify-between p-3 gap-2 w-full whitespace-nowrap'
-            onClick={() =>
-              console.error('FIXME: button not hooked up to Sign Out')
-            }
+            onClick={() => signOut({redirectTo: '/login'})}
           >
             <span>Sign Out</span>
             <LogOutIcon />
