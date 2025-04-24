@@ -5,7 +5,12 @@ import {prisma} from '@/app/server/prisma';
 import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
 import {getUser} from '@/app/server/users/actions';
-import {getValidSession} from '@/app/server/common';
+import {
+  getDateForClient,
+  getPriceForDatabase,
+  getPriceForUser,
+  getValidSession,
+} from '@/app/server/common';
 
 export type State = {
   message?: string | null;
@@ -78,7 +83,7 @@ export const addVisit = async (
         size: size,
         drink: drink,
         rating: rating,
-        price: price,
+        price: getPriceForDatabase(price),
         date: new Date(date),
         notes: notes,
         orderType: orderType,
@@ -115,7 +120,7 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
 
     const visit = {
       id: rawVisit.id,
-      date: rawVisit.date.toLocaleDateString(),
+      date: getDateForClient(rawVisit.date),
       notes: rawVisit.notes,
       drink: rawVisit.drink,
       shop: rawVisit.shop,
@@ -123,7 +128,7 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
         rawVisit.orderType === OrderType.ForHere
           ? OrderType.ForHere
           : OrderType.ToGo,
-      price: rawVisit.price,
+      price: getPriceForUser(rawVisit.price),
       rating: rawVisit.rating,
       size: rawVisit.size,
     };
@@ -147,11 +152,16 @@ export const listVisits = async (): Promise<Visit[]> => {
       where: {
         userId: user.id,
       },
+      orderBy: [
+        {
+          date: 'desc',
+        },
+      ],
     });
 
     const visits = rawVisits.map((visit) => ({
       id: visit.id,
-      date: visit.date.toLocaleDateString(),
+      date: getDateForClient(visit.date),
       notes: visit.notes,
       drink: visit.drink,
       shop: visit.shop,
@@ -159,7 +169,7 @@ export const listVisits = async (): Promise<Visit[]> => {
         visit.orderType === OrderType.ForHere
           ? OrderType.ForHere
           : OrderType.ToGo,
-      price: visit.price,
+      price: getPriceForUser(visit.price),
       rating: visit.rating,
       size: visit.size,
     }));
@@ -206,7 +216,9 @@ export const updateVisit = async (
     const {id, shop, size, drink, rating, price, date, notes, orderType} =
       validatedFields.data;
 
-    const visits = await prisma.visits.update({
+    console.log(date);
+
+    const visit = await prisma.visits.update({
       where: {
         id: id,
         userId: user.id,
@@ -217,14 +229,14 @@ export const updateVisit = async (
         size: size,
         drink: drink,
         rating: rating,
-        price: price,
+        price: getPriceForDatabase(price),
         date: new Date(date),
         notes: notes,
         orderType: orderType,
       },
     });
 
-    console.log(visits);
+    console.log(visit);
   } catch (error: any) {
     console.error(error.message);
   }
@@ -277,11 +289,16 @@ export const searchVisits = async (query: string) => {
           ],
         },
       },
+      orderBy: [
+        {
+          date: 'desc',
+        },
+      ],
     });
 
     const visits = rawVisits.map((visit) => ({
       id: visit.id,
-      date: visit.date.toLocaleDateString(),
+      date: getDateForClient(visit.date),
       notes: visit.notes,
       drink: visit.drink,
       shop: visit.shop,
@@ -289,7 +306,7 @@ export const searchVisits = async (query: string) => {
         visit.orderType === OrderType.ForHere
           ? OrderType.ForHere
           : OrderType.ToGo,
-      price: visit.price,
+      price: getPriceForUser(visit.price),
       rating: visit.rating,
       size: visit.size,
     }));

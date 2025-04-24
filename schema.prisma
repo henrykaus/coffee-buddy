@@ -25,7 +25,7 @@ model Visits {
   id          String @id @default(uuid())
   userId      String
 
-  date        DateTime
+  date        DateTime @db.Date
   notes       String?
   drink       String
   orderType   String

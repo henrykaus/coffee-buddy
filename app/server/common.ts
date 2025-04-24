@@ -12,3 +12,24 @@ export const getValidSession = async () => {
 
   return sessionRaw;
 };
+
+// FORMAT: $4.45 -> 445
+export const getPriceForDatabase = (priceFromUser: number) => {
+  return Math.floor(priceFromUser * 100);
+};
+
+// FORMAT: 445 -> $4.45
+export const getPriceForUser = (priceFromDatabase: number) => {
+  return Number.parseFloat((priceFromDatabase / 100).toFixed(2));
+};
+
+// Format: YYYY-MM-DD
+export const getDateForClient = (dateFromDatabase: Date) => {
+  return dateFromDatabase.toISOString().split('T')[0];
+};
+
+// Format: M/D/YYYY
+export const getDateForUser = (dateForClient: string) => {
+  const dateParts = dateForClient.split('-');
+  return `${dateParts[1].replace(/^0*/, '')}/${dateParts[2].replace(/^0*/, '')}/${dateParts[0]}`;
+};

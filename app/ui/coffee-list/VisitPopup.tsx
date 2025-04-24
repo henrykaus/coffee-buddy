@@ -118,11 +118,7 @@ export default function VisitPopup(props: VisitPopupProps) {
             name='date'
             aria-label='Visit date'
             className={inputClasses}
-            defaultValue={
-              visit?.date
-                ? new Date(visit.date).toISOString().split('T')[0]
-                : undefined
-            }
+            defaultValue={visit?.date ? visit.date : undefined}
             required
           />
           <OrderTypeToggle defaultValue={visit?.orderType} />

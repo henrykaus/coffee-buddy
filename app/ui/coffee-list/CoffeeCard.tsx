@@ -6,6 +6,7 @@ import {HomeActionType, OrderType} from '@/app/lib/enums';
 import {EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+import {getDateForUser} from '@/app/server/common';
 
 interface CoffeeCardProps {
   visit: Visit;
@@ -29,6 +30,11 @@ export default function CoffeeCard(props: CoffeeCardProps) {
     params.set('action', HomeActionType.Edit);
     params.set('visitId', visit.id);
     replace(`${pathname}?${params.toString()}`);
+  };
+
+  const getFormattedPrice = (price: number) => {
+    const priceToDisplay = price % 1 === 0 ? price : price.toFixed(2);
+    return `$${priceToDisplay}`;
   };
 
   return (
@@ -88,8 +94,8 @@ export default function CoffeeCard(props: CoffeeCardProps) {
         </div>
       </div>
       <div className='flex justify-between items-baseline'>
-        <p className='text-sm'>Visited {visit.date}</p>
-        <p>${visit.price}</p>
+        <p className='text-sm'>Visited {getDateForUser(visit.date)}</p>
+        <p>{getFormattedPrice(visit.price)}</p>
       </div>
     </article>
   );
