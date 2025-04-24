@@ -32,7 +32,7 @@ export default function Toolbar() {
       <SearchInput onSearch={handleSearch} />
       <button
         onClick={handleAddClick}
-        className='flex items-center justify-center text-4xl font-medium text-slate-600 h-14 w-14 border-[2px] shadow-md rounded-md border-slate-300 bg-white'
+        className='flex items-center justify-center text-4xl font-medium text-slate-600 h-14 w-14 border-[2px] shadow-md rounded-full border-slate-300 bg-white'
       >
         <PlusIcon />
       </button>
