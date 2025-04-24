@@ -34,8 +34,10 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
-      <header className='flex sticky top-0 items-center justify-between w-full py-6 px-8 sm:px-20 bg-white'>
-        <h1 className='text-2xl font-medium'>Recent visits</h1>
+      <header className='flex sticky top-0 items-center justify-between w-full py-6 px-8 sm:px-20 bg-[--background]'>
+        <h1 className='text-3xl font-medium font-[family-name:var(--font-header)]'>
+          Recent visits
+        </h1>
         <span className='flex items-center gap-4'>
           <Form
             action={async () => {
@@ -47,17 +49,33 @@ export default async function Page(props: PageProps) {
               className='p-2 border-2 rounded-lg hover:bg-slate-100 transition'
               type='submit'
             >
-              Seed Visits
+              Add Sample Visits
             </button>
           </Form>
           <UserMenu imageUrl={session?.user?.image} />
         </span>
       </header>
-      <div className='flex gap-y-3 flex-col mb-24 pb-6 px-8 sm:px-20'>
-        {visits.map((visit) => (
-          <CoffeeCard key={visit.id} visit={visit} />
-        ))}
-      </div>
+      {visits.length ? (
+        <section className='flex gap-y-3 flex-col mb-24 pb-6 px-8 sm:px-20'>
+          {visits.map((visit) => (
+            <CoffeeCard key={visit.id} visit={visit} />
+          ))}
+        </section>
+      ) : (
+        <section className='flex flex-col items-center justify-center absolute -z-10 top-0 h-screen w-screen'>
+          {query === '' ? (
+            <>
+              <p className='font-semibold text-xl text-slate-500'>No visits</p>
+              <p className='text-lg text-slate-400'>
+                Click the + button to add
+              </p>
+            </>
+          ) : (
+            <p className='font-semibold text-xl text-slate-500'>No results</p>
+          )}
+        </section>
+      )}
+
       <Toolbar />
       {action === HomeActionType.Add && <AddVisitPopup />}
       {action === HomeActionType.Edit && <EditVisitPopup id={visitId} />}

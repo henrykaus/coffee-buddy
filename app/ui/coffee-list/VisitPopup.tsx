@@ -97,7 +97,7 @@ export default function VisitPopup(props: VisitPopupProps) {
     >
       {onDelete && visit && (
         <button
-          className='absolute right-4 top-4 rounded-md p-2 flex items-center justify-center transition hover:bg-rose-200 text-rose-700'
+          className='absolute right-9 top-9 rounded-md p-2 flex items-center justify-center transition hover:bg-rose-200 text-rose-700'
           onClick={handleDelete}
           aria-label='Delete visit'
         >

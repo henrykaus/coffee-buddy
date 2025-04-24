@@ -33,7 +33,7 @@ export default function Modal(props: ModalProps) {
     <>
       <ModalBackground />
       <dialog
-        className='rounded-t-2xl margin-0 w-full fixed bottom-0 left-0 bg-white text-xl p-5 pb-7'
+        className='rounded-t-2xl margin-0 w-full fixed bottom-0 left-0 bg-white text-xl p-10 pb-10'
         open
       >
         <form>
@@ -42,7 +42,7 @@ export default function Modal(props: ModalProps) {
               <button
                 onClick={onClose}
                 aria-label='Close popup'
-                className='absolute left-4 top-4 hover:bg-slate-200 rounded-md p-2 flex items-center justify-center text-slate-600 transition'
+                className='absolute left-9 top-9 hover:bg-slate-200 rounded-md p-2 flex items-center justify-center text-slate-600 transition'
               >
                 <CloseIcon height={20} width={20} />
               </button>
