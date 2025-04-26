@@ -9,3 +9,9 @@ export enum HomeActionType {
   MoreOptions = 'more-options',
   DeleteAccount = 'delete-account',
 }
+
+export enum Route {
+  Root = '',
+  Home = 'home',
+  Login = 'login',
+}

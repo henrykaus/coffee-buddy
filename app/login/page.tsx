@@ -1,10 +1,11 @@
 import {signIn} from '@/auth';
 import MovingBackground from '@/app/ui/login/MovingBackground';
+import {Route} from '@/app/lib/enums';
 
 export default function Page() {
   const handleLoginClick = async () => {
     'use server';
-    await signIn('google', {redirectTo: '/home'});
+    await signIn('google', {redirectTo: `/${Route.Home}`});
   };
 
   return (

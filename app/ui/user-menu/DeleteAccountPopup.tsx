@@ -5,6 +5,7 @@ import React from 'react';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {CancelIcon, GhostIcon} from '@/app/ui/icons';
 import {deleteUserData} from '@/app/server/data-deletion/actions';
+import {Route} from '@/app/lib/enums';
 
 export default function DeleteAccountPopup() {
   const searchParams = useSearchParams();
@@ -13,7 +14,7 @@ export default function DeleteAccountPopup() {
 
   const handleDeleteAccount = async () => {
     await deleteUserData();
-    replace(`/login`);
+    replace(`/${Route.Login}`);
   };
 
   const handleClose = () => {

@@ -4,7 +4,7 @@ import Modal from '@/app/ui/common/Modal';
 import React from 'react';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {GhostIcon, LogOutIcon} from '@/app/ui/icons';
-import {HomeActionType} from '@/app/lib/enums';
+import {HomeActionType, Route} from '@/app/lib/enums';
 import {signOut} from 'next-auth/react';
 
 export default function MoreOptionsPopup() {
@@ -31,7 +31,7 @@ export default function MoreOptionsPopup() {
           <button
             type='button'
             className='flex justify-between p-3 gap-2 w-full whitespace-nowrap'
-            onClick={() => signOut({redirectTo: '/login'})}
+            onClick={() => signOut({redirectTo: `/${Route.Login}`})}
           >
             <span>Sign Out</span>
             <LogOutIcon />
