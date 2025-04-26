@@ -1,6 +1,6 @@
 'use client';
 
-import {useActionState} from 'react';
+import React, {useActionState} from 'react';
 import {State} from '@/app/server/visits/actions';
 import OrderTypeToggle from '@/app/ui/inputs/OrderTypeToggle';
 import RatingInput from '@/app/ui/inputs/RatingInput';
@@ -61,7 +61,9 @@ export default function VisitPopup(props: VisitPopupProps) {
 
   const [state, formAction] = useActionState(confirmAction, initialState);
 
-  const handleDelete = async (event) => {
+  const handleDelete = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     event.preventDefault();
     if (onDelete && visit) {
       await onDelete(visit.id);
@@ -69,7 +71,9 @@ export default function VisitPopup(props: VisitPopupProps) {
     removeVisitPopupParams();
   };
 
-  const handleClose = (event) => {
+  const handleClose = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     event.preventDefault();
     removeVisitPopupParams();
   };

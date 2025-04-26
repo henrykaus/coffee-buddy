@@ -10,6 +10,7 @@ import {
   getPriceForDatabase,
   getPriceForUser,
   getValidSession,
+  logError,
 } from '@/app/server/common';
 
 export type State = {
@@ -66,8 +67,6 @@ export const addVisit = async (
     });
 
     if (!validatedFields.success) {
-      console.log(validatedFields.error.flatten().fieldErrors);
-      console.log(formData);
       return {
         message: `Failed to add location.\n${validatedFields.error.flatten().fieldErrors}`,
       };
@@ -76,7 +75,7 @@ export const addVisit = async (
     const {shop, size, drink, rating, price, date, notes, orderType} =
       validatedFields.data;
 
-    const visits = await prisma.visits.create({
+    const visits = await prisma.visit.create({
       data: {
         userId: user.id,
         shop: shop,
@@ -91,11 +90,12 @@ export const addVisit = async (
     });
 
     console.log(visits);
-  } catch (error: any) {
-    console.error(error);
-    return {
-      message: error.message,
-    };
+  } catch (error: unknown) {
+    logError(error);
+
+    return error instanceof Error
+      ? {message: error.message}
+      : {message: 'unknown error while adding visit'};
   }
 };
 
@@ -107,7 +107,7 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    const rawVisit = await prisma.visits.findUnique({
+    const rawVisit = await prisma.visit.findUnique({
       where: {
         id: id,
         userId: user.id,
@@ -134,8 +134,8 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
     };
 
     return visit;
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    logError(error);
     return undefined;
   }
 };
@@ -148,7 +148,7 @@ export const listVisits = async (): Promise<Visit[]> => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    const rawVisits = await prisma.visits.findMany({
+    const rawVisits = await prisma.visit.findMany({
       where: {
         userId: user.id,
       },
@@ -175,7 +175,8 @@ export const listVisits = async (): Promise<Visit[]> => {
     }));
 
     return visits;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    logError(error);
     return [];
   }
 };
@@ -218,7 +219,7 @@ export const updateVisit = async (
 
     console.log(date);
 
-    const visit = await prisma.visits.update({
+    const visit = await prisma.visit.update({
       where: {
         id: id,
         userId: user.id,
@@ -237,8 +238,8 @@ export const updateVisit = async (
     });
 
     console.log(visit);
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    logError(error);
   }
 };
 
@@ -250,14 +251,14 @@ export const deleteVisit = async (id: string) => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    await prisma.visits.delete({
+    await prisma.visit.delete({
       where: {
         id: id,
         userId: user.id,
       },
     });
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    logError(error);
   }
 };
 
@@ -269,7 +270,7 @@ export const searchVisits = async (query: string) => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    const rawVisits = await prisma.visits.findMany({
+    const rawVisits = await prisma.visit.findMany({
       where: {
         userId: user.id,
         AND: {
@@ -312,8 +313,8 @@ export const searchVisits = async (query: string) => {
     }));
 
     return visits;
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    logError(error);
     return [];
   }
 };

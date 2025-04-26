@@ -24,3 +24,15 @@ export interface Shop {
   city: string;
   state: string;
 }
+
+/**
+ * This class maps exactly what Nominatim responds with for queries
+ */
+export interface NominatimEntry {
+  place_id: number;
+  name: string;
+  address: {
+    city: string;
+    state: string;
+  };
+}

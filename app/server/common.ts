@@ -33,3 +33,11 @@ export const getDateForUser = (dateForClient: string) => {
   const dateParts = dateForClient.split('-');
   return `${dateParts[1].replace(/^0*/, '')}/${dateParts[2].replace(/^0*/, '')}/${dateParts[0]}`;
 };
+
+export const logError = (error: unknown) => {
+  if (error instanceof Error) {
+    console.error(error.message);
+  } else {
+    console.error(error);
+  }
+};

@@ -1,4 +1,4 @@
-import {Shop} from '@/app/lib/types';
+import {NominatimEntry, Shop} from '@/app/lib/types';
 
 const NOMINATIM_BASE_URL =
   'https://nominatim.openstreetmap.org/search?countrycodes=us&addressdetails=1&layer=poi,address&format=jsonv2';
@@ -24,7 +24,7 @@ export const searchShops = async (query: string) => {
       console.error(error);
     });
 
-  const shops: Shop[] = data.map((entry) => {
+  const shops: Shop[] = data.map((entry: NominatimEntry) => {
     return {
       id: entry.place_id.toString(),
       name: entry.name,

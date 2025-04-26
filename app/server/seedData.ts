@@ -60,7 +60,7 @@ const seedData = async () => {
 
   for (const visitData of visitList) {
     promises.push(
-      prisma.visits.create({
+      prisma.visit.create({
         data: {
           notes: visitData.notes,
           drink: visitData.drink,

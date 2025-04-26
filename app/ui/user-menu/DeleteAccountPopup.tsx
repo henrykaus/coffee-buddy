@@ -4,14 +4,16 @@ import Modal from '@/app/ui/common/Modal';
 import React from 'react';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {CancelIcon, GhostIcon} from '@/app/ui/icons';
+import {deleteUserData} from '@/app/server/data-deletion/actions';
 
 export default function DeleteAccountPopup() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const {replace} = useRouter();
 
-  const handleDeleteAccount = () => {
-    console.error('FIXME: button not hooked up to Delete Account');
+  const handleDeleteAccount = async () => {
+    await deleteUserData();
+    replace(`/login`);
   };
 
   const handleClose = () => {

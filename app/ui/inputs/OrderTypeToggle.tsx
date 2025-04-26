@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import {useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {OrderType} from '@/app/lib/enums';
 import {MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 
@@ -22,8 +22,8 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   const leftButtonClasses = 'rounded-l-md border-r-0';
   const rightButtonClasses = 'rounded-r-md';
 
-  const handleOptionSelected = (event) => {
-    setSelectedOption(event.currentTarget.value);
+  const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(event.currentTarget.value as OrderType);
   };
 
   return (

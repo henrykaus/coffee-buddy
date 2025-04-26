@@ -28,7 +28,7 @@ export const addUser = async (email: string): Promise<User | null> => {
   if (existingUser) {
     return existingUser;
   } else {
-    return prisma.users.create({
+    return prisma.user.create({
       data: {
         email: email,
       },
@@ -37,7 +37,7 @@ export const addUser = async (email: string): Promise<User | null> => {
 };
 
 export const getUser = async (email: string): Promise<User | null> => {
-  return prisma.users.findUnique({
+  return prisma.user.findUnique({
     where: {
       email: email,
     },
@@ -45,5 +45,5 @@ export const getUser = async (email: string): Promise<User | null> => {
 };
 
 export const listUsers = async (): Promise<User[]> => {
-  return prisma.users.findMany({});
+  return prisma.user.findMany({});
 };
