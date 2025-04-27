@@ -23,6 +23,8 @@ export interface Shop {
   name: string;
   city: string;
   state: string;
+  street: string;
+  houseNumber: string;
 }
 
 /**
@@ -30,9 +32,13 @@ export interface Shop {
  */
 export interface NominatimEntry {
   place_id: number;
-  name: string;
   address: {
     city: string;
+    house_number: string;
+    neighborhood: string;
+    road: string;
     state: string;
+    town: string;
   };
+  name: string;
 }

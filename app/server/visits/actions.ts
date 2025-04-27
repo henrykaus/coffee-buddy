@@ -132,6 +132,7 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
       rating: rawVisit.rating,
       size: rawVisit.size,
     };
+    console.log(visit);
 
     return visit;
   } catch (error: unknown) {
@@ -207,8 +208,6 @@ export const updateVisit = async (
     });
 
     if (!validatedFields.success) {
-      console.log(validatedFields.error.flatten().fieldErrors);
-      console.log(formData);
       return {
         message: `Failed to update location.\n${validatedFields.error.flatten().fieldErrors}`,
       };
@@ -216,8 +215,6 @@ export const updateVisit = async (
 
     const {id, shop, size, drink, rating, price, date, notes, orderType} =
       validatedFields.data;
-
-    console.log(date);
 
     const visit = await prisma.visit.update({
       where: {

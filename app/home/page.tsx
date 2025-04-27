@@ -1,5 +1,5 @@
 import CoffeeCard from '@/app/ui/coffee-list/CoffeeCard';
-import Toolbar from '@/app/ui/common/toolbar';
+import Toolbar from '@/app/ui/common/Toolbar';
 import React from 'react';
 import {Visit} from '@/app/lib/types';
 import {listVisits, searchVisits} from '@/app/server/visits/actions';
@@ -49,14 +49,14 @@ export default async function Page(props: PageProps) {
               className='p-2 border-2 rounded-lg hover:bg-slate-100 transition'
               type='submit'
             >
-              Add Sample Visits
+              Add
             </button>
           </Form>
           <UserMenu imageUrl={session?.user?.image} />
         </span>
       </header>
       {visits.length ? (
-        <section className='flex gap-y-3 flex-col mb-24 pb-6 px-8 sm:px-20'>
+        <section className='flex gap-y-3 flex-col mb-24 pb-10 px-8 sm:px-20'>
           {visits.map((visit) => (
             <CoffeeCard key={visit.id} visit={visit} />
           ))}

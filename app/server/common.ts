@@ -13,14 +13,23 @@ export const getValidSession = async () => {
   return sessionRaw;
 };
 
-// FORMAT: $4.45 -> 445
+// FORMAT: 4.45 -> 445
 export const getPriceForDatabase = (priceFromUser: number) => {
   return Math.floor(priceFromUser * 100);
 };
 
-// FORMAT: 445 -> $4.45
+// FORMAT: 445 -> '4.45' | 450 -> '4.5'
 export const getPriceForUser = (priceFromDatabase: number) => {
   return Number.parseFloat((priceFromDatabase / 100).toFixed(2));
+};
+
+// FORMAT: 445 -> '$4.45' | 400 -> '$4'
+export const getPriceForDisplay = (priceFromDatabase: number) => {
+  const priceToDisplay =
+    priceFromDatabase % 1 === 0
+      ? priceFromDatabase
+      : priceFromDatabase.toFixed(2);
+  return `$${priceToDisplay}`;
 };
 
 // Format: YYYY-MM-DD

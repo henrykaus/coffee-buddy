@@ -11,6 +11,7 @@ import ShopSearch from '@/app/ui/inputs/ShopSearch';
 import {Visit} from '@/app/lib/types';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import Modal from '@/app/ui/common/Modal';
+import SizeInput from '@/app/ui/inputs/SizeInput';
 
 export interface VisitPopupProps {
   title: string;
@@ -24,6 +25,13 @@ export interface VisitPopupProps {
   onDelete?: (id: string) => Promise<void>;
 }
 
+/**
+ * Venmo has good interface for a "form" that doesn't feel like a form.
+ * For adding it could have 1 screen on searching for location, and the
+ * next screen on filling in deats with default date being today.
+ * Rating could be 1-5 buttons w/ emoji icons (starting at 0)?
+ * Have size picker have increment and decrement buttons in addition to edit '<' 8 '>'
+ */
 export default function VisitPopup(props: VisitPopupProps) {
   const {
     title,
@@ -86,7 +94,7 @@ export default function VisitPopup(props: VisitPopupProps) {
   };
 
   const inputClasses =
-    'border-b-2 border-slate-300 outline-none focus:border-b-slate-400 text-slate-600 transition p-1 flex-grow';
+    'border-b-2 border-slate-300 outline-none focus:border-b-slate-400 text-slate-600 transition p-1 flex-grow min-w-0 max-w-full';
   const textAreaClasses =
     'border-2 border-slate-300 rounded-md outline-none focus:border-b-slate-400 text-slate-600 transition p-2';
 
@@ -127,15 +135,8 @@ export default function VisitPopup(props: VisitPopupProps) {
           />
           <OrderTypeToggle defaultValue={visit?.orderType} />
         </div>
-        <div className='flex gap-2 w-full'>
-          <input
-            type='number'
-            name='size'
-            placeholder='Size'
-            className={inputClasses}
-            defaultValue={visit?.size}
-            required
-          />
+        <div className='flex gap-5'>
+          <SizeInput className={inputClasses} defaultValue={visit?.size} />
           <input
             type='text'
             placeholder='Drink'
@@ -146,10 +147,11 @@ export default function VisitPopup(props: VisitPopupProps) {
             required
           />
         </div>
-        <div className='flex gap-5 w-full'>
+        <div className='flex gap-5'>
           <RatingInput className={inputClasses} defaultValue={visit?.rating} />
           <PriceInput className={inputClasses} defaultValue={visit?.price} />
         </div>
+        {/* Have more interesting placeholders */}
         <textarea
           placeholder='Notes'
           name='notes'

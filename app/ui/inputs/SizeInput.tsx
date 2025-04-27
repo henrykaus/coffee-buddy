@@ -1,57 +1,58 @@
 import {ChangeEvent, useState} from 'react';
+import clsx from 'clsx';
 
-interface PriceInputProps {
+interface SizeInputProps {
   className?: string;
   defaultValue?: number | string;
 }
 
-export default function PriceInput(props: PriceInputProps) {
+export default function SizeInput(props: SizeInputProps) {
   const {className, defaultValue} = props;
 
   const [value, setValue] = useState(defaultValue ?? '');
 
   const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const rating = event.target.value;
+    const size = event.target.value;
 
-    if (rating === '') {
+    if (size === '') {
       setValue('');
     }
 
-    const ratingNumber = Number.parseFloat(rating);
+    const sizeNumber = Number.parseInt(size);
 
-    if (isNaN(ratingNumber)) {
+    if (isNaN(sizeNumber)) {
       return;
     }
 
-    if (ratingNumber >= 0) {
-      setValue(rating);
+    if (sizeNumber >= 0) {
+      setValue(size);
     }
   };
 
   const handleBlur = (event: ChangeEvent<HTMLInputElement>) => {
-    const rating = event.target.value;
-    const ratingNumber = Number.parseFloat(rating);
+    const size = event.target.value;
+    const sizeNumber = Number.parseInt(size);
 
-    if (isNaN(ratingNumber)) {
+    if (isNaN(sizeNumber)) {
       setValue('');
     } else {
-      setValue(Number.parseFloat(rating).toFixed(2));
+      setValue(sizeNumber);
     }
   };
 
   return (
-    <span className='min-w-0 flex flex-grow items-baseline text-slate-500'>
-      $
+    <span className='flex items-baseline text-slate-500'>
       <input
         value={value}
         type='text'
-        name='price'
-        placeholder='Price'
-        className={className}
+        name='size'
+        placeholder='#'
+        className={clsx(className, 'w-10 text-end')}
         onChange={handleNumberChange}
         onBlur={handleBlur}
         required
       />
+      oz.
     </span>
   );
 }

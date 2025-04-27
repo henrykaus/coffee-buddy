@@ -34,7 +34,7 @@ export default function RatingInput(props: RatingInputProps) {
         name='rating'
         aria-label='Rating'
         placeholder='#'
-        className={clsx(className, 'w-5 text-end')}
+        className={clsx(className, 'w-10 text-end')}
         onChange={handleNumberChange}
         required
       />

@@ -43,12 +43,24 @@ export default function ShopSearch(props: ShopSearchProps) {
     }
   };
 
-  const formatLocation = (shop: Shop) => {
-    if (!shop.city) {
-      return shop.state;
-    } else {
-      return `${shop.city}, ${shop.state}`;
+  const formatSpecificLocation = (shop: Shop) => {
+    let location = '';
+    if (shop.houseNumber) {
+      location = location.concat(shop.houseNumber, ' ');
     }
+    location = location.concat(shop.street);
+
+    return location;
+  };
+
+  const formatBroadLocation = (shop: Shop) => {
+    let location = '';
+    if (shop.city) {
+      location = location.concat(shop.city, ', ');
+    }
+    location = location.concat(shop.state);
+
+    return location;
   };
 
   return (
@@ -72,12 +84,13 @@ export default function ShopSearch(props: ShopSearchProps) {
           {shops.map((shop: Shop) => (
             <li key={shop.id}>
               <button
-                className='w-full flex justify-between items-baseline p-2 hover:bg-slate-100 transition'
+                className='w-full flex justify-between items-center p-2 text-base hover:bg-slate-100 transition text-left'
                 onClick={() => handleSelection(shop.name)}
               >
                 {shop.name}
-                <span className='text-sm text-slate-500'>
-                  {formatLocation(shop)}
+                <span className='text-sm text-slate-500 text-right leading-tight'>
+                  {shop.street && <p>{formatSpecificLocation(shop)}</p>}
+                  <p>{formatBroadLocation(shop)}</p>
                 </span>
               </button>
             </li>
