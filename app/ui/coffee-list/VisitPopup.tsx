@@ -112,9 +112,9 @@ export default function VisitPopup(props: VisitPopupProps) {
   };
 
   const inputClasses =
-    'border-b-2 border-slate-300 outline-none focus:border-b-slate-400 text-slate-600 transition p-1 flex-grow min-w-0 max-w-full';
+    'border-b-2 border-slate-300 outline-hidden focus:border-b-slate-400 text-slate-600 transition p-1 grow min-w-0 max-w-full';
   const textAreaClasses =
-    'border-2 border-slate-300 rounded-md outline-none focus:border-b-slate-400 text-slate-600 transition p-2';
+    'border-2 border-slate-300 rounded-md outline-hidden focus:border-b-slate-400 text-slate-600 transition p-2';
 
   return (
     <Modal

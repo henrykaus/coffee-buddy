@@ -35,7 +35,7 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
-      <header className='flex sticky top-0 items-center justify-between w-full py-6 px-8 sm:px-20 bg-[--background]'>
+      <header className='flex sticky top-0 items-center justify-between w-full py-6 px-8 sm:px-20 bg-(--background)'>
         <h1 className='text-3xl font-medium font-[family-name:var(--font-header)]'>
           Recent visits
         </h1>
@@ -47,7 +47,7 @@ export default async function Page(props: PageProps) {
             }}
           >
             <button
-              className='p-2 border-2 rounded-lg hover:bg-slate-100 transition'
+              className='p-2 border-2 border-slate-200 rounded-lg hover:bg-slate-100 transition'
               type='submit'
             >
               Add

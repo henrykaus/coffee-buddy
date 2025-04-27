@@ -40,7 +40,7 @@ export default function PriceInput(props: PriceInputProps) {
   };
 
   return (
-    <span className='min-w-0 flex flex-grow items-baseline text-slate-500'>
+    <span className='min-w-0 flex grow items-baseline text-slate-500'>
       $
       <input
         value={value}

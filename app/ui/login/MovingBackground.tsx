@@ -11,11 +11,11 @@ import {MugIcon} from '@/app/ui/icons';
 export default function MovingBackground() {
   return (
     <div
-      className='absolute -z-10 h-screen w-screen animate-[--animate-login]'
+      className='absolute -z-10 h-screen w-screen animate-(--animate-login)'
       aria-hidden
     >
       {/*animate-[--animate-login]'>*/}
-      {/*<div className='animate-[--animate-login]'>*/}
+      {/*<div className='animate-(--animate-login)'>*/}
       {/* ON-SCREEN */}
       <MugIcon
         className='absolute left-[10%] bottom-[5%] text-yellow-700/30 rotate-[10deg]'
