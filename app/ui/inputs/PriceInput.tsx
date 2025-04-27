@@ -46,7 +46,7 @@ export default function PriceInput(props: PriceInputProps) {
         value={value}
         type='text'
         name='price'
-        placeholder='Price'
+        placeholder='0.00'
         className={className}
         onChange={handleNumberChange}
         onBlur={handleBlur}

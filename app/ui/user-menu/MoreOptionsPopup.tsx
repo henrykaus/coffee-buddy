@@ -27,10 +27,10 @@ export default function MoreOptionsPopup() {
   return (
     <Modal title='More Options' showSecondary={false} onClose={handleClose}>
       <ul>
-        <li className='transition relative hover:bg-slate-100 text-slate-700 rounded-lg after:bg-slate-300 after:h-[2px] after:content-[""] after:w-[calc(100%-1.5rem)] after:left-3 after:absolute after:bottom-[0]'>
+        <li className='transition relative hover:bg-slate-100 text-slate-700 rounded-lg after:bg-slate-200 after:h-[2px] after:content-[""] after:w-[calc(100%-1.5rem)] after:left-3 after:absolute after:-bottom-[0.5em]'>
           <button
             type='button'
-            className='flex justify-between p-3 gap-2 w-full whitespace-nowrap'
+            className='flex justify-between p-3 mb-4 gap-2 w-full whitespace-nowrap'
             onClick={() => signOut({redirectTo: `/${Route.Login}`})}
           >
             <span>Sign Out</span>
@@ -40,7 +40,7 @@ export default function MoreOptionsPopup() {
         <li className='transition hover:bg-rose-100 text-rose-700 rounded-lg'>
           <button
             type='button'
-            className='flex justify-between p-3 gap-2 w-full whitespace-nowrap'
+            className='flex justify-between p-3 mt-4 gap-2 w-full whitespace-nowrap'
             onClick={handleDeleteAccount}
           >
             <span>Delete Account</span>

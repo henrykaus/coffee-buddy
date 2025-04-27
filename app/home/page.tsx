@@ -1,5 +1,5 @@
 import CoffeeCard from '@/app/ui/coffee-list/CoffeeCard';
-import Toolbar from '@/app/ui/common/Toolbar';
+import VisitSearch from '@/app/ui/common/VisitSearch';
 import React from 'react';
 import {Visit} from '@/app/lib/types';
 import {listVisits, searchVisits} from '@/app/server/visits/actions';
@@ -12,6 +12,7 @@ import DeleteAccountPopup from '@/app/ui/user-menu/DeleteAccountPopup';
 import {auth} from '@/auth';
 import seedData from '@/app/server/seedData';
 import Form from 'next/form';
+import AddVisitButton from '@/app/ui/coffee-list/AddVisitButton';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -57,12 +58,13 @@ export default async function Page(props: PageProps) {
       </header>
       {visits.length ? (
         <section className='flex gap-y-3 flex-col mb-24 pb-10 px-8 sm:px-20'>
+          <VisitSearch />
           {visits.map((visit) => (
             <CoffeeCard key={visit.id} visit={visit} />
           ))}
         </section>
       ) : (
-        <section className='flex flex-col items-center justify-center absolute -z-10 top-0 h-screen w-screen'>
+        <section className='flex flex-col items-center justify-center absolute -z-10 top-0 min-h-screen min-w-full'>
           {query === '' ? (
             <>
               <p className='font-semibold text-xl text-slate-500'>No visits</p>
@@ -76,7 +78,7 @@ export default async function Page(props: PageProps) {
         </section>
       )}
 
-      <Toolbar />
+      <AddVisitButton />
       {action === HomeActionType.Add && <AddVisitPopup />}
       {action === HomeActionType.Edit && <EditVisitPopup id={visitId} />}
       {action === HomeActionType.MoreOptions && <MoreOptionsPopup />}

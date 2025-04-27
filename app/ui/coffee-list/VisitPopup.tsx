@@ -12,6 +12,11 @@ import {Visit} from '@/app/lib/types';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import Modal from '@/app/ui/common/Modal';
 import SizeInput from '@/app/ui/inputs/SizeInput';
+import {getDateForClient} from '@/app/server/common';
+import {
+  NOTES_PLACEHOLDER_KEYWORDS,
+  SEARCH_PLACEHOLDER_KEYWORDS,
+} from '@/app/lib/constants';
 
 export interface VisitPopupProps {
   title: string;
@@ -93,6 +98,19 @@ export default function VisitPopup(props: VisitPopupProps) {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  const getTodaysDate = () => {
+    const today = new Date();
+    return getDateForClient(today);
+  };
+
+  const selectRandomPlaceholder = () => {
+    const randomNumber = Math.floor(
+      Math.random() * NOTES_PLACEHOLDER_KEYWORDS.length,
+    );
+
+    return NOTES_PLACEHOLDER_KEYWORDS[randomNumber];
+  };
+
   const inputClasses =
     'border-b-2 border-slate-300 outline-none focus:border-b-slate-400 text-slate-600 transition p-1 flex-grow min-w-0 max-w-full';
   const textAreaClasses =
@@ -130,7 +148,7 @@ export default function VisitPopup(props: VisitPopupProps) {
             name='date'
             aria-label='Visit date'
             className={inputClasses}
-            defaultValue={visit?.date ? visit.date : undefined}
+            defaultValue={visit?.date ? visit.date : getTodaysDate()}
             required
           />
           <OrderTypeToggle defaultValue={visit?.orderType} />
@@ -153,12 +171,13 @@ export default function VisitPopup(props: VisitPopupProps) {
         </div>
         {/* Have more interesting placeholders */}
         <textarea
-          placeholder='Notes'
+          placeholder={selectRandomPlaceholder()}
           name='notes'
           aria-label='Notes'
           className={textAreaClasses}
           rows={3}
           defaultValue={visit?.notes ?? undefined}
+          suppressHydrationWarning
         />
       </div>
     </Modal>

@@ -36,11 +36,12 @@ export default function SearchInput(props: SearchInputProps) {
         ref={ref}
         type='text'
         placeholder={`${selectRandomPlaceholder()}...`}
-        className='border-[2px] rounded-full py-3 pl-4 pr-11 placeholder:text-slate-400/80 text-xl h-14 flex-grow border-slate-300 shadow-md w-full'
+        className='border-2 border-slate-300 rounded-lg outline-none focus:border-b-slate-400 text-slate-600 transition py-2 pl-4 pr-11 placeholder:text-slate-400/80
+          text-xl flex-grow shadow-sm w-full'
         onChange={debouncedSearchShops}
         suppressHydrationWarning
       />
-      <SearchIcon className='absolute end-4 top-4 text-slate-400' />
+      <SearchIcon className='absolute end-4 top-3 text-slate-400 pointer-events-none' />
     </span>
   );
 }
