@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/coffee-buddy.iml
+/.idea/dataSources.xml
+/migrations/20250426202249_init/migration.sql
+/migrations/migration_lock.toml
+/.idea/modules.xml
+/.idea/prettier.xml
+/.idea/codeStyles/Project.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
