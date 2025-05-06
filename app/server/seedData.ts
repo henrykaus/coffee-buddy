@@ -26,7 +26,8 @@ const seedData = async () => {
       orderType: OrderType.ToGo,
       price: 575,
       rating: 4,
-      shop: 'Insomnia',
+      shopName: 'Insomnia',
+      shopId: 'N10963848676',
       size: 8,
       userId: userId,
     },
@@ -38,7 +39,8 @@ const seedData = async () => {
       orderType: OrderType.ForHere,
       price: 175,
       rating: 3.5,
-      shop: 'Lionheart (Beaverton)',
+      shopName: 'Lionheart (Beaverton)',
+      shopId: 'W946737443',
       size: 8,
       userId: userId,
     },
@@ -50,12 +52,14 @@ const seedData = async () => {
       orderType: OrderType.ForHere,
       price: 550,
       rating: 2,
-      shop: 'The Blue Scorcher',
+      shopName: 'Blue Scorcher Bakery and Cafe',
+      shopId: 'N5225196890',
       size: 8,
       userId: userId,
     },
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const promises: Promise<any>[] = [];
 
   for (const visitData of visitList) {
@@ -68,9 +72,23 @@ const seedData = async () => {
           orderType: visitData.orderType,
           price: visitData.price,
           rating: visitData.rating,
-          shop: visitData.shop,
           size: visitData.size,
-          userId: userId,
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          shop: {
+            connectOrCreate: {
+              where: {
+                osmId: visitData.shopId,
+              },
+              create: {
+                osmId: visitData.shopId,
+                name: visitData.shopName,
+              },
+            },
+          },
         },
       }),
     );

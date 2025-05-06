@@ -13,10 +13,7 @@ import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import Modal from '@/app/ui/common/Modal';
 import SizeInput from '@/app/ui/inputs/SizeInput';
 import {getDateForClient} from '@/app/server/common';
-import {
-  NOTES_PLACEHOLDER_KEYWORDS,
-  SEARCH_PLACEHOLDER_KEYWORDS,
-} from '@/app/lib/constants';
+import {NOTES_PLACEHOLDER_KEYWORDS} from '@/app/lib/constants';
 
 export interface VisitPopupProps {
   title: string;
@@ -140,7 +137,11 @@ export default function VisitPopup(props: VisitPopupProps) {
         </p>
       )}
       <div className='flex flex-col gap-3'>
-        <ShopSearch className={inputClasses} defaultValue={visit?.shop} />
+        <ShopSearch
+          className={inputClasses}
+          defaultName={visit?.shopName}
+          defaultId={visit?.shopId}
+        />
         <div className='flex gap-2'>
           <input
             type='date'

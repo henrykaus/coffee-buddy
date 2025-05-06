@@ -14,7 +14,8 @@ export interface Visit {
   orderType: OrderType;
   price: number;
   rating: number;
-  shop: string;
+  shopName: string;
+  shopId: string;
   size: number;
 }
 
@@ -31,7 +32,8 @@ export interface Shop {
  * This class maps exactly what Nominatim responds with for queries
  */
 export interface NominatimEntry {
-  place_id: number;
+  osm_id: number;
+  osm_type: string;
   address: {
     city: string;
     house_number: string;

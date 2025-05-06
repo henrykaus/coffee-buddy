@@ -49,7 +49,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
           ) : (
             <ToGoCupIcon className='text-slate-600' />
           )}
-          <p className='font-semibold text-lg'>{visit.shop}</p>
+          <p className='font-semibold text-lg'>{visit.shopName}</p>
         </span>
         <span className='flex gap-2'>
           {isExpanded && (

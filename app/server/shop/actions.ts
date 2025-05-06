@@ -1,7 +1,9 @@
 import {NominatimEntry, Shop} from '@/app/lib/types';
 
-const NOMINATIM_BASE_URL =
-  'https://nominatim.openstreetmap.org/search?countrycodes=us&addressdetails=1&layer=poi,address&format=jsonv2';
+const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org';
+
+const NOMINATIM_SEARCH_URL = `${NOMINATIM_BASE_URL}/search?countrycodes=us&addressdetails=1&layer=poi,address&format=jsonv2`;
+const NOMINATIM_LOOKUP_URL = `${NOMINATIM_BASE_URL}/lookup?format=jsonv2`;
 
 const shortenAddress = (address: string) => {
   let newAddress = address.replace(/^north /i, 'N ');
@@ -29,8 +31,10 @@ const convertNominatimEntryToShop = (
   const street = !makeSpecific ? '' : shortenAddress(entry.address.road);
   const houseNumber = !makeSpecific ? '' : entry.address.house_number;
 
+  const id = `${entry.osm_type[0].toUpperCase()}${entry.osm_id}`;
+
   return {
-    id: entry.place_id.toString(),
+    id: id,
     name: entry.name,
     city: entry.address.city ?? entry.address.town,
     state: entry.address.state,
@@ -41,7 +45,7 @@ const convertNominatimEntryToShop = (
 
 export const searchShops = async (query: string) => {
   const data = await fetch(
-    `${NOMINATIM_BASE_URL}&q=${encodeURIComponent(query)}`,
+    `${NOMINATIM_SEARCH_URL}&q=${encodeURIComponent(query)}`,
     {
       method: 'GET',
       headers: {
@@ -86,4 +90,34 @@ export const searchShops = async (query: string) => {
   });
 
   return shops;
+};
+
+export const lookupShop = async (id: string) => {
+  const data = await fetch(
+    `${NOMINATIM_LOOKUP_URL}&osm_ids=${encodeURIComponent(id)}`,
+    {
+      method: 'GET',
+      headers: {
+        Referer: 'https://coffee-buddy.henrykaus.com',
+      },
+    },
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error. Status: ${response.status}`);
+      }
+
+      return response.json();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  console.log(data);
+
+  if (data.length > 0) {
+    return convertNominatimEntryToShop(data[0]);
+  } else {
+    return null;
+  }
 };

@@ -6,20 +6,22 @@ import clsx from 'clsx';
 
 interface ShopSearchProps {
   className?: string;
-  defaultValue?: string | number;
+  defaultId?: string | number;
+  defaultName?: string | number;
 }
 
 export default function ShopSearch(props: ShopSearchProps) {
-  const {className, defaultValue} = props;
+  const {className, defaultId, defaultName} = props;
 
-  const ref = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const idRef = useRef<HTMLInputElement>(null);
   const [shops, setShops] = useState<Shop[]>([]);
 
   console.log('re-render');
 
   const handleSearchInput = async () => {
-    if (ref.current) {
-      const shopData = await searchShops(ref.current.value);
+    if (nameRef.current) {
+      const shopData = await searchShops(nameRef.current.value);
       console.log('shopData', shopData);
       if (shopData) {
         setShops(shopData);
@@ -36,9 +38,10 @@ export default function ShopSearch(props: ShopSearchProps) {
     [],
   );
 
-  const handleSelection = (shopName: string) => {
-    if (ref.current) {
-      ref.current.value = shopName;
+  const handleSelection = (shop: Shop) => {
+    if (nameRef.current && idRef.current) {
+      idRef.current.value = shop.id;
+      nameRef.current.value = shop.name;
       setShops([]);
     }
   };
@@ -66,16 +69,16 @@ export default function ShopSearch(props: ShopSearchProps) {
   return (
     <div className='relative w-full'>
       <input
-        ref={ref}
+        ref={nameRef}
         type='text'
         placeholder='Shop'
-        name='shop'
+        name='shop-name'
         aria-label='Shop'
         className={clsx(
           className,
           'border-2 border-x-white border-t-white focus:border-slate-300 rounded-t-md w-full transition py-1.5',
         )}
-        defaultValue={defaultValue}
+        defaultValue={defaultName}
         onChange={debouncedSearchShops}
         required
       />
@@ -85,7 +88,7 @@ export default function ShopSearch(props: ShopSearchProps) {
             <li key={shop.id}>
               <button
                 className='w-full flex justify-between items-center p-2 text-base hover:bg-slate-100 transition text-left'
-                onClick={() => handleSelection(shop.name)}
+                onClick={() => handleSelection(shop)}
               >
                 {shop.name}
                 <span className='text-sm text-slate-500 text-right leading-tight'>
@@ -97,6 +100,7 @@ export default function ShopSearch(props: ShopSearchProps) {
           ))}
         </ul>
       )}
+      <input ref={idRef} name='shop-id' defaultValue={defaultId} hidden />
     </div>
   );
 }

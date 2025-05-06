@@ -22,7 +22,8 @@ const VisitSchema = z.object({
   userId: z.string({
     invalid_type_error: 'Please select a customer.',
   }),
-  shop: z.string().min(1),
+  shopId: z.string().min(1),
+  shopName: z.string().min(1),
   size: z.coerce
     .number()
     .int()
@@ -56,7 +57,8 @@ export const addVisit = async (
     }
 
     const validatedFields = AddVisit.safeParse({
-      shop: formData.get('shop'),
+      shopId: formData.get('shop-id'),
+      shopName: formData.get('shop-name'),
       size: formData.get('size'),
       drink: formData.get('drink'),
       rating: formData.get('rating'),
@@ -72,13 +74,20 @@ export const addVisit = async (
       };
     }
 
-    const {shop, size, drink, rating, price, date, notes, orderType} =
-      validatedFields.data;
+    const {
+      shopId,
+      shopName,
+      size,
+      drink,
+      rating,
+      price,
+      date,
+      notes,
+      orderType,
+    } = validatedFields.data;
 
-    const visits = await prisma.visit.create({
+    const visit = await prisma.visit.create({
       data: {
-        userId: user.id,
-        shop: shop,
         size: size,
         drink: drink,
         rating: rating,
@@ -86,10 +95,26 @@ export const addVisit = async (
         date: new Date(date),
         notes: notes,
         orderType: orderType,
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        shop: {
+          connectOrCreate: {
+            where: {
+              osmId: shopId,
+            },
+            create: {
+              osmId: shopId,
+              name: shopName,
+            },
+          },
+        },
       },
     });
 
-    console.log(visits);
+    console.log(visit);
   } catch (error: unknown) {
     logError(error);
 
@@ -112,6 +137,9 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
         id: id,
         userId: user.id,
       },
+      include: {
+        shop: true,
+      },
     });
 
     if (!rawVisit) {
@@ -123,7 +151,8 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
       date: getDateForClient(rawVisit.date),
       notes: rawVisit.notes,
       drink: rawVisit.drink,
-      shop: rawVisit.shop,
+      shopName: rawVisit.shop.name,
+      shopId: rawVisit.shop.osmId,
       orderType:
         rawVisit.orderType === OrderType.ForHere
           ? OrderType.ForHere
@@ -158,6 +187,9 @@ export const listVisits = async (): Promise<Visit[]> => {
           date: 'desc',
         },
       ],
+      include: {
+        shop: true,
+      },
     });
 
     const visits = rawVisits.map((visit) => ({
@@ -165,7 +197,8 @@ export const listVisits = async (): Promise<Visit[]> => {
       date: getDateForClient(visit.date),
       notes: visit.notes,
       drink: visit.drink,
-      shop: visit.shop,
+      shopName: visit.shop.name,
+      shopId: visit.shop.osmId,
       orderType:
         visit.orderType === OrderType.ForHere
           ? OrderType.ForHere
@@ -197,7 +230,8 @@ export const updateVisit = async (
 
     const validatedFields = UpdateVisit.safeParse({
       id: formData.get('id'),
-      shop: formData.get('shop'),
+      shopId: formData.get('shop-id'),
+      shopName: formData.get('shop-name'),
       size: formData.get('size'),
       drink: formData.get('drink'),
       rating: formData.get('rating'),
@@ -213,8 +247,18 @@ export const updateVisit = async (
       };
     }
 
-    const {id, shop, size, drink, rating, price, date, notes, orderType} =
-      validatedFields.data;
+    const {
+      id,
+      shopId,
+      shopName,
+      size,
+      drink,
+      rating,
+      price,
+      date,
+      notes,
+      orderType,
+    } = validatedFields.data;
 
     const visit = await prisma.visit.update({
       where: {
@@ -222,8 +266,6 @@ export const updateVisit = async (
         userId: user.id,
       },
       data: {
-        userId: user.id,
-        shop: shop,
         size: size,
         drink: drink,
         rating: rating,
@@ -231,6 +273,22 @@ export const updateVisit = async (
         date: new Date(date),
         notes: notes,
         orderType: orderType,
+        user: {
+          connect: {
+            id: user.id,
+          },
+        },
+        shop: {
+          connectOrCreate: {
+            where: {
+              osmId: shopId,
+            },
+            create: {
+              osmId: shopId,
+              name: shopName,
+            },
+          },
+        },
       },
     });
 
@@ -259,7 +317,7 @@ export const deleteVisit = async (id: string) => {
   }
 };
 
-export const searchVisits = async (query: string) => {
+export const searchVisits = async (query: string): Promise<Visit[]> => {
   try {
     const session = await getValidSession();
     const user = await getUser(session.user?.email as string);
@@ -274,8 +332,10 @@ export const searchVisits = async (query: string) => {
           OR: [
             {
               shop: {
-                contains: query,
-                mode: 'insensitive',
+                name: {
+                  contains: query,
+                  mode: 'insensitive',
+                },
               },
             },
             {
@@ -292,6 +352,9 @@ export const searchVisits = async (query: string) => {
           date: 'desc',
         },
       ],
+      include: {
+        shop: true,
+      },
     });
 
     const visits = rawVisits.map((visit) => ({
@@ -299,7 +362,8 @@ export const searchVisits = async (query: string) => {
       date: getDateForClient(visit.date),
       notes: visit.notes,
       drink: visit.drink,
-      shop: visit.shop,
+      shopName: visit.shop.name,
+      shopId: visit.shop.osmId,
       orderType:
         visit.orderType === OrderType.ForHere
           ? OrderType.ForHere

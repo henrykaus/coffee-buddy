@@ -21,9 +21,18 @@ model User {
   visits Visit[]
 }
 
+model Shop {
+  id    String @id @default(uuid())
+  osmId String @unique
+  name  String
+
+  visits Visit[]
+}
+
 model Visit {
   id     String @id @default(uuid())
   userId String
+  shopId String
 
   date      DateTime @db.Date
   notes     String?
@@ -31,8 +40,8 @@ model Visit {
   orderType String
   price     Int
   rating    Int
-  shop      String
   size      Int
 
+  shop Shop @relation(fields: [shopId], references: [id])
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
