@@ -26,7 +26,7 @@ export default function DeleteAccountPopup() {
   return (
     <Modal
       title='Are You Sure?'
-      showSecondary={false}
+      fullscreen={false}
       showClose={false}
       onClose={handleClose}
     >

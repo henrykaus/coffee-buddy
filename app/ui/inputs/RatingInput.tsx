@@ -1,7 +1,7 @@
-'use client';
-
-import {ChangeEvent, useState} from 'react';
-import clsx from 'clsx';
+import React from 'react';
+import FieldPopup from '@/app/ui/common/FieldPopup';
+import {RatingOffIcon} from '@/app/ui/icons';
+import RatingInputText from '@/app/ui/inputs/RatingInputText';
 
 interface RatingInputProps {
   className?: string;
@@ -9,36 +9,11 @@ interface RatingInputProps {
 }
 
 export default function RatingInput(props: RatingInputProps) {
-  const {className, defaultValue} = props;
-
-  const [value, setValue] = useState(defaultValue ?? '');
-
-  const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const rating = event.target.value;
-    const ratingNumber = Number(rating);
-
-    if (isNaN(ratingNumber)) {
-      return;
-    }
-
-    if (!(ratingNumber < 0) && !(ratingNumber > 5)) {
-      setValue(event.target.value);
-    }
-  };
+  const {defaultValue, className} = props;
 
   return (
-    <span className='flex items-baseline text-slate-500'>
-      <input
-        type='text'
-        value={value}
-        name='rating'
-        aria-label='Rating'
-        placeholder='#'
-        className={clsx(className, 'w-10 text-end')}
-        onChange={handleNumberChange}
-        required
-      />
-      /5
-    </span>
+    <FieldPopup icon={<RatingOffIcon />}>
+      <RatingInputText defaultValue={defaultValue} className={className} />
+    </FieldPopup>
   );
 }

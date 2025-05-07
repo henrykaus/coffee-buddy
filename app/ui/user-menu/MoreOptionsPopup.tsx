@@ -25,7 +25,7 @@ export default function MoreOptionsPopup() {
   };
 
   return (
-    <Modal title='More Options' showSecondary={false} onClose={handleClose}>
+    <Modal title='More Options' fullscreen={false} onClose={handleClose}>
       <ul>
         <li className='transition relative hover:bg-slate-100 text-slate-700 rounded-lg after:bg-slate-200 after:h-[2px] after:content-[""] after:w-[calc(100%-1.5rem)] after:left-3 after:absolute after:-bottom-[0.5em]'>
           <button

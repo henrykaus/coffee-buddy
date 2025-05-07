@@ -24,19 +24,33 @@ const VisitSchema = z.object({
   }),
   shopId: z.string().min(1),
   shopName: z.string().min(1),
-  size: z.coerce
-    .number()
-    .int()
-    .gt(0, {message: 'Please enter a valid size greater than 0oz'}),
+  size: z
+    .null()
+    .or(
+      z.coerce
+        .number()
+        .int()
+        .gt(0, {message: 'Please enter a valid size greater than 0oz'}),
+    ),
   drink: z.string().min(1),
-  rating: z.coerce
-    .number()
-    .min(0, {message: 'Please enter a valid rating between 0 and 5'})
-    .max(500, {message: 'Please enter a valid rating between 0 and 5'}),
+  rating: z
+    .null()
+    .or(
+      z
+        .string()
+        .length(0)
+        .transform(() => null),
+    )
+    .or(
+      z.coerce
+        .number()
+        .min(0, {message: 'Please enter a valid rating between 0 and 5'})
+        .max(5, {message: 'Please enter a valid rating between 0 and 5'}),
+    ),
   price: z.coerce.number().min(0, {
     message: 'Please enter a valid price greater than or equal to $0',
   }),
-  date: z.string(),
+  date: z.ostring(),
   notes: z.ostring(),
   orderType: z.enum(['TO GO', 'FOR HERE'], {
     invalid_type_error: 'Please select an order type.....',
@@ -56,6 +70,8 @@ export const addVisit = async (
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
+    console.log(typeof formData.get('rating'));
+
     const validatedFields = AddVisit.safeParse({
       shopId: formData.get('shop-id'),
       shopName: formData.get('shop-name'),
@@ -69,6 +85,15 @@ export const addVisit = async (
     });
 
     if (!validatedFields.success) {
+      console.log(
+        `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.notes}`,
+      );
+      console.log(
+        `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.rating}`,
+      );
+      console.log(
+        `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.size}`,
+      );
       return {
         message: `Failed to add location.\n${validatedFields.error.flatten().fieldErrors}`,
       };
@@ -86,13 +111,15 @@ export const addVisit = async (
       orderType,
     } = validatedFields.data;
 
+    console.log(rating);
+
     const visit = await prisma.visit.create({
       data: {
         size: size,
         drink: drink,
         rating: rating,
         price: getPriceForDatabase(price),
-        date: new Date(date),
+        date: date ? new Date(date) : null,
         notes: notes,
         orderType: orderType,
         user: {
@@ -148,7 +175,7 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
 
     const visit = {
       id: rawVisit.id,
-      date: getDateForClient(rawVisit.date),
+      date: rawVisit.date ? getDateForClient(rawVisit.date) : null,
       notes: rawVisit.notes,
       drink: rawVisit.drink,
       shopName: rawVisit.shop.name,
@@ -194,7 +221,7 @@ export const listVisits = async (): Promise<Visit[]> => {
 
     const visits = rawVisits.map((visit) => ({
       id: visit.id,
-      date: getDateForClient(visit.date),
+      date: visit.date ? getDateForClient(visit.date) : null,
       notes: visit.notes,
       drink: visit.drink,
       shopName: visit.shop.name,
@@ -241,6 +268,8 @@ export const updateVisit = async (
       orderType: formData.get('order-type'),
     });
 
+    console.log(formData.get('rating'));
+
     if (!validatedFields.success) {
       return {
         message: `Failed to update location.\n${validatedFields.error.flatten().fieldErrors}`,
@@ -260,6 +289,8 @@ export const updateVisit = async (
       orderType,
     } = validatedFields.data;
 
+    console.log(rating);
+
     const visit = await prisma.visit.update({
       where: {
         id: id,
@@ -270,7 +301,7 @@ export const updateVisit = async (
         drink: drink,
         rating: rating,
         price: getPriceForDatabase(price),
-        date: new Date(date),
+        date: date ? new Date(date) : null,
         notes: notes,
         orderType: orderType,
         user: {
@@ -359,7 +390,7 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
 
     const visits = rawVisits.map((visit) => ({
       id: visit.id,
-      date: getDateForClient(visit.date),
+      date: visit.date ? getDateForClient(visit.date) : null,
       notes: visit.notes,
       drink: visit.drink,
       shopName: visit.shop.name,

@@ -27,6 +27,27 @@ export const CancelIcon = (props: IconProps) => {
   );
 };
 
+export const CheckIcon = (props: IconProps) => {
+  const {className, height = 24, width = 24, strokeWidth = 3} = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='M20 6 9 17l-5-5' />
+    </svg>
+  );
+};
+
 export const CloseIcon = (props: IconProps) => {
   const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
 
@@ -164,6 +185,30 @@ export const MugIcon = (props: IconProps) => {
   );
 };
 
+export const NotesIcon = (props: IconProps) => {
+  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z' />
+      <path d='M14 8H8' />
+      <path d='M16 12H8' />
+      <path d='M13 16H8' />
+    </svg>
+  );
+};
+
 export const PlusIcon = (props: IconProps) => {
   const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
 
@@ -182,6 +227,29 @@ export const PlusIcon = (props: IconProps) => {
     >
       <path d='M5 12h14' />
       <path d='M12 5v14' />
+    </svg>
+  );
+};
+
+export const RatingOffIcon = (props: IconProps) => {
+  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='M8.34 8.34 2 9.27l5 4.87L5.82 21 12 17.77 18.18 21l-.59-3.43' />
+      <path d='M18.42 12.76 22 9.27l-6.91-1L12 2l-1.44 2.91' />
+      <line x1='2' x2='22' y1='2' y2='22' />
     </svg>
   );
 };

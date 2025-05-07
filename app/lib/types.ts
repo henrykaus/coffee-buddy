@@ -8,15 +8,15 @@ export interface User {
 export interface Visit {
   id: string;
   userId?: string;
-  date: string;
+  date: string | null;
   notes: string | null;
   drink: string;
   orderType: OrderType;
   price: number;
-  rating: number;
+  rating: number | null;
   shopName: string;
   shopId: string;
-  size: number;
+  size: number | null;
 }
 
 export interface Shop {

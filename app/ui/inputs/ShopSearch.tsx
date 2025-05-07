@@ -5,13 +5,14 @@ import {Shop} from '@/app/lib/types';
 import clsx from 'clsx';
 
 interface ShopSearchProps {
+  autoFocus?: boolean;
   className?: string;
   defaultId?: string | number;
   defaultName?: string | number;
 }
 
 export default function ShopSearch(props: ShopSearchProps) {
-  const {className, defaultId, defaultName} = props;
+  const {autoFocus = false, className, defaultId, defaultName} = props;
 
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
@@ -76,10 +77,11 @@ export default function ShopSearch(props: ShopSearchProps) {
         aria-label='Shop'
         className={clsx(
           className,
-          'border-2 border-x-white border-t-white focus:border-slate-300 rounded-t-md w-full transition py-1.5',
+          'border-2 border-x-transparent border-t-transparent focus:border-slate-300 rounded-t-md w-full transition py-1.5',
         )}
         defaultValue={defaultName}
         onChange={debouncedSearchShops}
+        autoFocus={autoFocus}
         required
       />
       {shops.length > 0 && (

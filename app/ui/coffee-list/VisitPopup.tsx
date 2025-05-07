@@ -1,29 +1,28 @@
 'use client';
 
-import React, {useActionState} from 'react';
+import React, {ReactNode, useActionState} from 'react';
 import {State} from '@/app/server/visits/actions';
 import OrderTypeToggle from '@/app/ui/inputs/OrderTypeToggle';
-import RatingInput from '@/app/ui/inputs/RatingInput';
 import PriceInput from '@/app/ui/inputs/PriceInput';
 import {listUsers} from '@/app/server/users/actions';
-import {TrashIcon} from '@/app/ui/icons';
+import {CheckIcon, TrashIcon} from '@/app/ui/icons';
 import ShopSearch from '@/app/ui/inputs/ShopSearch';
 import {Visit} from '@/app/lib/types';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import Modal from '@/app/ui/common/Modal';
-import SizeInput from '@/app/ui/inputs/SizeInput';
-import {getDateForClient} from '@/app/server/common';
-import {NOTES_PLACEHOLDER_KEYWORDS} from '@/app/lib/constants';
+import DrinkInput from '@/app/ui/inputs/DrinkInput';
+import NotesInput from '@/app/ui/inputs/NotesInput';
+import RatingInput from '@/app/ui/inputs/RatingInput';
+import DateInput from '@/app/ui/inputs/DateInput';
 
 export interface VisitPopupProps {
-  title: string;
+  autoFocusShop?: boolean;
   visit?: Visit;
+  confirmButton?: ReactNode;
   onConfirm: (
     prevState: State | undefined,
     formData: FormData,
   ) => Promise<{message: string} | undefined>;
-  confirmButtonText: string;
-  cancelButton?: boolean;
   onDelete?: (id: string) => Promise<void>;
 }
 
@@ -35,14 +34,7 @@ export interface VisitPopupProps {
  * Have size picker have increment and decrement buttons in addition to edit '<' 8 '>'
  */
 export default function VisitPopup(props: VisitPopupProps) {
-  const {
-    title,
-    visit,
-    onConfirm,
-    confirmButtonText,
-    cancelButton = false,
-    onDelete,
-  } = props;
+  const {autoFocusShop = false, visit, onConfirm, onDelete} = props;
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -95,91 +87,63 @@ export default function VisitPopup(props: VisitPopupProps) {
     replace(`${pathname}?${params.toString()}`);
   };
 
-  const getTodaysDate = () => {
-    const today = new Date();
-    return getDateForClient(today);
-  };
-
-  const selectRandomPlaceholder = () => {
-    const randomNumber = Math.floor(
-      Math.random() * NOTES_PLACEHOLDER_KEYWORDS.length,
-    );
-
-    return NOTES_PLACEHOLDER_KEYWORDS[randomNumber];
-  };
-
   const inputClasses =
     'border-b-2 border-slate-300 outline-hidden focus:border-b-slate-400 text-slate-600 transition p-1 grow min-w-0 max-w-full';
-  const textAreaClasses =
-    'border-2 border-slate-300 rounded-md outline-hidden focus:border-b-slate-400 text-slate-600 transition p-2';
+
+  const confirmButton = (
+    <button
+      formAction={formAction}
+      className='rounded-full h-10 w-10 flex items-center justify-center text-green-800 bg-green-100 hover:bg-green-200 transition'
+      key={3}
+    >
+      <CheckIcon />
+    </button>
+  );
+
+  const deleteButton = (
+    <button
+      className='rounded-full h-10 w-10 flex items-center justify-center text-rose-800 bg-rose-100 hover:bg-rose-200 transition'
+      onClick={handleDelete}
+      aria-label='Delete visit'
+      key={10}
+    >
+      <TrashIcon />
+    </button>
+  );
+
+  const actions = [
+    <DateInput key={0} defaultValue={visit?.date ?? undefined} />,
+    <RatingInput key={1} defaultValue={visit?.rating ?? undefined} />,
+    <NotesInput key={2} defaultValue={visit?.notes ?? undefined} />,
+    ...(onDelete ? [deleteButton] : []),
+    confirmButton,
+  ];
 
   return (
-    <Modal
-      title={title}
-      onClose={handleClose}
-      onConfirm={formAction}
-      primaryButtonText={confirmButtonText}
-      showClose={!onDelete}
-      showSecondary={cancelButton}
-    >
-      {onDelete && visit && (
-        <button
-          className='absolute right-9 top-9 rounded-md p-2 flex items-center justify-center transition hover:bg-rose-200 text-rose-700'
-          onClick={handleDelete}
-          aria-label='Delete visit'
-        >
-          <TrashIcon />
-        </button>
-      )}
+    <Modal onClose={handleClose} actions={actions}>
       {state?.message && (
         <p className='bg-rose-300 rounded-lg p-2 text-rose-800 mb-4'>
           <span className='font-semibold'>ERROR:</span> {state.message}
         </p>
       )}
-      <div className='flex flex-col gap-3'>
+      <div className='flex flex-col gap-6 mt-8'>
         <ShopSearch
+          autoFocus={autoFocusShop}
           className={inputClasses}
           defaultName={visit?.shopName}
           defaultId={visit?.shopId}
         />
-        <div className='flex gap-2'>
-          <input
-            type='date'
-            placeholder='MM/DD/YYYY'
-            name='date'
-            aria-label='Visit date'
+        <div className='flex gap-5'>
+          <DrinkInput
             className={inputClasses}
-            defaultValue={visit?.date ? visit.date : getTodaysDate()}
-            required
+            defaultDrink={visit?.drink}
+            defaultSize={visit?.size ?? undefined}
           />
+        </div>
+        <div className='flex gap-3'>
+          <PriceInput className={inputClasses} defaultValue={visit?.price} />
           <OrderTypeToggle defaultValue={visit?.orderType} />
         </div>
-        <div className='flex gap-5'>
-          <SizeInput className={inputClasses} defaultValue={visit?.size} />
-          <input
-            type='text'
-            placeholder='Drink'
-            name='drink'
-            aria-label='Location'
-            className={inputClasses}
-            defaultValue={visit?.drink}
-            required
-          />
-        </div>
-        <div className='flex gap-5'>
-          <RatingInput className={inputClasses} defaultValue={visit?.rating} />
-          <PriceInput className={inputClasses} defaultValue={visit?.price} />
-        </div>
-        {/* Have more interesting placeholders */}
-        <textarea
-          placeholder={selectRandomPlaceholder()}
-          name='notes'
-          aria-label='Notes'
-          className={textAreaClasses}
-          rows={3}
-          defaultValue={visit?.notes ?? undefined}
-          suppressHydrationWarning
-        />
       </div>
     </Modal>
   );

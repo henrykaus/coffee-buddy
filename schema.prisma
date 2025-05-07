@@ -34,13 +34,13 @@ model Visit {
   userId String
   shopId String
 
-  date      DateTime @db.Date
+  date      DateTime? @db.Date
   notes     String?
   drink     String
   orderType String
   price     Int
-  rating    Int
-  size      Int
+  rating    Int?
+  size      Int?
 
   shop Shop @relation(fields: [shopId], references: [id])
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

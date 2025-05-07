@@ -32,6 +32,9 @@ export default function CoffeeCard(props: CoffeeCardProps) {
     replace(`${pathname}?${params.toString()}`);
   };
 
+  const formattedDrink =
+    visit.size !== null ? `${visit.size}oz ${visit.drink}` : visit.drink;
+
   return (
     <article
       className={clsx(
@@ -61,15 +64,15 @@ export default function CoffeeCard(props: CoffeeCardProps) {
               <EditIcon strokeWidth={2} height={22} width={22} />
             </button>
           )}
-          <p>
-            <span className='font-bold text-2xl'>{visit.rating}</span>
-            /5
-          </p>
+          {visit.rating !== null && (
+            <p>
+              <span className='font-bold text-2xl'>{visit.rating}</span>
+              /5
+            </p>
+          )}
         </span>
       </header>
-      <p>
-        {visit.size}oz {visit.drink}
-      </p>
+      <p>{formattedDrink}</p>
       {/* TODO: Make this accessible, the description is still visible to screen-readers */}
       <div
         className={clsx('grid transition-all', {
@@ -89,8 +92,10 @@ export default function CoffeeCard(props: CoffeeCardProps) {
         </div>
       </div>
       <div className='flex justify-between items-baseline'>
-        <p className='text-sm'>Visited {getDateForUser(visit.date)}</p>
-        <p>{getPriceForDisplay(visit.price)}</p>
+        {visit.date && (
+          <p className='text-sm'>Visited {getDateForUser(visit.date)}</p>
+        )}
+        <p className='justify-self-end'>{getPriceForDisplay(visit.price)}</p>
       </div>
     </article>
   );

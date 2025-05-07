@@ -15,13 +15,6 @@ export default async function EditVisitPopup(props: EditVisitPopupProps) {
   const visit = await getVisit(id);
 
   return (
-    <VisitPopup
-      title='Edit visit'
-      confirmButtonText='Save'
-      onConfirm={updateVisit}
-      onDelete={deleteVisit}
-      visit={visit}
-      cancelButton={true}
-    />
+    <VisitPopup onConfirm={updateVisit} onDelete={deleteVisit} visit={visit} />
   );
 }
