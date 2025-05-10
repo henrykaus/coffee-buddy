@@ -1,41 +1,40 @@
-import {ReactNode, useEffect, useRef, useState} from 'react';
+import {ReactNode, useState} from 'react';
+import useCloseableDropdown from '@/app/hooks/useCloseableDropdown';
+import clsx from 'clsx';
 
 interface FieldPopupProps {
   children?: ReactNode;
   icon: ReactNode;
+  altIcon?: ReactNode;
+  showAltIcon?: boolean;
 }
 
 export default function FieldPopup(props: FieldPopupProps) {
-  const {children, icon} = props;
-
-  const ref = useRef<HTMLSpanElement>(null);
+  const {children, icon, altIcon, showAltIcon = false} = props;
 
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
+  const ref = useCloseableDropdown(() => setIsOpen(false));
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
+  const iconToDisplay = showAltIcon ? altIcon : icon;
+
+  const classes =
+    'rounded-full bg-slate-200 transition h-10 w-10 flex items-center justify-center';
 
   return (
     <span ref={ref} className='relative'>
       <button
         type='button'
-        className='rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition h-10 w-10 flex items-center justify-center'
+        className={clsx(classes, {
+          'bg-slate-300 shadow-md text-slate-800 hover:bg-slate-300': isOpen,
+          'text-slate-600 hover:bg-slate-300': !isOpen,
+        })}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {icon}
+        {iconToDisplay}
       </button>
       {children && (
-        <div className='absolute top-12 right-0 z-10' hidden={!isOpen}>
+        <div className='fixed start-0 mt-3 w-full z-10' hidden={!isOpen}>
           {children}
         </div>
       )}

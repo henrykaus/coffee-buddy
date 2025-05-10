@@ -3,10 +3,17 @@ export interface IconProps {
   height?: number;
   width?: number;
   strokeWidth?: number;
+  fill?: string;
 }
 
 export const CancelIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -14,7 +21,7 @@ export const CancelIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -28,7 +35,13 @@ export const CancelIcon = (props: IconProps) => {
 };
 
 export const CheckIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 3} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 3,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -36,7 +49,7 @@ export const CheckIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -49,7 +62,13 @@ export const CheckIcon = (props: IconProps) => {
 };
 
 export const CloseIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -57,7 +76,7 @@ export const CloseIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -71,7 +90,13 @@ export const CloseIcon = (props: IconProps) => {
 };
 
 export const EditIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -79,7 +104,7 @@ export const EditIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -93,7 +118,13 @@ export const EditIcon = (props: IconProps) => {
 };
 
 export const EllipsisIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -101,7 +132,7 @@ export const EllipsisIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -116,7 +147,13 @@ export const EllipsisIcon = (props: IconProps) => {
 };
 
 export const GhostIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -124,7 +161,7 @@ export const GhostIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -139,7 +176,13 @@ export const GhostIcon = (props: IconProps) => {
 };
 
 export const LogOutIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -147,7 +190,7 @@ export const LogOutIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -162,7 +205,13 @@ export const LogOutIcon = (props: IconProps) => {
 };
 
 export const MugIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -170,7 +219,7 @@ export const MugIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -186,7 +235,13 @@ export const MugIcon = (props: IconProps) => {
 };
 
 export const NotesIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -194,23 +249,32 @@ export const NotesIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
       strokeLinejoin='round'
       className={className}
     >
-      <path d='M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z' />
-      <path d='M14 8H8' />
-      <path d='M16 12H8' />
-      <path d='M13 16H8' />
+      <path d='M8 2v4' />
+      <path d='M12 2v4' />
+      <path d='M16 2v4' />
+      <rect width='16' height='18' x='4' y='4' rx='2' />
+      <path d='M8 10h6' />
+      <path d='M8 14h8' />
+      <path d='M8 18h5' />
     </svg>
   );
 };
 
-export const PlusIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+export const NoNotesIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -218,7 +282,46 @@ export const PlusIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='M8 2v4' />
+      <path d='M12 2v4' />
+      <path d='M16 2v4' />
+      <path d='M16 4h2a2 2 0 0 1 2 2v2' />
+      <path d='M20 12v2' />
+      <path d='M20 18v2a2 2 0 0 1-2 2h-1' />
+      <path d='M13 22h-2' />
+      <path d='M7 22H6a2 2 0 0 1-2-2v-2' />
+      <path d='M4 14v-2' />
+      <path d='M4 8V6a2 2 0 0 1 2-2h2' />
+      <path d='M8 10h6' />
+      <path d='M8 14h8' />
+      <path d='M8 18h5' />
+    </svg>
+  );
+};
+
+export const PlusIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -232,7 +335,13 @@ export const PlusIcon = (props: IconProps) => {
 };
 
 export const RatingOffIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -240,7 +349,7 @@ export const RatingOffIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -255,7 +364,13 @@ export const RatingOffIcon = (props: IconProps) => {
 };
 
 export const SearchIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -263,7 +378,7 @@ export const SearchIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -276,8 +391,14 @@ export const SearchIcon = (props: IconProps) => {
   );
 };
 
-export const ToGoCupIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+export const StarIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -285,7 +406,34 @@ export const ToGoCupIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z' />
+    </svg>
+  );
+};
+
+export const ToGoCupIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -301,7 +449,13 @@ export const ToGoCupIcon = (props: IconProps) => {
 };
 
 export const TrashIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -309,7 +463,7 @@ export const TrashIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'
@@ -326,7 +480,13 @@ export const TrashIcon = (props: IconProps) => {
 };
 
 export const UserIcon = (props: IconProps) => {
-  const {className, height = 24, width = 24, strokeWidth = 2.5} = props;
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
 
   return (
     <svg
@@ -334,7 +494,7 @@ export const UserIcon = (props: IconProps) => {
       width={width}
       height={height}
       viewBox='0 0 24 24'
-      fill='none'
+      fill={fill}
       stroke='currentColor'
       strokeWidth={strokeWidth}
       strokeLinecap='round'

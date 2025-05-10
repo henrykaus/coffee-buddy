@@ -1,8 +1,9 @@
-import {useMemo, useRef, useState} from 'react';
+import {useCallback, useMemo, useRef, useState} from 'react';
 import {searchShops} from '@/app/server/shop/actions';
 import {debounce} from 'lodash';
 import {Shop} from '@/app/lib/types';
 import clsx from 'clsx';
+import useCloseableDropdown from '@/app/hooks/useCloseableDropdown';
 
 interface ShopSearchProps {
   autoFocus?: boolean;
@@ -14,16 +15,19 @@ interface ShopSearchProps {
 export default function ShopSearch(props: ShopSearchProps) {
   const {autoFocus = false, className, defaultId, defaultName} = props;
 
+  const [shops, setShops] = useState<Shop[]>([]);
+
+  const clearShops = useCallback(() => setShops([]), []);
+
+  const dropdownRef = useCloseableDropdown(clearShops);
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
-  const [shops, setShops] = useState<Shop[]>([]);
 
   console.log('re-render');
 
   const handleSearchInput = async () => {
     if (nameRef.current) {
       const shopData = await searchShops(nameRef.current.value);
-      console.log('shopData', shopData);
       if (shopData) {
         setShops(shopData);
       } else {
@@ -67,8 +71,9 @@ export default function ShopSearch(props: ShopSearchProps) {
     return location;
   };
 
+  // TODO: WHY IS THIS A PROBLEM?
   return (
-    <div className='relative w-full'>
+    <div ref={dropdownRef} className='relative w-full'>
       <input
         ref={nameRef}
         type='text'
@@ -85,7 +90,7 @@ export default function ShopSearch(props: ShopSearchProps) {
         required
       />
       {shops.length > 0 && (
-        <ul className='absolute top-[2.1em] w-full bg-white border-2 border-slate-300 rounded-b-xl shadow-lg'>
+        <ul className='absolute top-[2.1em] w-full bg-white border-2 border-slate-300 rounded-b-xl shadow-lg z-10'>
           {shops.map((shop: Shop) => (
             <li key={shop.id}>
               <button

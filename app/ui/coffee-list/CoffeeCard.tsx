@@ -38,7 +38,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
   return (
     <article
       className={clsx(
-        'border-2 border-slate-200 p-2 px-3 rounded-md text-lg text-slate-700 text-left transition cursor-pointer',
+        'border-2 border-slate-200 pb-2 pt-3 px-3 rounded-md text-lg text-slate-700 text-left transition cursor-pointer',
         {'shadow-lg': isExpanded},
       )}
       onClick={handleClick}
@@ -54,21 +54,21 @@ export default function CoffeeCard(props: CoffeeCardProps) {
           )}
           <p className='font-semibold text-lg'>{visit.shopName}</p>
         </span>
-        <span className='flex gap-2'>
-          {isExpanded && (
-            <button
-              onClick={handleEditClick}
-              aria-label='Edit visit'
-              className='flex justify-center items-center h-8 w-8 bg-slate-100 border-2 border-slate-200 rounded-md text-slate-500'
-            >
-              <EditIcon strokeWidth={2} height={22} width={22} />
-            </button>
-          )}
+        <span className='flex gap-3'>
           {visit.rating !== null && (
             <p>
               <span className='font-bold text-2xl'>{visit.rating}</span>
               /5
             </p>
+          )}
+          {isExpanded && (
+            <button
+              onClick={handleEditClick}
+              aria-label='Edit visit'
+              className='flex justify-center items-center h-8 w-8  hover:bg-slate-100 transition  border-slate-200 rounded-md text-slate-600'
+            >
+              <EditIcon strokeWidth={2} height={22} width={22} />
+            </button>
           )}
         </span>
       </header>

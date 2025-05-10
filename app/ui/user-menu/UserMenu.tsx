@@ -39,7 +39,7 @@ export default function UserMenu(props: UserMenuProps) {
       >
         <UserAvatar imageUrl={imageUrl} />
       </button>
-      <ul className='bg-(--background) rounded-lg shadow-xl w-fit absolute hidden right-0 transition'>
+      <ul className='bg-(--background) rounded-lg shadow-xl w-fit absolute hidden end-0 transition'>
         <li className='hover:bg-slate-100 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
           <button
             className='flex justify-between p-2 gap-2 w-full whitespace-nowrap'

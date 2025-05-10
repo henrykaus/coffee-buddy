@@ -20,7 +20,7 @@ export default function AddVisitButton() {
     <Form action={handleAddClick}>
       <button
         type='submit'
-        className='flex items-center justify-center fixed right-5 bottom-5
+        className='flex items-center justify-center fixed end-5 bottom-5
           text-4xl font-medium text-yellow-700 h-16 w-16 shadow-md
           rounded-full bg-[#f7e2ba] hover:bg-[#f7daa3] transition active:transform-[scale(0.93)]'
       >

@@ -21,7 +21,7 @@ export default function DrinkInput(props: SizeInputProps) {
         defaultValue={defaultDrink}
         required
       />
-      <span className='absolute inline-block right-1 top-1'>
+      <span className='absolute inline-block end-1 top-1'>
         {/* TODO: Selects do not have good browser support, rework into custom component*/}
         <select
           name='size'
@@ -31,6 +31,7 @@ export default function DrinkInput(props: SizeInputProps) {
           <option value='' disabled>
             # oz.
           </option>
+          <option value='2'>2 oz.</option>
           <option value='5'>5 oz.</option>
           <option value='6'>6 oz.</option>
           <option value='8'>8 oz.</option>

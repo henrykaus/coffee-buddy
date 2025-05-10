@@ -56,28 +56,21 @@ export default async function Page(props: PageProps) {
           <UserMenu imageUrl={session?.user?.image} />
         </span>
       </header>
-      {visits.length ? (
-        <section className='flex gap-y-3 flex-col mb-24 pb-10 px-8 sm:px-20'>
-          <VisitSearch />
-          {visits.map((visit) => (
-            <CoffeeCard key={visit.id} visit={visit} />
-          ))}
-        </section>
-      ) : (
-        <section className='flex flex-col items-center justify-center absolute -z-10 top-0 min-h-screen min-w-full'>
-          {query === '' ? (
-            <>
-              <p className='font-semibold text-xl text-slate-500'>No visits</p>
+      <section className='flex gap-y-3 flex-col mb-24 pb-10 px-8 sm:px-20'>
+        {(visits.length || query !== '') && <VisitSearch />}
+        {visits.length ? (
+          visits.map((visit) => <CoffeeCard key={visit.id} visit={visit} />)
+        ) : (
+          <div className='absolute start-0 mx-auto w-full text-center top-[calc(50%-28px)]'>
+            <p className='font-semibold text-xl text-slate-500'>No visits</p>
+            {query === '' && (
               <p className='text-lg text-slate-400'>
                 Click the + button to add
               </p>
-            </>
-          ) : (
-            <p className='font-semibold text-xl text-slate-500'>No results</p>
-          )}
-        </section>
-      )}
-
+            )}
+          </div>
+        )}
+      </section>
       <AddVisitButton />
       {action === HomeActionType.Add && <AddVisitPopup />}
       {action === HomeActionType.Edit && <EditVisitPopup id={visitId} />}

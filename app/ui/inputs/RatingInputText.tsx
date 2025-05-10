@@ -1,43 +1,67 @@
 'use client';
 
-import {ChangeEvent, useState} from 'react';
-import clsx from 'clsx';
+import {useRef, useState} from 'react';
+import {StarIcon} from '@/app/ui/icons';
 
 interface RatingInputProps {
-  className?: string;
-  defaultValue?: number | string;
+  defaultValue?: number;
+  shouldShowIcon?: (showIcon: boolean) => void;
 }
 
 export default function RatingInputText(props: RatingInputProps) {
-  const {className, defaultValue} = props;
+  const {defaultValue, shouldShowIcon} = props;
 
-  const [value, setValue] = useState(defaultValue ?? '');
+  const [currentRating, setCurrentRating] = useState(defaultValue ?? 0);
 
-  const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const rating = event.target.value;
-    const ratingNumber = Number(rating);
-
-    if (isNaN(ratingNumber)) {
-      return;
-    }
-
-    if (!(ratingNumber < 0) && !(ratingNumber > 5)) {
-      setValue(event.target.value);
+  const showSelectedIcon = (showIcon: boolean) => {
+    if (shouldShowIcon) {
+      shouldShowIcon(showIcon);
     }
   };
 
+  const handleStarSelect = (rating: number) => {
+    if (rating === currentRating) {
+      setCurrentRating(0);
+      showSelectedIcon(false);
+    } else {
+      setCurrentRating(rating);
+      showSelectedIcon(true);
+    }
+  };
+
+  const shouldBeHighlighted = (rating: number) => {
+    return currentRating >= rating ? 'currentColor' : 'none';
+  };
+
+  // TODO: Is there a better way?
+  const ref1 = useRef<HTMLButtonElement>(null);
+  const ref2 = useRef<HTMLButtonElement>(null);
+  const ref3 = useRef<HTMLButtonElement>(null);
+  const ref4 = useRef<HTMLButtonElement>(null);
+  const ref5 = useRef<HTMLButtonElement>(null);
+  const refs = [ref1, ref2, ref3, ref4, ref5];
+
   return (
-    <div className='flex items-baseline text-slate-500 shadow-lg rounded-full border-2 border-slate-300 py-2 px-3 bg-(--background)'>
-      <input
-        type='text'
-        value={value}
-        name='rating'
-        aria-label='Rating'
-        placeholder='#'
-        className={clsx(className, 'w-10 text-end')}
-        onChange={handleNumberChange}
-      />
-      /5
+    <div className='text-slate-500 shadow-lg rounded-full border-2 border-slate-300 py-2 px-3 bg-(--background) w-fit mx-auto'>
+      <ul className='flex gap-2'>
+        {refs.map((ref, index) => (
+          <li className='flex w-10 h-10' key={index}>
+            <button
+              ref={ref}
+              type='button'
+              className='cursor-pointer rounded-full hover:bg-slate-200 hover:shadow-md transition w-10 h-10 flex items-center justify-center'
+              onClick={() => handleStarSelect(index + 1)}
+            >
+              <StarIcon
+                height={30}
+                width={30}
+                fill={shouldBeHighlighted(index + 1)}
+              />
+            </button>
+          </li>
+        ))}
+      </ul>
+      <input type='text' value={currentRating} name='rating' readOnly hidden />
     </div>
   );
 }
