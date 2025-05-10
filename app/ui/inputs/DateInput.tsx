@@ -18,7 +18,7 @@ export default function DateInput(props: DateInput) {
         type='date'
         name='date'
         aria-label='Visit date'
-        className='rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition flex items-center justify-center text-lg font-semibold h-10 px-3'
+        className='rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition flex items-center justify-center text-sm font-semibold h-10 px-3'
         defaultValue={defaultValue ?? getTodaysDate()}
         required
       />

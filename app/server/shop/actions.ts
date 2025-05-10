@@ -6,6 +6,10 @@ const NOMINATIM_SEARCH_URL = `${NOMINATIM_BASE_URL}/search?countrycodes=us&addre
 const NOMINATIM_LOOKUP_URL = `${NOMINATIM_BASE_URL}/lookup?format=jsonv2`;
 
 const shortenAddress = (address: string) => {
+  if (!address) {
+    return '';
+  }
+
   let newAddress = address.replace(/^north /i, 'N ');
   newAddress = newAddress.replace(/^south /i, 'S ');
   newAddress = newAddress.replace(/^east /i, 'E ');

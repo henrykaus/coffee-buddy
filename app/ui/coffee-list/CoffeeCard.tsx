@@ -45,19 +45,21 @@ export default function CoffeeCard(props: CoffeeCardProps) {
       aria-expanded={isExpanded}
       role='row'
     >
-      <header className='flex justify-between'>
+      <header className='flex justify-between gap-4'>
         <span className='flex gap-2'>
           {visit.orderType === OrderType.ForHere ? (
-            <MugIcon className='text-slate-600' />
+            <MugIcon className='text-slate-600 shrink-0' />
           ) : (
-            <ToGoCupIcon className='text-slate-600' />
+            <ToGoCupIcon className='text-slate-600 shrink-0' />
           )}
-          <p className='font-semibold text-lg'>{visit.shopName}</p>
+          <p className='font-semibold text-lg/5 mt-[0.2rem] mb-[0.2rem]'>
+            {visit.shopName}
+          </p>
         </span>
-        <span className='flex gap-3'>
+        <span className='flex gap-2'>
           {visit.rating !== null && (
             <p>
-              <span className='font-bold text-2xl'>{visit.rating}</span>
+              <span className='font-bold text-2xl/7'>{visit.rating}</span>
               /5
             </p>
           )}

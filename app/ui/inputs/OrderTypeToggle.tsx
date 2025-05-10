@@ -18,7 +18,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   );
 
   const commonClasses =
-    'p-2 border-2 border-slate-300 cursor-pointer transition flex';
+    'p-[0.35rem] border-2 border-slate-300 cursor-pointer transition flex';
   const leftButtonClasses = 'rounded-l-md border-r-0';
   const rightButtonClasses = 'rounded-r-md';
 
