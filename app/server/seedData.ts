@@ -68,7 +68,7 @@ const seedData = async () => {
         data: {
           notes: visitData.notes,
           drink: visitData.drink,
-          date: new Date(visitData.date),
+          date: visitData.date ? new Date(visitData.date) : null,
           orderType: visitData.orderType,
           price: visitData.price,
           rating: visitData.rating,

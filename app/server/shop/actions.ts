@@ -6,6 +6,7 @@ const NOMINATIM_SEARCH_URL = `${NOMINATIM_BASE_URL}/search?countrycodes=us&addre
 const NOMINATIM_LOOKUP_URL = `${NOMINATIM_BASE_URL}/lookup?format=jsonv2`;
 
 const shortenAddress = (address: string) => {
+  // TODO: Why is "address" coming in as undefined when the term "Flag" is searched?
   if (!address) {
     return '';
   }

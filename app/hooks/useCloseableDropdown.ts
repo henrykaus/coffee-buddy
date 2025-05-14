@@ -1,11 +1,13 @@
 import {useEffect, useRef} from 'react';
 
-export default function useCloseableDropdown(callback: () => void) {
-  const ref = useRef<HTMLElement>(null);
+export default function useCloseableDropdown<T extends HTMLElement>(
+  callback: () => void,
+) {
+  const ref = useRef<T>(null);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
         callback();
       }
     }

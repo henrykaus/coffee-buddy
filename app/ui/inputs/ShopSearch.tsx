@@ -19,7 +19,7 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const clearShops = useCallback(() => setShops([]), []);
 
-  const dropdownRef = useCloseableDropdown(clearShops);
+  const dropdownRef = useCloseableDropdown<HTMLDivElement>(clearShops);
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
 
@@ -71,7 +71,6 @@ export default function ShopSearch(props: ShopSearchProps) {
     return location;
   };
 
-  // TODO: WHY IS THIS A PROBLEM?
   return (
     <div ref={dropdownRef} className='relative w-full'>
       <input
