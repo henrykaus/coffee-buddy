@@ -36,7 +36,7 @@ export default function UserMenu(props: UserMenuProps) {
       <button
         aria-label='Open user menu'
         className='rounded-full p-1 transition hover:bg-slate-200/80'
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(!isOpen)}
       >
         <UserAvatar imageUrl={imageUrl} />
       </button>
