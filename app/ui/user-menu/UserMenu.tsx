@@ -35,14 +35,14 @@ export default function UserMenu(props: UserMenuProps) {
     <div className='relative text-slate-700 font-medium' ref={ref}>
       <button
         aria-label='Open user menu'
-        className='rounded-full p-1 transition hover:bg-slate-200/80'
+        className='rounded-full p-1 transition hover:bg-slate-200/80 active:bg-slate-200/80'
         onClick={() => setIsOpen(!isOpen)}
       >
         <UserAvatar imageUrl={imageUrl} />
       </button>
       {isOpen && (
         <ul className='bg-(--background) rounded-lg shadow-xl w-fit absolute end-0 transition'>
-          <li className='hover:bg-slate-100 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
+          <li className='hover:bg-slate-100 active:bg-slate-100 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
             <button
               className='flex justify-between p-2 gap-2 w-full whitespace-nowrap'
               onClick={() => signOut({redirectTo: `/${Route.Login}`})}
@@ -51,7 +51,7 @@ export default function UserMenu(props: UserMenuProps) {
               <LogOutIcon />
             </button>
           </li>
-          <li className='hover:bg-slate-100 border-b-2 border-l-2 border-r-2 border-slate-300 rounded-b-lg'>
+          <li className='hover:bg-slate-100 active:bg-slate-100 border-b-2 border-l-2 border-r-2 border-slate-300 rounded-b-lg'>
             <button
               className='flex justify-between p-2 gap-2 w-full whitespace-nowrap'
               onClick={handleMoreOptionsClick}

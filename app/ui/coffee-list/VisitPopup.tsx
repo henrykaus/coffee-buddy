@@ -93,7 +93,7 @@ export default function VisitPopup(props: VisitPopupProps) {
   const confirmButton = (
     <button
       formAction={formAction}
-      className='rounded-full h-10 w-10 flex items-center justify-center text-green-800 bg-green-100 hover:bg-green-200 transition'
+      className='rounded-full h-10 w-10 flex items-center justify-center text-green-800 bg-green-100 hover:bg-green-200 active:bg-green-200 active:scale-90 transition'
       key={3}
     >
       <CheckIcon />
@@ -102,7 +102,7 @@ export default function VisitPopup(props: VisitPopupProps) {
 
   const deleteButton = (
     <button
-      className='rounded-full h-10 w-10 flex items-center justify-center text-rose-800 bg-rose-100 hover:bg-rose-200 transition'
+      className='rounded-full h-10 w-10 flex items-center justify-center text-rose-800 bg-rose-100 hover:bg-rose-200 active:bg-rose-200 active:scale-90 transition'
       onClick={handleDelete}
       aria-label='Delete visit'
       key={10}

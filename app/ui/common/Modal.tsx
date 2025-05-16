@@ -42,7 +42,7 @@ export default function Modal(props: ModalProps) {
               <button
                 onClick={onClose}
                 aria-label='Close popup'
-                className='absolute start-6 top-6 hover:bg-slate-200 rounded-md p-2 flex items-center justify-center text-slate-600 transition'
+                className='absolute start-6 top-6 hover:bg-slate-200 active:bg-slate-200 rounded-md p-2 flex items-center justify-center text-slate-600 transition'
               >
                 <CloseIcon height={20} width={20} />
               </button>

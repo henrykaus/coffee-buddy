@@ -52,7 +52,7 @@ export default async function Page(props: PageProps) {
             }}
           >
             <button
-              className='p-2 border-2 border-slate-200 rounded-lg hover:bg-slate-100 transition'
+              className='p-2 border-2 border-slate-200 rounded-lg hover:bg-slate-100 active:bg-slate-100 transition'
               type='submit'
             >
               Add
