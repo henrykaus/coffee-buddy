@@ -5,7 +5,7 @@ import {addUser} from '@/app/server/users/actions';
 export const {handlers, signIn, signOut, auth} = NextAuth({
   providers: [Google],
   callbacks: {
-    async signIn({user, account, profile, email, credentials}) {
+    signIn: async ({user, account, profile, email, credentials}) => {
       const userEmail = user?.email;
 
       if (userEmail) {

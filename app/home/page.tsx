@@ -3,7 +3,7 @@ import VisitSearch from '@/app/ui/common/VisitSearch';
 import React from 'react';
 import {Visit} from '@/app/lib/types';
 import {listVisits, searchVisits} from '@/app/server/visits/actions';
-import {HomeActionType} from '@/app/lib/enums';
+import {HomeActionType, Route} from '@/app/lib/enums';
 import AddVisitPopup from '@/app/ui/coffee-list/AddVisitPopup';
 import EditVisitPopup from '@/app/ui/coffee-list/EditVisitPopup';
 import UserMenu from '@/app/ui/user-menu/UserMenu';
@@ -13,6 +13,7 @@ import {auth} from '@/auth';
 import seedData from '@/app/server/seedData';
 import Form from 'next/form';
 import AddVisitButton from '@/app/ui/coffee-list/AddVisitButton';
+import {redirect} from 'next/navigation';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -30,12 +31,16 @@ export default async function Page(props: PageProps) {
 
   const session = await auth();
 
+  if (!session) {
+    redirect(`/${Route.Login}`);
+  }
+
   const visits: Visit[] =
     query === '' ? await listVisits() : await searchVisits(query);
 
   return (
     <>
-      <header className='flex sticky top-0 items-center justify-between w-full py-6 px-8 sm:px-20 bg-(--background) z-10'>
+      <header className='flex sticky top-0 items-center justify-between w-full py-6 px-6 sm:px-20 bg-(--background) z-10'>
         <h1 className='text-3xl font-medium font-[family-name:var(--font-header)]'>
           Recent visits
         </h1>
@@ -56,7 +61,7 @@ export default async function Page(props: PageProps) {
           <UserMenu imageUrl={session?.user?.image} />
         </span>
       </header>
-      <section className='flex gap-y-3 flex-col mb-24 pb-10 px-8 sm:px-20'>
+      <section className='flex gap-y-3 flex-col mb-24 pb-10 px-6 sm:px-20'>
         {(visits.length || query !== '') && <VisitSearch />}
         {visits.length ? (
           visits.map((visit) => <CoffeeCard key={visit.id} visit={visit} />)

@@ -1,3 +1,5 @@
+'use client';
+
 import VisitPopup from '@/app/ui/coffee-list/VisitPopup';
 import {addVisit} from '@/app/server/visits/actions';
 
