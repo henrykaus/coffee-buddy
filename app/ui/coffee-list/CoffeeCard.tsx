@@ -42,7 +42,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
             <ToGoCupIcon className='text-slate-600 shrink-0' />
           )}
           <p className='font-semibold text-lg/5 mt-[0.2rem] mb-[0.2rem]'>
-            {visit.shopName} - {visit.id}
+            {visit.shopName}
           </p>
         </span>
         <span className='flex gap-2'>

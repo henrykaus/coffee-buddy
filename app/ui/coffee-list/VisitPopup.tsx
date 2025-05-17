@@ -52,7 +52,9 @@ export default function VisitPopup(props: VisitPopupProps) {
     formData: FormData,
   ): Promise<State> => {
     whenDone(getVisitFromFormData(formData));
+    console.log('when done');
     onClose();
+    console.log('after close');
     return await onConfirm(prevState, formData);
   };
 
@@ -62,11 +64,11 @@ export default function VisitPopup(props: VisitPopupProps) {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault();
+    onClose();
     if (onDelete && visit) {
       // whenDone(visit);
       await onDelete(visit.id);
     }
-    onClose();
   };
 
   const handleClose = (
