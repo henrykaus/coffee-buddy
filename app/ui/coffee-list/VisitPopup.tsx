@@ -55,7 +55,12 @@ export default function VisitPopup(props: VisitPopupProps) {
     console.log('when done');
     onClose();
     console.log('after close');
-    return await onConfirm(prevState, formData);
+
+    let state: State = {};
+    setTimeout(async () => {
+      state = await onConfirm(prevState, formData);
+    }, 100);
+    return state;
   };
 
   const [state, formAction] = useActionState(handleConfirm, initialState);
@@ -67,7 +72,9 @@ export default function VisitPopup(props: VisitPopupProps) {
     onClose();
     if (onDelete && visit) {
       // whenDone(visit);
-      await onDelete(visit.id);
+      setTimeout(async () => {
+        await onDelete(visit.id);
+      }, 100);
     }
   };
 
