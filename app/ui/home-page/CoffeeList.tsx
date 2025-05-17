@@ -22,7 +22,6 @@ interface CoffeeListProps {
 
 export default function CoffeeList(props: CoffeeListProps) {
   const {hasAnyVisits, visits} = props;
-  console.log(visits);
 
   const [coffeeVisits, setCoffeeVisits] = useState(visits);
   const [visitAction, setVisitAction] = useState<VisitAction | null>(null);

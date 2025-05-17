@@ -31,7 +31,6 @@ export default async function Page(props: PageProps) {
   const visits: Visit[] =
     query === '' ? await listVisits() : await searchVisits(query);
 
-  console.log(visits);
   console.log('IMPORTANT: re-rendered home');
 
   return (

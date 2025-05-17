@@ -11,7 +11,6 @@ interface OrderTypeToggleProps {
 
 export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   const {defaultValue} = props;
-  console.log(defaultValue);
 
   const [selectedOption, setSelectedOption] = useState<OrderType>(
     defaultValue === OrderType.ToGo ? OrderType.ToGo : OrderType.ForHere,
