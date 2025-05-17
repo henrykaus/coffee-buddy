@@ -17,13 +17,17 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const [shops, setShops] = useState<Shop[]>([]);
 
-  const clearShops = useCallback(() => setShops([]), []);
+  const clearShops = useCallback(() => {
+    if (shops.length) {
+      setShops([]);
+    }
+  }, [shops.length]);
 
   const dropdownRef = useCloseableDropdown<HTMLDivElement>(clearShops);
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
 
-  console.log('re-render');
+  console.log('re-render shop search');
 
   const handleSearchInput = async () => {
     if (nameRef.current) {

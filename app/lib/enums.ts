@@ -5,8 +5,6 @@ export enum OrderType {
 
 export enum HomeActionType {
   None = 'none',
-  Add = 'add',
-  Edit = 'edit',
   MoreOptions = 'more-options',
   DeleteAccount = 'delete-account',
 }

@@ -31,7 +31,7 @@ export default function NotesInput(props: NotesInputProps) {
   return (
     <FieldPopup
       icon={<NoNotesIcon />}
-      altIcon={<NotesIcon />}
+      altIcon={<NotesIcon fill='#aebfd6' />}
       showAltIcon={showAltIcon}
     >
       <textarea

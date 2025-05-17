@@ -19,15 +19,15 @@ export default function FieldPopup(props: FieldPopupProps) {
   const iconToDisplay = showAltIcon ? altIcon : icon;
 
   const classes =
-    'rounded-full bg-slate-200 transition h-10 w-10 flex items-center justify-center';
+    'rounded-full bg-slate-200 hover:bg-slate-300 active:scale-90 transition h-10 w-10 flex items-center justify-center';
 
   return (
     <span ref={ref} className='relative'>
       <button
         type='button'
         className={clsx(classes, {
-          'bg-slate-300 shadow-md text-slate-800 hover:bg-slate-300': isOpen,
-          'text-slate-600 hover:bg-slate-300': !isOpen,
+          'bg-slate-300 shadow-md text-slate-800 ': isOpen,
+          'text-slate-600': !isOpen,
         })}
         onClick={() => setIsOpen(!isOpen)}
       >

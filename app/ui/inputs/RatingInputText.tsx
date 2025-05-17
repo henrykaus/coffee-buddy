@@ -30,7 +30,7 @@ export default function RatingInputText(props: RatingInputProps) {
   };
 
   const shouldBeHighlighted = (rating: number) => {
-    return currentRating >= rating ? 'currentColor' : 'none';
+    return currentRating >= rating ? '#94a3b8' : 'none';
   };
 
   // TODO: Is there a better way?

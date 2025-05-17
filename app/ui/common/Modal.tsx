@@ -1,6 +1,6 @@
 'use client';
 
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import ModalBackground from '@/app/ui/common/ModalBackground';
 import {CloseIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
@@ -25,6 +25,14 @@ export default function Modal(props: ModalProps) {
     showClose = true,
     title,
   } = props;
+
+  useEffect(() => {
+    // Stop body from being scrollable when modal is open
+    document.body.classList.add('overflow-y-hidden');
+    return () => {
+      document.body.classList.remove('overflow-y-hidden');
+    };
+  }, []);
 
   return (
     <>

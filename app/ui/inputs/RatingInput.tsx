@@ -14,8 +14,8 @@ export default function RatingInput(props: RatingInputProps) {
 
   return (
     <FieldPopup
-      icon={<RatingOffIcon />}
-      altIcon={<StarIcon />}
+      icon={<RatingOffIcon strokeWidth={2.25} />}
+      altIcon={<StarIcon fill='#94a3b8' strokeWidth={2.25} />}
       showAltIcon={showAltIcon}
     >
       <RatingInputText

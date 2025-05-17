@@ -48,7 +48,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
         <span className='flex gap-2'>
           {visit.rating !== null && (
             <p>
-              <span className='font-bold text-2xl/7'>{visit.rating}</span>
+              <span className='font-bold text-2xl/8'>{visit.rating}</span>
               /5
             </p>
           )}
