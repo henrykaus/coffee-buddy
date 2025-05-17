@@ -341,6 +341,7 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
+    console.log(query);
     const rawVisits = await prisma.visit.findMany({
       where: {
         userId: user.id,
@@ -372,6 +373,8 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
         shop: true,
       },
     });
+
+    console.log(rawVisits);
 
     const visits = rawVisits.map((visit) => getVisitForClient(visit));
     return visits;

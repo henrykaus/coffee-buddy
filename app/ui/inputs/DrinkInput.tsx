@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+import {ChevronDownIcon} from '@/app/ui/icons';
 
 interface SizeInputProps {
   className?: string;
@@ -11,7 +12,7 @@ export default function DrinkInput(props: SizeInputProps) {
   const {className, defaultSize, defaultDrink} = props;
 
   return (
-    <span className='flex relative w-full items-baseline text-slate-500'>
+    <span className='flex relative w-full text-slate-500'>
       <input
         type='text'
         placeholder='Drink'
@@ -21,11 +22,10 @@ export default function DrinkInput(props: SizeInputProps) {
         defaultValue={defaultDrink}
         required
       />
-      <span className='absolute inline-block end-1 top-1'>
-        {/* TODO: Selects do not have good browser support, rework into custom component*/}
+      <span className='absolute end-1 top-1'>
         <select
           name='size'
-          className='rounded bg-slate-200 px-2 py-0 w-[5.6rem]'
+          className='rounded appearance-none peer bg-slate-200 px-2 py-0 w-[5.75rem] outline-none hover:bg-slate-300 transition cursor-pointer'
           defaultValue={defaultSize ?? ''}
         >
           <option value='' disabled>
@@ -40,6 +40,10 @@ export default function DrinkInput(props: SizeInputProps) {
           <option value='16'>16 oz.</option>
           <option value='20'>20 oz.</option>
         </select>
+        <ChevronDownIcon
+          className='absolute right-[0.1rem] top-[0.15rem] peer-open:rotate-x-180 transition duration-300'
+          strokeWidth={2.1}
+        />
       </span>
     </span>
   );

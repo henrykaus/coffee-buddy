@@ -16,7 +16,7 @@ export default function AddVisitPopup(props: AddVisitPopupProps) {
 
   return (
     <VisitPopup
-      autoFocusShop={true}
+      autoFocusShop={false}
       onConfirm={onConfirm}
       onClose={onClose}
       whenDone={whenConfirm}
