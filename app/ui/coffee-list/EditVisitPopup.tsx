@@ -1,20 +1,28 @@
 import VisitPopup from '@/app/ui/coffee-list/VisitPopup';
-import {deleteVisit, getVisit, updateVisit} from '@/app/server/visits/actions';
+import {State} from '@/app/server/visits/actions';
+import {Visit} from '@/app/lib/types';
 
 interface EditVisitPopupProps {
-  id: string;
+  onClose: () => void;
+  onConfirm: (
+    prevState: State | undefined,
+    formData: FormData,
+  ) => Promise<State>;
+  onDelete: (id: string) => Promise<State>;
+  whenDone: (visit: Visit) => void;
+  visit: Visit;
 }
 
-export default async function EditVisitPopup(props: EditVisitPopupProps) {
-  const {id} = props;
-
-  if (id === undefined || id === '') {
-    console.error('FIXME: no id found');
-  }
-
-  const visit = await getVisit(id);
+export default function EditVisitPopup(props: EditVisitPopupProps) {
+  const {onClose, onConfirm, onDelete, visit, whenDone} = props;
 
   return (
-    <VisitPopup onConfirm={updateVisit} onDelete={deleteVisit} visit={visit} />
+    <VisitPopup
+      onConfirm={onConfirm}
+      onDelete={onDelete}
+      onClose={onClose}
+      visit={visit}
+      whenDone={whenDone}
+    />
   );
 }

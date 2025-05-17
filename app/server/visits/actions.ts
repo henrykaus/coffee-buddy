@@ -3,22 +3,23 @@
 import {z} from 'zod';
 import {prisma} from '@/app/server/prisma';
 import {Visit} from '@/app/lib/types';
-import {OrderType} from '@/app/lib/enums';
 import {getUser} from '@/app/server/users/actions';
 import {
-  getDateForClient,
+  generateErrorForClient,
   getPriceForDatabase,
-  getPriceForUser,
   getValidSession,
+  getVisitForClient,
   logError,
 } from '@/app/server/common';
 
 export type State = {
   message?: string | null;
+  visit?: Visit | null;
 };
 
 const VisitSchema = z.object({
   id: z.string(),
+  reconId: z.string(),
   userId: z.string({
     invalid_type_error: 'Please select a customer.',
   }),
@@ -57,12 +58,12 @@ const VisitSchema = z.object({
   }),
 });
 
-const AddVisit = VisitSchema.omit({id: true, userId: true});
+const CreateVisit = VisitSchema.omit({id: true, userId: true});
 
-export const addVisit = async (
+export const createVisit = async (
   prevState: State | undefined,
   formData: FormData,
-) => {
+): Promise<State> => {
   try {
     const session = await getValidSession();
     const user = await getUser(session.user?.email as string);
@@ -70,9 +71,8 @@ export const addVisit = async (
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    console.log(typeof formData.get('rating'));
-
-    const validatedFields = AddVisit.safeParse({
+    const validatedFields = CreateVisit.safeParse({
+      reconId: formData.get('recon-id'),
       shopId: formData.get('shop-id'),
       shopName: formData.get('shop-name'),
       size: formData.get('size'),
@@ -100,6 +100,7 @@ export const addVisit = async (
     }
 
     const {
+      reconId,
       shopId,
       shopName,
       size,
@@ -111,9 +112,7 @@ export const addVisit = async (
       orderType,
     } = validatedFields.data;
 
-    console.log(rating);
-
-    const visit = await prisma.visit.create({
+    const dbVisit = await prisma.visit.create({
       data: {
         size: size,
         drink: drink,
@@ -139,9 +138,14 @@ export const addVisit = async (
           },
         },
       },
+      include: {
+        shop: true,
+      },
     });
 
-    console.log(visit);
+    console.log(dbVisit);
+
+    return {visit: getVisitForClient(dbVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
 
@@ -151,7 +155,7 @@ export const addVisit = async (
   }
 };
 
-export const getVisit = async (id: string): Promise<Visit | undefined> => {
+export const getVisit = async (id: string): Promise<State> => {
   try {
     const session = await getValidSession();
     const user = await getUser(session.user?.email as string);
@@ -159,7 +163,7 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    const rawVisit = await prisma.visit.findUnique({
+    const dbVisit = await prisma.visit.findUnique({
       where: {
         id: id,
         userId: user.id,
@@ -169,31 +173,16 @@ export const getVisit = async (id: string): Promise<Visit | undefined> => {
       },
     });
 
-    if (!rawVisit) {
-      return undefined;
+    if (!dbVisit) {
+      return {message: `Visit with ID ${id} was not found.`};
     }
 
-    const visit = {
-      id: rawVisit.id,
-      date: rawVisit.date ? getDateForClient(rawVisit.date) : null,
-      notes: rawVisit.notes,
-      drink: rawVisit.drink,
-      shopName: rawVisit.shop.name,
-      shopId: rawVisit.shop.osmId,
-      orderType:
-        rawVisit.orderType === OrderType.ForHere
-          ? OrderType.ForHere
-          : OrderType.ToGo,
-      price: getPriceForUser(rawVisit.price),
-      rating: rawVisit.rating,
-      size: rawVisit.size,
-    };
-    console.log(visit);
+    console.log(dbVisit);
 
-    return visit;
+    return {visit: getVisitForClient(dbVisit)};
   } catch (error: unknown) {
     logError(error);
-    return undefined;
+    return generateErrorForClient(error, `getting visit with ID ${id}`);
   }
 };
 
@@ -205,7 +194,7 @@ export const listVisits = async (): Promise<Visit[]> => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    const rawVisits = await prisma.visit.findMany({
+    const dbVisits = await prisma.visit.findMany({
       where: {
         userId: user.id,
       },
@@ -219,22 +208,7 @@ export const listVisits = async (): Promise<Visit[]> => {
       },
     });
 
-    const visits = rawVisits.map((visit) => ({
-      id: visit.id,
-      date: visit.date ? getDateForClient(visit.date) : null,
-      notes: visit.notes,
-      drink: visit.drink,
-      shopName: visit.shop.name,
-      shopId: visit.shop.osmId,
-      orderType:
-        visit.orderType === OrderType.ForHere
-          ? OrderType.ForHere
-          : OrderType.ToGo,
-      price: getPriceForUser(visit.price),
-      rating: visit.rating,
-      size: visit.size,
-    }));
-
+    const visits = dbVisits.map((visit) => getVisitForClient(visit));
     return visits;
   } catch (error: unknown) {
     logError(error);
@@ -247,7 +221,7 @@ const UpdateVisit = VisitSchema.omit({userId: true});
 export const updateVisit = async (
   prevState: State | undefined,
   formData: FormData,
-) => {
+): Promise<State> => {
   try {
     const session = await getValidSession();
     const user = await getUser(session.user?.email as string);
@@ -257,6 +231,7 @@ export const updateVisit = async (
 
     const validatedFields = UpdateVisit.safeParse({
       id: formData.get('id'),
+      reconId: formData.get('recon-id'),
       shopId: formData.get('shop-id'),
       shopName: formData.get('shop-name'),
       size: formData.get('size'),
@@ -268,8 +243,6 @@ export const updateVisit = async (
       orderType: formData.get('order-type'),
     });
 
-    console.log(formData.get('rating'));
-
     if (!validatedFields.success) {
       return {
         message: `Failed to update location.\n${validatedFields.error.flatten().fieldErrors}`,
@@ -278,6 +251,7 @@ export const updateVisit = async (
 
     const {
       id,
+      reconId,
       shopId,
       shopName,
       size,
@@ -289,9 +263,7 @@ export const updateVisit = async (
       orderType,
     } = validatedFields.data;
 
-    console.log(rating);
-
-    const visit = await prisma.visit.update({
+    const rawVisit = await prisma.visit.update({
       where: {
         id: id,
         userId: user.id,
@@ -321,15 +293,22 @@ export const updateVisit = async (
           },
         },
       },
+      include: {
+        shop: true,
+      },
     });
 
-    console.log(visit);
+    console.log(rawVisit);
+
+    return {visit: getVisitForClient(rawVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
+    return generateErrorForClient(error, 'updating visit');
   }
 };
 
-export const deleteVisit = async (id: string) => {
+// TODO: need to also use reconId here
+export const deleteVisit = async (id: string): Promise<State> => {
   try {
     const session = await getValidSession();
     const user = await getUser(session.user?.email as string);
@@ -337,14 +316,20 @@ export const deleteVisit = async (id: string) => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    await prisma.visit.delete({
+    const dbVisit = await prisma.visit.delete({
       where: {
         id: id,
         userId: user.id,
       },
+      include: {
+        shop: true,
+      },
     });
+
+    return {visit: getVisitForClient(dbVisit)};
   } catch (error: unknown) {
     logError(error);
+    return generateErrorForClient(error, `deleting visit with ID ${id}`);
   }
 };
 
@@ -388,22 +373,7 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
       },
     });
 
-    const visits = rawVisits.map((visit) => ({
-      id: visit.id,
-      date: visit.date ? getDateForClient(visit.date) : null,
-      notes: visit.notes,
-      drink: visit.drink,
-      shopName: visit.shop.name,
-      shopId: visit.shop.osmId,
-      orderType:
-        visit.orderType === OrderType.ForHere
-          ? OrderType.ForHere
-          : OrderType.ToGo,
-      price: getPriceForUser(visit.price),
-      rating: visit.rating,
-      size: visit.size,
-    }));
-
+    const visits = rawVisits.map((visit) => getVisitForClient(visit));
     return visits;
   } catch (error: unknown) {
     logError(error);

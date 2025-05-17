@@ -1,8 +1,25 @@
-'use client';
-
 import VisitPopup from '@/app/ui/coffee-list/VisitPopup';
-import {addVisit} from '@/app/server/visits/actions';
+import {State} from '@/app/server/visits/actions';
+import {Visit} from '@/app/lib/types';
 
-export default function AddVisitPopup() {
-  return <VisitPopup autoFocusShop={true} onConfirm={addVisit} />;
+interface AddVisitPopupProps {
+  onClose: () => void;
+  onConfirm: (
+    prevState: State | undefined,
+    formData: FormData,
+  ) => Promise<State>;
+  whenConfirm: (visit: Visit) => void;
+}
+
+export default function AddVisitPopup(props: AddVisitPopupProps) {
+  const {onClose, onConfirm, whenConfirm} = props;
+
+  return (
+    <VisitPopup
+      autoFocusShop={true}
+      onConfirm={onConfirm}
+      onClose={onClose}
+      whenDone={whenConfirm}
+    />
+  );
 }

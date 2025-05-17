@@ -2,34 +2,23 @@
 
 import {useState} from 'react';
 import {Visit} from '@/app/lib/types';
-import {HomeActionType, OrderType} from '@/app/lib/enums';
+import {OrderType} from '@/app/lib/enums';
 import {EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {getDateForUser, getPriceForDisplay} from '@/app/server/common';
 
 interface CoffeeCardProps {
+  onEditClick: () => void;
   visit: Visit;
 }
 
 export default function CoffeeCard(props: CoffeeCardProps) {
-  const {visit} = props;
-
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const {replace} = useRouter();
+  const {onEditClick, visit} = props;
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const handleClick = () => {
     setIsExpanded(!isExpanded);
-  };
-
-  const handleEditClick = () => {
-    const params = new URLSearchParams(searchParams);
-    params.set('action', HomeActionType.Edit);
-    params.set('visitId', visit.id);
-    replace(`${pathname}?${params.toString()}`);
   };
 
   const formattedDrink =
@@ -53,7 +42,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
             <ToGoCupIcon className='text-slate-600 shrink-0' />
           )}
           <p className='font-semibold text-lg/5 mt-[0.2rem] mb-[0.2rem]'>
-            {visit.shopName}
+            {visit.shopName} - {visit.id}
           </p>
         </span>
         <span className='flex gap-2'>
@@ -65,7 +54,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
           )}
           {isExpanded && (
             <button
-              onClick={handleEditClick}
+              onClick={onEditClick}
               aria-label='Edit visit'
               className='flex justify-center items-center h-8 w-8 hover:bg-slate-100 active:bg-slate-100 transition border-slate-200 rounded-md text-slate-600'
             >

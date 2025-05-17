@@ -4,16 +4,16 @@ import React, {ReactNode, useActionState} from 'react';
 import {State} from '@/app/server/visits/actions';
 import OrderTypeToggle from '@/app/ui/inputs/OrderTypeToggle';
 import PriceInput from '@/app/ui/inputs/PriceInput';
-import {listUsers} from '@/app/server/users/actions';
 import {CheckIcon, TrashIcon} from '@/app/ui/icons';
 import ShopSearch from '@/app/ui/inputs/ShopSearch';
 import {Visit} from '@/app/lib/types';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import Modal from '@/app/ui/common/Modal';
 import DrinkInput from '@/app/ui/inputs/DrinkInput';
 import NotesInput from '@/app/ui/inputs/NotesInput';
 import RatingInput from '@/app/ui/inputs/RatingInput';
 import DateInput from '@/app/ui/inputs/DateInput';
+import {getVisitFromFormData} from '@/app/server/common';
+import {v4 as uuidv4} from 'uuid';
 
 export interface VisitPopupProps {
   autoFocusShop?: boolean;
@@ -22,8 +22,10 @@ export interface VisitPopupProps {
   onConfirm: (
     prevState: State | undefined,
     formData: FormData,
-  ) => Promise<{message: string} | undefined>;
-  onDelete?: (id: string) => Promise<void>;
+  ) => Promise<State>;
+  onDelete?: (id: string) => Promise<State>;
+  onClose: () => void;
+  whenDone: (visit: Visit) => void;
 }
 
 /**
@@ -34,57 +36,44 @@ export interface VisitPopupProps {
  * Have size picker have increment and decrement buttons in addition to edit '<' 8 '>'
  */
 export default function VisitPopup(props: VisitPopupProps) {
-  const {autoFocusShop = false, visit, onConfirm, onDelete} = props;
+  const {
+    autoFocusShop = false,
+    visit,
+    onConfirm,
+    onDelete,
+    onClose,
+    whenDone,
+  } = props;
 
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const {replace} = useRouter();
+  const initialState: State = {message: null, visit: null};
 
-  const initialState: State = {message: null};
-
-  const confirmAction = async (
+  const handleConfirm = async (
     prevState: State | undefined,
     formData: FormData,
-  ) => {
-    const users = await listUsers();
-
-    if (users.length === 0 || !users[0].id) {
-      return prevState;
-    }
-
-    if (visit) {
-      formData.set('id', visit.id);
-    }
-    formData.set('userId', users[0].id);
-
-    await onConfirm(prevState, formData);
-    removeVisitPopupParams();
+  ): Promise<State> => {
+    whenDone(getVisitFromFormData(formData));
+    onClose();
+    return await onConfirm(prevState, formData);
   };
 
-  const [state, formAction] = useActionState(confirmAction, initialState);
+  const [state, formAction] = useActionState(handleConfirm, initialState);
 
   const handleDelete = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault();
     if (onDelete && visit) {
+      // whenDone(visit);
       await onDelete(visit.id);
     }
-    removeVisitPopupParams();
+    onClose();
   };
 
   const handleClose = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.preventDefault();
-    removeVisitPopupParams();
-  };
-
-  const removeVisitPopupParams = () => {
-    const params = new URLSearchParams(searchParams);
-    params.delete('action');
-    params.delete('visitId');
-    replace(`${pathname}?${params.toString()}`);
+    onClose();
   };
 
   const inputClasses =
@@ -145,6 +134,14 @@ export default function VisitPopup(props: VisitPopupProps) {
           <OrderTypeToggle defaultValue={visit?.orderType} />
         </div>
       </div>
+      <input type='text' defaultValue={visit?.id} name='id' readOnly hidden />
+      <input
+        type='text'
+        defaultValue={uuidv4().substring(0, 6)}
+        name='recon-id'
+        readOnly
+        hidden
+      />
     </Modal>
   );
 }

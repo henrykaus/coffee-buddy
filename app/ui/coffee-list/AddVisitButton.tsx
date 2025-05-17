@@ -1,23 +1,15 @@
-'use client';
-
 import {PlusIcon} from '@/app/ui/icons';
-import {useSearchParams, usePathname, useRouter} from 'next/navigation';
-import {HomeActionType} from '@/app/lib/enums';
 import Form from 'next/form';
 
-export default function AddVisitButton() {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const {replace} = useRouter();
+interface AddVisitPopupProps {
+  onClick: () => void;
+}
 
-  const handleAddClick = () => {
-    const params = new URLSearchParams(searchParams);
-    params.set('action', HomeActionType.Add);
-    replace(`${pathname}?${params.toString()}`);
-  };
+export default function AddVisitButton(props: AddVisitPopupProps) {
+  const {onClick} = props;
 
   return (
-    <Form action={handleAddClick}>
+    <Form action={onClick}>
       <button
         type='submit'
         className='flex items-center justify-center fixed end-5 bottom-5

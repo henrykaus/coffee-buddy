@@ -1,4 +1,4 @@
-import {OrderType} from './enums';
+import {OrderType, VisitActionType} from './enums';
 
 export interface User {
   id?: string;
@@ -7,6 +7,7 @@ export interface User {
 
 export interface Visit {
   id: string;
+  reconId?: string; // This should only be used to reconcile between client and db visit records
   userId?: string;
   date: string | null;
   notes: string | null;
@@ -43,4 +44,10 @@ export interface NominatimEntry {
     town: string;
   };
   name: string;
+}
+
+export interface VisitAction {
+  action: VisitActionType;
+  isClient: boolean;
+  visit: Visit;
 }
