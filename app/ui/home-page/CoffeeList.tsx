@@ -29,6 +29,7 @@ export default function CoffeeList(props: CoffeeListProps) {
   const [activeVisit, setActiveVisit] = useState<Visit | null>(null);
 
   useEffect(() => {
+    console.log('useEffect', visitAction?.isClient);
     if (visitAction) {
       switch (visitAction.action) {
         case VisitActionType.Add:
