@@ -16,17 +16,15 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
     defaultValue === OrderType.ToGo ? OrderType.ToGo : OrderType.ForHere,
   );
 
-  const commonClasses =
-    'p-[0.35rem] border-2 border-slate-300 cursor-pointer transition flex';
-  const leftButtonClasses = 'rounded-l-md border-r-0';
-  const rightButtonClasses = 'rounded-r-md';
+  const commonButtonClasses =
+    'text-slate-400 p-1 w-10 flex justify-center rounded-md transition cursor-pointer not-peer-checked:hover:text-slate-500 not-peer-checked:active:text-slate-500 not-peer-checked:active:bg-slate-200 active:scale-90';
 
   const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.currentTarget.value as OrderType);
   };
 
   return (
-    <fieldset className='flex items-center text-slate-600'>
+    <fieldset className='flex items-center bg-slate-100 border-0 border-slate-300 rounded-lg gap-1 text-slate-600 p-1'>
       <span>
         <input
           type='radio'
@@ -35,14 +33,17 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           value={OrderType.ForHere}
           onChange={handleOptionSelected}
           defaultChecked={defaultValue !== OrderType.ToGo}
+          className='peer'
           hidden
         />
         <label
           htmlFor='for-here-option'
           aria-label='For here'
-          className={clsx(commonClasses, leftButtonClasses, {
-            'bg-slate-200': selectedOption === OrderType.ForHere,
+          className={clsx(commonButtonClasses, {
+            'bg-slate-300/90 shadow-md text-slate-700':
+              selectedOption === OrderType.ForHere,
           })}
+          title='For here'
         >
           <MugIcon />
         </label>
@@ -55,13 +56,16 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           value={OrderType.ToGo}
           onChange={handleOptionSelected}
           defaultChecked={defaultValue === OrderType.ToGo}
+          className='peer'
           hidden
         />
         <label
           htmlFor='to-go-option'
           aria-label='To go'
-          className={clsx(commonClasses, rightButtonClasses, {
-            'bg-slate-200': selectedOption === OrderType.ToGo,
+          title='To go'
+          className={clsx(commonButtonClasses, {
+            'bg-slate-300/90 shadow-md text-slate-700':
+              selectedOption === OrderType.ToGo,
           })}
         >
           <ToGoCupIcon />
