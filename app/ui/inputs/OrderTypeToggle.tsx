@@ -17,7 +17,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   );
 
   const commonButtonClasses =
-    'text-slate-400 p-1 w-10 flex justify-center rounded-md transition cursor-pointer not-peer-checked:hover:text-slate-500 not-peer-checked:active:text-slate-500 active:scale-90';
+    'text-slate-400 p-1 w-10 flex justify-center rounded-md transition cursor-pointer not-peer-checked:hover:text-slate-500 not-peer-checked:active:[&_svg]:scale-90 peer-checked:active:scale-90';
 
   const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.currentTarget.value as OrderType);
@@ -45,7 +45,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           })}
           title='For here'
         >
-          <MugIcon />
+          <MugIcon className='transition' />
         </label>
       </span>
       <span>
@@ -68,7 +68,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
               selectedOption === OrderType.ToGo,
           })}
         >
-          <ToGoCupIcon />
+          <ToGoCupIcon className='transition' />
         </label>
       </span>
     </fieldset>

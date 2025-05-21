@@ -1,4 +1,11 @@
-import {useCallback, useMemo, useRef, useState} from 'react';
+import {
+  CSSProperties,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {searchShops} from '@/app/server/shop/actions';
 import {debounce} from 'lodash';
 import {Shop} from '@/app/lib/types';
@@ -18,6 +25,9 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const [shops, setShops] = useState<Shop[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [dropdownHeight, setDropdownHeight] = useState<
+    CSSProperties | undefined
+  >(undefined);
 
   const clearShops = useCallback(() => {
     if (shops.length) {
@@ -25,11 +35,34 @@ export default function ShopSearch(props: ShopSearchProps) {
     }
   }, [shops.length]);
 
-  const dropdownRef = useCloseableDropdown<HTMLDivElement>(clearShops);
+  const ref = useCloseableDropdown<HTMLDivElement>(clearShops);
+  const dropdownRef = useRef<HTMLUListElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
 
-  // console.log('re-render shop search');
+  useEffect(() => {
+    if (shops.length > 0 && dropdownRef.current) {
+      const itemHeight = 51;
+
+      const dropdownTop = dropdownRef.current.getBoundingClientRect().top;
+      const dropdownHeight = shops.length * itemHeight;
+      const calculatedDropdownBottom = dropdownTop + dropdownHeight;
+      const viewportBottom = window.innerHeight;
+
+      const isOverflowing = calculatedDropdownBottom >= viewportBottom;
+      if (isOverflowing) {
+        // Create a bounded dropdown height where its height is in increments of rows (no half rows)
+        const borderWidth = 1.875;
+        let boundedDropdownHeight = viewportBottom - dropdownTop - borderWidth;
+        const numRows = Math.floor(boundedDropdownHeight / 51);
+        boundedDropdownHeight = numRows * 51 + 1.875;
+
+        setDropdownHeight({height: `${boundedDropdownHeight}px`});
+      } else {
+        setDropdownHeight(undefined);
+      }
+    }
+  }, [shops.length, dropdownRef]);
 
   const handleSearchInput = async () => {
     if (nameRef.current) {
@@ -84,7 +117,7 @@ export default function ShopSearch(props: ShopSearchProps) {
   };
 
   return (
-    <div ref={dropdownRef} className='relative w-full'>
+    <div ref={ref} className='relative w-full'>
       <input
         ref={nameRef}
         type='text'
@@ -97,24 +130,27 @@ export default function ShopSearch(props: ShopSearchProps) {
         autoFocus={autoFocus}
         required
       />
-      {shops.length > 0 && (
-        <ul className='absolute top-[1.8em] w-full bg-white border-2 border-slate-300 rounded-b-xl shadow-lg z-10'>
-          {shops.map((shop: Shop) => (
-            <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
-              <button
-                className='w-full flex justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left'
-                onClick={() => handleSelection(shop)}
-              >
-                {shop.name}
-                <span className='text-sm font-normal text-slate-500 text-right leading-tight'>
-                  {shop.street && <p>{formatSpecificLocation(shop)}</p>}
-                  <p>{formatBroadLocation(shop)}</p>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul
+        className='absolute top-[1.8em] w-full bg-white border-2 border-slate-300 rounded-b-xl shadow-lg z-10 overflow-y-auto'
+        hidden={shops.length === 0}
+        ref={dropdownRef}
+        style={dropdownHeight}
+      >
+        {shops.map((shop: Shop) => (
+          <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
+            <button
+              className='w-full flex justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left h-[51px]'
+              onClick={() => handleSelection(shop)}
+            >
+              {shop.name}
+              <span className='text-sm font-normal text-slate-500 text-right leading-tight'>
+                {shop.street && <p>{formatSpecificLocation(shop)}</p>}
+                <p>{formatBroadLocation(shop)}</p>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
       {isSearching && (
         <SearchIcon className='absolute right-1 top-1 text-slate-500 animate-(--animate-shop-search)' />
       )}
