@@ -16,12 +16,12 @@ import {
 import {VisitActionType} from '@/app/lib/enums';
 
 interface CoffeeListProps {
-  hasAnyVisits: boolean;
   visits: Visit[];
+  query: string;
 }
 
 export default function CoffeeList(props: CoffeeListProps) {
-  const {hasAnyVisits, visits} = props;
+  const {visits, query} = props;
 
   const [coffeeVisits, setCoffeeVisits] = useState(visits);
   const [visitAction, setVisitAction] = useState<VisitAction | null>(null);
@@ -178,7 +178,7 @@ export default function CoffeeList(props: CoffeeListProps) {
   return (
     <>
       <section className='flex gap-y-3 flex-col mb-24 pb-10 px-6 sm:px-20'>
-        {(coffeeVisits.length || hasAnyVisits) && <VisitSearch />}
+        {(coffeeVisits.length || query.length > 0) && <VisitSearch />}
         {coffeeVisits.length ? (
           coffeeVisits.map((visit) => (
             <CoffeeCard
@@ -190,7 +190,7 @@ export default function CoffeeList(props: CoffeeListProps) {
         ) : (
           <div className='absolute start-0 mx-auto w-full text-center top-[calc(50%-28px)]'>
             <p className='font-semibold text-xl text-slate-500'>No visits</p>
-            {!hasAnyVisits && (
+            {query.length === 0 && (
               <p className='text-lg text-slate-400'>
                 Click the + button to add
               </p>

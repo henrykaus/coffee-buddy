@@ -31,10 +31,7 @@ export default async function Page(props: PageProps) {
   return (
     <>
       <HomeHeader user={session?.user} />
-      <CoffeeList
-        hasAnyVisits={!!visits.length || query !== ''}
-        visits={visits}
-      />
+      <CoffeeList visits={visits} query={query} />
     </>
   );
 }
