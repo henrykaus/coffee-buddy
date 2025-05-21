@@ -1,4 +1,4 @@
-import VisitPopup from '@/app/ui/coffee-list/VisitPopup';
+import VisitPopup from '@/app/ui/visit-popups/VisitPopup';
 import {State} from '@/app/server/visits/actions';
 import {Visit} from '@/app/lib/types';
 

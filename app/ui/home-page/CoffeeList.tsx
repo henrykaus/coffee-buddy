@@ -3,8 +3,8 @@
 import VisitSearch from '@/app/ui/common/VisitSearch';
 import CoffeeCard from '@/app/ui/coffee-list/CoffeeCard';
 import AddVisitButton from '@/app/ui/coffee-list/AddVisitButton';
-import AddVisitPopup from '@/app/ui/coffee-list/AddVisitPopup';
-import EditVisitPopup from '@/app/ui/coffee-list/EditVisitPopup';
+import AddVisitPopup from '@/app/ui/visit-popups/AddVisitPopup';
+import EditVisitPopup from '@/app/ui/visit-popups/EditVisitPopup';
 import React, {useEffect, useState} from 'react';
 import {Visit, VisitAction} from '@/app/lib/types';
 import {

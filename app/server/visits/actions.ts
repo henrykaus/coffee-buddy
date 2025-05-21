@@ -25,14 +25,7 @@ const VisitSchema = z.object({
   }),
   shopId: z.string().min(1),
   shopName: z.string().min(1),
-  size: z
-    .null()
-    .or(
-      z.coerce
-        .number()
-        .int()
-        .gt(0, {message: 'Please enter a valid size greater than 0oz'}),
-    ),
+  size: z.coerce.number(),
   drink: z.string().min(1),
   rating: z
     .null()

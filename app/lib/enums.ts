@@ -3,8 +3,8 @@ export enum OrderType {
   ForHere = 'FOR HERE',
 }
 
-export enum HomeActionType {
-  None = 'none',
+export enum UserMenuOption {
+  LogOut = 'log-out',
   MoreOptions = 'more-options',
   DeleteAccount = 'delete-account',
 }

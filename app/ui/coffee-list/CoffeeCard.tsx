@@ -22,7 +22,9 @@ export default function CoffeeCard(props: CoffeeCardProps) {
   };
 
   const formattedDrink =
-    visit.size !== null ? `${visit.size}oz ${visit.drink}` : visit.drink;
+    visit.size && visit.size > 0
+      ? `${visit.size}oz ${visit.drink}`
+      : visit.drink;
 
   return (
     <article
@@ -57,6 +59,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
               onClick={onEditClick}
               aria-label='Edit visit'
               className='flex justify-center items-center h-8 w-8 hover:bg-slate-100 active:bg-slate-100 transition border-slate-200 rounded-md text-slate-600'
+              disabled={visit.id.length === 0}
             >
               <EditIcon strokeWidth={2} height={22} width={22} />
             </button>
