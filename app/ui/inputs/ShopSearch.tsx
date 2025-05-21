@@ -41,21 +41,15 @@ export default function ShopSearch(props: ShopSearchProps) {
   const idRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (shops.length > 0 && dropdownRef.current) {
+    if (shops.length > 0) {
       const itemHeight = 51;
+      const maxNumItems = 4;
 
-      const dropdownTop = dropdownRef.current.getBoundingClientRect().top;
-      const dropdownHeight = shops.length * itemHeight;
-      const calculatedDropdownBottom = dropdownTop + dropdownHeight;
-      const viewportBottom = window.innerHeight;
-
-      const isOverflowing = calculatedDropdownBottom >= viewportBottom;
-      if (isOverflowing) {
+      const shouldBeTruncated = shops.length > maxNumItems;
+      if (shouldBeTruncated) {
         // Create a bounded dropdown height where its height is in increments of rows (no half rows)
         const borderWidth = 1.875;
-        let boundedDropdownHeight = viewportBottom - dropdownTop - borderWidth;
-        const numRows = Math.floor(boundedDropdownHeight / 51);
-        boundedDropdownHeight = numRows * 51 + 1.875;
+        const boundedDropdownHeight = itemHeight * maxNumItems + borderWidth;
 
         setDropdownHeight({height: `${boundedDropdownHeight}px`});
       } else {
