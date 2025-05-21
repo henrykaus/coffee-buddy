@@ -1,4 +1,4 @@
-import {MugIcon} from '@/app/ui/icons';
+import {DrinkGlassIcon, MugIcon, StoreIcon} from '@/app/ui/icons';
 
 // IMPORTANT: Read these instructions before editing/adding to this file
 // For the infinite animation appear truly infinite, each icon must be positioned
@@ -14,77 +14,70 @@ export default function MovingBackground() {
       className='absolute -z-10 h-screen w-screen animate-(--animate-login)'
       aria-hidden
     >
-      {/*animate-[--animate-login]'>*/}
-      {/*<div className='animate-(--animate-login)'>*/}
       {/* ON-SCREEN */}
-      <MugIcon
-        className='absolute left-[10%] bottom-[5%] text-yellow-700/30 rotate-[10deg]'
+      <StoreIcon
+        className='absolute left-[10%] bottom-[5%] text-[#e5cfb4] rotate-[10deg]'
         height={100}
         width={100}
+        strokeWidth={2}
       />
-      <MugIcon
-        className='absolute left-[75%] bottom-[5%] text-yellow-700/30 rotate-[-45deg]'
-        height={80}
-        width={80}
-      />
-      <MugIcon
-        className='absolute left-[12%] bottom-[90%] text-yellow-700/30 rotate-[-12deg]'
+      <StoreIcon
+        className='absolute left-[12%] bottom-[90%] text-[#e5cfb4] rotate-[-30deg]'
         height={60}
         width={60}
       />
       <MugIcon
-        className='absolute left-[32%] bottom-[55%] text-yellow-700/30 rotate-[-16deg]'
+        className='absolute left-[32%] bottom-[55%] text-[#e5cfb4] rotate-[-16deg]'
         height={100}
         width={100}
       />
-      <MugIcon
-        className='absolute left-[73%] bottom-[79%] text-yellow-700/30 rotate-6'
-        height={100}
-        width={100}
+      <DrinkGlassIcon
+        className='absolute left-[73%] bottom-[79%] text-[#e5cfb4] rotate-[-6deg]'
+        height={120}
+        width={120}
+        strokeWidth={2.25}
       />
       {/* OFF-SCREEN */}
-      <MugIcon
-        className='absolute left-[-11rem] bottom-[calc(100%-30rem)] text-yellow-700/30 rotate-6'
-        height={100}
-        width={100}
+      <StoreIcon
+        className='absolute left-[-11rem] bottom-[calc(100%-30rem)] text-[#e5cfb4] rotate-[-8deg]'
+        height={120}
+        width={120}
+        strokeWidth={1.75}
       />
       <MugIcon
-        className='absolute left-[50%] bottom-[-10rem] text-yellow-700/30 rotate-[-20deg]'
-        height={100}
-        width={100}
+        className='absolute left-[50%] bottom-[-10rem] text-[#e5cfb4] rotate-[20deg]'
+        height={140}
+        width={140}
+        strokeWidth={2}
       />
-      <MugIcon
-        className='absolute left-[calc(100%+6rem)] bottom-[calc(100%-30rem)] text-yellow-700/30 rotate-[-20deg]'
+      <StoreIcon
+        className='absolute left-[calc(100%+6rem)] bottom-[calc(100%-30rem)] text-[#e5cfb4] rotate-[-20deg]'
         height={100}
         width={100}
       />
       {/* MIRRORS */}
-      <MugIcon
-        className='absolute -left-[90%] -bottom-[95%] text-yellow-700/30 rotate-[10deg]'
+      <StoreIcon
+        className='absolute -left-[90%] -bottom-[95%] text-[#e5cfb4] rotate-[10deg]'
         height={100}
         width={100}
+        strokeWidth={2}
       />
-      <MugIcon
-        className='absolute -left-[25%] -bottom-[95%] text-yellow-700/30 rotate-[-45deg]'
-        height={80}
-        width={80}
-      />
-      <MugIcon
-        className='absolute -left-[88%] -bottom-[10%] text-yellow-700/30 rotate-[-12deg]'
+      <StoreIcon
+        className='absolute -left-[88%] -bottom-[10%] text-[#e5cfb4] rotate-[-30deg]'
         height={60}
         width={60}
       />
       <MugIcon
-        className='absolute -left-[68%] -bottom-[45%] text-yellow-700/30 rotate-[-16deg]'
+        className='absolute -left-[68%] -bottom-[45%] text-[#e5cfb4] rotate-[-16deg]'
         height={100}
         width={100}
       />
-      <MugIcon
-        className='absolute -left-[27%] -bottom-[21%] text-yellow-700/30 rotate-6'
-        height={100}
-        width={100}
+      <DrinkGlassIcon
+        className='absolute -left-[27%] -bottom-[21%] text-[#e5cfb4] rotate-[-6deg]'
+        height={120}
+        width={120}
+        strokeWidth={2.25}
       />
-      {/*</div>*/}
     </div>
   );
 }

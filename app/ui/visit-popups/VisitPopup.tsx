@@ -28,13 +28,6 @@ export interface VisitPopupProps {
   whenDone: (visit: Visit) => void;
 }
 
-/**
- * Venmo has good interface for a "form" that doesn't feel like a form.
- * For adding it could have 1 screen on searching for location, and the
- * next screen on filling in deats with default date being today.
- * Rating could be 1-5 buttons w/ emoji icons (starting at 0)?
- * Have size picker have increment and decrement buttons in addition to edit '<' 8 '>'
- */
 export default function VisitPopup(props: VisitPopupProps) {
   const {
     autoFocusShop = false,
@@ -52,9 +45,7 @@ export default function VisitPopup(props: VisitPopupProps) {
     formData: FormData,
   ): Promise<State> => {
     whenDone(getVisitFromFormData(formData));
-    console.log('when done');
     onClose();
-    console.log('after close');
 
     let state: State = {};
     setTimeout(async () => {
