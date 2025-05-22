@@ -26,7 +26,7 @@ export default function FieldPopup(props: FieldPopupProps) {
       <button
         type='button'
         className={clsx(classes, {
-          'bg-slate-300 shadow-md text-slate-800 ': isOpen,
+          'bg-slate-300 shadow-md text-slate-800': isOpen,
           'text-slate-600': !isOpen,
         })}
         onClick={() => setIsOpen(!isOpen)}

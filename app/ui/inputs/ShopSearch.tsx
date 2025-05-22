@@ -1,3 +1,5 @@
+'use client';
+
 import {
   CSSProperties,
   useCallback,
@@ -11,7 +13,13 @@ import {debounce} from 'lodash';
 import {Shop} from '@/app/lib/types';
 import clsx from 'clsx';
 import useCloseableDropdown from '@/app/hooks/useCloseableDropdown';
-import {SearchIcon} from '@/app/ui/icons';
+import {
+  SearchCheckIcon,
+  SearchIcon,
+  SearchXIcon,
+  StoreIcon,
+} from '@/app/ui/icons';
+import {ShopSearchState} from '@/app/lib/enums';
 
 interface ShopSearchProps {
   autoFocus?: boolean;
@@ -24,13 +32,20 @@ export default function ShopSearch(props: ShopSearchProps) {
   const {autoFocus = false, className, defaultId, defaultName} = props;
 
   const [shops, setShops] = useState<Shop[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const [searchInputState, setSearchInputState] =
+    useState<ShopSearchState | null>(
+      defaultId ? ShopSearchState.SelectedShop : null,
+    );
   const [dropdownHeight, setDropdownHeight] = useState<
     CSSProperties | undefined
   >(undefined);
 
   const clearShops = useCallback(() => {
     if (shops.length) {
+      console.log(idRef.current?.value.length);
+      setSearchInputState(
+        idRef.current?.value.length ? ShopSearchState.SelectedShop : null,
+      );
       setShops([]);
     }
   }, [shops.length]);
@@ -59,17 +74,17 @@ export default function ShopSearch(props: ShopSearchProps) {
   }, [shops.length, dropdownRef]);
 
   const handleSearchInput = async () => {
-    if (nameRef.current) {
+    if (nameRef.current?.value && idRef.current) {
+      idRef.current.value = '';
       const shopData = await searchShops(nameRef.current.value);
-      if (shopData) {
-        setShops(shopData);
-      } else {
-        setShops([]);
-      }
+      setSearchInputState(
+        shopData.length ? ShopSearchState.FoundShops : ShopSearchState.NoShops,
+      );
+      setShops(shopData);
     } else {
-      console.log('no ref.current');
+      setSearchInputState(null);
+      setShops([]);
     }
-    setIsSearching(false);
   };
 
   const debouncedSearchShops = useMemo(
@@ -78,7 +93,7 @@ export default function ShopSearch(props: ShopSearchProps) {
   );
 
   const handleOnChange = () => {
-    setIsSearching(true);
+    setSearchInputState(ShopSearchState.Searching);
     debouncedSearchShops();
   };
 
@@ -86,6 +101,7 @@ export default function ShopSearch(props: ShopSearchProps) {
     if (nameRef.current && idRef.current) {
       idRef.current.value = shop.id;
       nameRef.current.value = shop.name;
+      setSearchInputState(ShopSearchState.SelectedShop);
       setShops([]);
     }
   };
@@ -145,10 +161,35 @@ export default function ShopSearch(props: ShopSearchProps) {
           </li>
         ))}
       </ul>
-      {isSearching && (
-        <SearchIcon className='absolute right-1 top-1 text-slate-500 animate-(--animate-shop-search)' />
-      )}
+      <ShopSearchIcon
+        className='absolute right-1 top-1 text-slate-500'
+        icon={searchInputState}
+      />
       <input ref={idRef} name='shop-id' defaultValue={defaultId} hidden />
     </div>
   );
+}
+
+function ShopSearchIcon(props: {
+  icon: ShopSearchState | null;
+  className?: string;
+}) {
+  const {icon, className} = props;
+
+  switch (icon) {
+    case ShopSearchState.SelectedShop:
+      return <StoreIcon className={className} />;
+    case ShopSearchState.Searching:
+      return (
+        <SearchIcon
+          className={clsx(className, 'animate-(--animate-shop-search)')}
+        />
+      );
+    case ShopSearchState.FoundShops:
+      return <SearchCheckIcon className={className} />;
+    case ShopSearchState.NoShops:
+      return <SearchXIcon className={className} />;
+    default:
+      return null;
+  }
 }

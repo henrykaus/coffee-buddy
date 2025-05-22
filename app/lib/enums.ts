@@ -20,3 +20,10 @@ export enum Route {
   Home = 'home',
   Login = 'login',
 }
+
+export enum ShopSearchState {
+  SelectedShop = 'selected-shop',
+  Searching = 'searching',
+  NoShops = 'no-shops',
+  FoundShops = 'found-shops',
+}

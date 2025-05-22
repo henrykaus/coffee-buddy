@@ -110,38 +110,31 @@ export default function VisitPopup(props: VisitPopupProps) {
 
   return (
     <Modal onClose={handleClose} actions={actions}>
-      {state?.message && (
-        <p className='bg-rose-300 rounded-lg p-2 text-rose-800 mb-4'>
-          <span className='font-semibold'>ERROR:</span> {state.message}
-        </p>
-      )}
-      <div className='flex flex-col gap-6 mt-8'>
+      <section className='flex flex-col gap-8 mt-8'>
         <ShopSearch
           autoFocus={autoFocusShop}
           className={inputClasses}
           defaultName={visit?.shopName}
           defaultId={visit?.shopId}
         />
-        <div className='flex gap-5'>
-          <DrinkInput
-            className={inputClasses}
-            defaultDrink={visit?.drink}
-            defaultSize={visit?.size ?? undefined}
-          />
-        </div>
+        <DrinkInput
+          className={inputClasses}
+          defaultDrink={visit?.drink}
+          defaultSize={visit?.size ?? undefined}
+        />
         <div className='flex gap-3'>
           <PriceInput className={inputClasses} defaultValue={visit?.price} />
           <OrderTypeToggle defaultValue={visit?.orderType} />
         </div>
-      </div>
-      <input type='text' defaultValue={visit?.id} name='id' readOnly hidden />
-      <input
-        type='text'
-        defaultValue={uuidv4().substring(0, 6)}
-        name='recon-id'
-        readOnly
-        hidden
-      />
+        <input type='text' defaultValue={visit?.id} name='id' readOnly hidden />
+        <input
+          type='text'
+          defaultValue={uuidv4().substring(0, 6)}
+          name='recon-id'
+          readOnly
+          hidden
+        />
+      </section>
     </Modal>
   );
 }

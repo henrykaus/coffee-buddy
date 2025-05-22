@@ -6,7 +6,7 @@ import {OrderType} from '@/app/lib/enums';
 import {MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 
 interface OrderTypeToggleProps {
-  defaultValue?: string;
+  defaultValue?: OrderType;
 }
 
 export default function OrderTypeToggle(props: OrderTypeToggleProps) {

@@ -35,6 +35,29 @@ input[type='number']::-webkit-outer-spin-button {
   margin: 0;
 }
 
+
+input[type='date'].calendar::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: -0.25rem;
+  width: 27px;
+  height: 100%;
+  padding-right: 0.75em;
+  opacity: 0;
+  cursor: pointer;
+}
+
+input[type='date'].calendar.icon-only {
+  position: absolute;
+  right: 0;
+  width: 2.5rem;
+  height: 100%;
+  padding-right: 0.75em;
+  opacity: 0;
+  cursor: pointer;
+  border-radius: calc(infinity * 1px);
+  text-align: end;
+}
+
 @keyframes login-animation {
   from {
     bottom: 0;
@@ -49,7 +72,7 @@ input[type='number']::-webkit-outer-spin-button {
 @keyframes searching-animation {
   0% {
     transform: scale(90%);
-    opacity: 0%;
+    opacity: 0;
   }
   50% {
     transform: scale(100%);
@@ -57,7 +80,7 @@ input[type='number']::-webkit-outer-spin-button {
   }
   100% {
     transform: scale(90%);
-    opacity: 0%;
+    opacity: 0;
   }
 }
 
