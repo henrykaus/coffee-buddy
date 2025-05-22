@@ -17,7 +17,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   );
 
   const commonButtonClasses =
-    'text-slate-400 p-1 w-10 flex justify-center rounded-md transition cursor-pointer not-peer-checked:hover:text-slate-500 not-peer-checked:active:[&_svg]:scale-90 peer-checked:active:scale-90';
+    'text-slate-400 p-1 w-10 flex justify-center rounded-md transition cursor-pointer not-peer-checked:active:[&_svg]:scale-90 peer-checked:active:scale-90';
 
   const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.currentTarget.value as OrderType);
