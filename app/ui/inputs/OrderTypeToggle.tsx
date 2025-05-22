@@ -17,15 +17,20 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   );
 
   const commonButtonClasses =
-    'text-slate-400 p-1 w-10 flex justify-center rounded-md transition cursor-pointer not-peer-checked:active:[&_svg]:scale-90 peer-checked:active:scale-90';
+    'w-10 flex rounded-md transition cursor-pointer text-slate-400 not-has-checked:hover:text-slate-500 not-has-checked:active:[&_svg]:scale-90 has-checked:active:scale-90';
 
   const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.currentTarget.value as OrderType);
   };
 
   return (
-    <fieldset className='flex items-center bg-slate-100 border-0 border-slate-300 rounded-lg gap-1 text-slate-600 p-1'>
-      <span>
+    <fieldset className='flex bg-slate-100 rounded-lg p-1 gap-1'>
+      <span
+        className={clsx(commonButtonClasses, {
+          'bg-slate-300/90 shadow-md text-slate-700':
+            selectedOption === OrderType.ForHere,
+        })}
+      >
         <input
           type='radio'
           id='for-here-option'
@@ -33,22 +38,23 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           value={OrderType.ForHere}
           onChange={handleOptionSelected}
           defaultChecked={defaultValue !== OrderType.ToGo}
-          className='peer'
           hidden
         />
         <label
           htmlFor='for-here-option'
           aria-label='For here'
-          className={clsx(commonButtonClasses, {
-            'bg-slate-300/90 shadow-md text-slate-700':
-              selectedOption === OrderType.ForHere,
-          })}
+          className='cursor-pointer w-full h-full p-1'
           title='For here'
         >
-          <MugIcon className='transition' />
+          <MugIcon className='transition mx-auto' />
         </label>
       </span>
-      <span>
+      <span
+        className={clsx(commonButtonClasses, {
+          'bg-slate-300/90 shadow-md text-slate-700':
+            selectedOption === OrderType.ToGo,
+        })}
+      >
         <input
           type='radio'
           id='to-go-option'
@@ -56,19 +62,15 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           value={OrderType.ToGo}
           onChange={handleOptionSelected}
           defaultChecked={defaultValue === OrderType.ToGo}
-          className='peer'
           hidden
         />
         <label
           htmlFor='to-go-option'
           aria-label='To go'
           title='To go'
-          className={clsx(commonButtonClasses, {
-            'bg-slate-300/90 shadow-md text-slate-700':
-              selectedOption === OrderType.ToGo,
-          })}
+          className='cursor-pointer w-full h-full p-1'
         >
-          <ToGoCupIcon className='transition' />
+          <ToGoCupIcon className='transition mx-auto' />
         </label>
       </span>
     </fieldset>
