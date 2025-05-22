@@ -42,7 +42,6 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const clearShops = useCallback(() => {
     if (shops.length) {
-      console.log(idRef.current?.value.length);
       setSearchInputState(
         idRef.current?.value.length ? ShopSearchState.SelectedShop : null,
       );

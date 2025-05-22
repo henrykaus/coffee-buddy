@@ -73,13 +73,15 @@ export const searchShops = async (query: string) => {
 
   const entryDict: Map<string, NominatimEntry[]> = new Map();
   data.forEach((entry: NominatimEntry) => {
-    const key = `${entry.name}-${entry.address.city ?? entry.address.town}`;
+    if (entry.name) {
+      const key = `${entry.name}-${entry.address.city ?? entry.address.town}`;
 
-    const dictValue = entryDict.get(key);
-    if (dictValue) {
-      dictValue.push(entry);
-    } else {
-      entryDict.set(key, [entry]);
+      const dictValue = entryDict.get(key);
+      if (dictValue) {
+        dictValue.push(entry);
+      } else {
+        entryDict.set(key, [entry]);
+      }
     }
   });
 

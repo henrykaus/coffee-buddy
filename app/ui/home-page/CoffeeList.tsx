@@ -52,6 +52,7 @@ export default function CoffeeList(props: CoffeeListProps) {
             );
           } else if (addedVisitIndex < 0) {
             setCoffeeVisits([visitAction.visit, ...coffeeVisits]);
+            window.scrollTo(0, 0);
             console.log(
               'added from useEffect (not found visit)',
               visitAction.isClient ? 'client' : 'db',
