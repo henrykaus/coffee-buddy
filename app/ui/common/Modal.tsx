@@ -28,9 +28,9 @@ export default function Modal(props: ModalProps) {
 
   useEffect(() => {
     // Stop body from being scrollable when modal is open
-    document.body.classList.add('overflow-y-hidden');
+    document.body.classList.add('overflow-y-hidden', 'touch-none');
     return () => {
-      document.body.classList.remove('overflow-y-hidden');
+      document.body.classList.remove('overflow-y-hidden', 'touch-none');
     };
   }, []);
 
