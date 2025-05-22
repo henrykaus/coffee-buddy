@@ -54,6 +54,7 @@ export default function VisitPopup(props: VisitPopupProps) {
     return state;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [state, formAction] = useActionState(handleConfirm, initialState);
 
   const handleDelete = async (

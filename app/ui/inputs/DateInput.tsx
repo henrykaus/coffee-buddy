@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 interface DateInput {
   defaultValue?: string;
-  iconOnly: boolean;
+  iconOnly?: boolean;
 }
 
 export default function DateInput(props: DateInput) {
