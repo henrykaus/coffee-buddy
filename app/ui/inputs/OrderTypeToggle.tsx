@@ -17,7 +17,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   );
 
   const commonButtonClasses =
-    'w-10 flex rounded-md transition cursor-pointer text-slate-400 not-has-checked:hover:text-slate-500 not-has-checked:active:[&_svg]:scale-90 has-checked:active:scale-90';
+    'w-10 flex rounded-md transition cursor-pointer text-slate-400 hover:text-slate-500 active:[&_svg]:scale-90';
 
   const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.currentTarget.value as OrderType);
@@ -27,7 +27,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
     <fieldset className='flex bg-slate-100 rounded-lg p-1 gap-1'>
       <span
         className={clsx(commonButtonClasses, {
-          'bg-slate-300/90 shadow-md text-slate-700':
+          'bg-slate-300/90 shadow-md text-slate-700 hover:text-slate-700 active:scale-90 active:[&_svg]:scale-100':
             selectedOption === OrderType.ForHere,
         })}
       >
@@ -51,7 +51,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
       </span>
       <span
         className={clsx(commonButtonClasses, {
-          'bg-slate-300/90 shadow-md text-slate-700':
+          'bg-slate-300/90 shadow-md text-slate-700 hover:text-slate-700 active:scale-90 active:[&_svg]:scale-100':
             selectedOption === OrderType.ToGo,
         })}
       >
