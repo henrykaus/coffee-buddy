@@ -4,7 +4,7 @@ import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
 import HomeHeader from '@/app/ui/home-page/HomeHeader';
 import CoffeeListWrapper from '@/app/ui/coffee-list/CoffeeListWrapper';
-import {DashboardSkeleton, FullDashboardSkeleton} from '@/app/ui/skeletons';
+import {DashboardSkeleton} from '@/app/ui/skeletons';
 
 interface PageProps {
   searchParams?: Promise<{
