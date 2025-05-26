@@ -4,22 +4,22 @@ import {Visit} from '@/app/lib/types';
 
 interface AddVisitPopupProps {
   onClose: () => void;
-  onConfirm: (
+  onConfirmClientAction: (visit: Visit) => void;
+  onConfirmServerAction: (
     prevState: State | undefined,
     formData: FormData,
   ) => Promise<State>;
-  whenConfirm: (visit: Visit) => void;
 }
 
 export default function AddVisitPopup(props: AddVisitPopupProps) {
-  const {onClose, onConfirm, whenConfirm} = props;
+  const {onClose, onConfirmClientAction, onConfirmServerAction} = props;
 
   return (
     <VisitPopup
       autoFocusShop={false}
-      onConfirm={onConfirm}
       onClose={onClose}
-      whenDone={whenConfirm}
+      onConfirmClientAction={onConfirmClientAction}
+      onConfirmServerAction={onConfirmServerAction}
     />
   );
 }

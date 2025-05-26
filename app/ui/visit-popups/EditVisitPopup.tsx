@@ -4,25 +4,34 @@ import {Visit} from '@/app/lib/types';
 
 interface EditVisitPopupProps {
   onClose: () => void;
-  onConfirm: (
+  onConfirmClientAction: (visit: Visit) => void;
+  onConfirmServerAction: (
     prevState: State | undefined,
     formData: FormData,
   ) => Promise<State>;
-  onDelete: (id: string) => Promise<State>;
-  whenDone: (visit: Visit) => void;
+  onDeleteClientAction: (visit: Visit) => void;
+  onDeleteServerAction: (visit: Visit) => Promise<State>;
   visit: Visit;
 }
 
 export default function EditVisitPopup(props: EditVisitPopupProps) {
-  const {onClose, onConfirm, onDelete, visit, whenDone} = props;
+  const {
+    onClose,
+    onConfirmClientAction,
+    onConfirmServerAction,
+    onDeleteClientAction,
+    onDeleteServerAction,
+    visit,
+  } = props;
 
   return (
     <VisitPopup
-      onConfirm={onConfirm}
-      onDelete={onDelete}
       onClose={onClose}
+      onConfirmClientAction={onConfirmClientAction}
+      onConfirmServerAction={onConfirmServerAction}
+      onDeleteClientAction={onDeleteClientAction}
+      onDeleteServerAction={onDeleteServerAction}
       visit={visit}
-      whenDone={whenDone}
     />
   );
 }

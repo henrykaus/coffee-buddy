@@ -1,6 +1,6 @@
 'use client';
 
-import VisitSearch from '@/app/ui/common/VisitSearch';
+import VisitSearch from '@/app/ui/home-page/VisitSearch';
 import CoffeeCard from '@/app/ui/coffee-list/CoffeeCard';
 import AddVisitButton from '@/app/ui/coffee-list/AddVisitButton';
 import AddVisitPopup from '@/app/ui/visit-popups/AddVisitPopup';
@@ -33,7 +33,6 @@ export default function CoffeeList(props: CoffeeListProps) {
   }, [visits]);
 
   useEffect(() => {
-    console.log('useEffect', visitAction?.isClient);
     if (visitAction) {
       switch (visitAction.action) {
         case VisitActionType.Add:
@@ -45,21 +44,9 @@ export default function CoffeeList(props: CoffeeListProps) {
             const newVisits = [...coffeeVisits];
             newVisits[addedVisitIndex] = visitAction.visit;
             setCoffeeVisits(newVisits);
-            console.log(
-              'updated (by add) from useEffect (found visit)',
-              visitAction.isClient ? 'client' : 'db',
-              visitAction.visit,
-            );
           } else if (addedVisitIndex < 0) {
             setCoffeeVisits([visitAction.visit, ...coffeeVisits]);
             window.scrollTo(0, 0);
-            console.log(
-              'added from useEffect (not found visit)',
-              visitAction.isClient ? 'client' : 'db',
-              visitAction.visit,
-            );
-          } else {
-            console.log('Else block', visitAction);
           }
 
           break;
@@ -78,13 +65,6 @@ export default function CoffeeList(props: CoffeeListProps) {
             const newVisits = [...coffeeVisits];
             newVisits[updatedVisitIndex] = visitAction.visit;
             setCoffeeVisits(newVisits);
-            console.log(
-              'updated (by edit) from useEffect (found visit)',
-              visitAction.isClient ? 'client' : 'db',
-              visitAction.visit,
-            );
-          } else {
-            console.log('Else block', visitAction);
           }
 
           break;
@@ -96,13 +76,6 @@ export default function CoffeeList(props: CoffeeListProps) {
           if (deletedVisitIndex >= 0) {
             const newVisits = coffeeVisits.toSpliced(deletedVisitIndex, 1);
             setCoffeeVisits(newVisits);
-            console.log(
-              'updated (by delete) from useEffect (found visit)',
-              visitAction.isClient ? 'client' : 'db',
-              visitAction.visit,
-            );
-          } else {
-            console.log('Else block', visitAction);
           }
           break;
       }
@@ -143,11 +116,9 @@ export default function CoffeeList(props: CoffeeListProps) {
     return newState;
   };
 
-  const removeVisitFromDB = async (id: string) => {
-    const newState = await deleteVisit(id);
+  const removeVisitFromDB = async (visit: Visit) => {
+    const newState = await deleteVisit(visit.id);
     if (newState.visit) {
-      console.log(newState);
-
       setVisitAction({
         action: VisitActionType.Delete,
         isClient: false,
@@ -164,7 +135,6 @@ export default function CoffeeList(props: CoffeeListProps) {
       isClient: true,
       visit: visit,
     });
-    console.log('updated from client!', visit);
   };
 
   const updateVisitOnClient = (visit: Visit) => {
@@ -173,7 +143,14 @@ export default function CoffeeList(props: CoffeeListProps) {
       isClient: true,
       visit: visit,
     });
-    console.log('updated from client!', visit);
+  };
+
+  const deleteVisitOnClient = (visit: Visit) => {
+    setVisitAction({
+      action: VisitActionType.Delete,
+      isClient: true,
+      visit: visit,
+    });
   };
 
   return (
@@ -203,17 +180,18 @@ export default function CoffeeList(props: CoffeeListProps) {
       {showAddVisitPopup && (
         <AddVisitPopup
           onClose={() => setShowAddVisitPopup(false)}
-          onConfirm={addVisitToDB}
-          whenConfirm={addVisitToClient}
+          onConfirmClientAction={addVisitToClient}
+          onConfirmServerAction={addVisitToDB}
         />
       )}
       {activeVisit && (
         <EditVisitPopup
-          visit={activeVisit}
-          onConfirm={updateVisitToDB}
-          onDelete={removeVisitFromDB}
           onClose={() => setActiveVisit(null)}
-          whenDone={updateVisitOnClient}
+          onConfirmClientAction={updateVisitOnClient}
+          onConfirmServerAction={updateVisitToDB}
+          onDeleteClientAction={deleteVisitOnClient}
+          onDeleteServerAction={removeVisitFromDB}
+          visit={activeVisit}
         />
       )}
     </>

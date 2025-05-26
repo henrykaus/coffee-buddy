@@ -1,6 +1,6 @@
 'use client';
 
-import React, {ReactNode, useActionState} from 'react';
+import React, {useActionState} from 'react';
 import {State} from '@/app/server/visits/actions';
 import OrderTypeToggle from '@/app/ui/inputs/OrderTypeToggle';
 import PriceInput from '@/app/ui/inputs/PriceInput';
@@ -17,25 +17,26 @@ import {v4 as uuidv4} from 'uuid';
 
 export interface VisitPopupProps {
   autoFocusShop?: boolean;
-  visit?: Visit;
-  confirmButton?: ReactNode;
-  onConfirm: (
+  onClose: () => void;
+  onConfirmClientAction: (visit: Visit) => void;
+  onConfirmServerAction: (
     prevState: State | undefined,
     formData: FormData,
   ) => Promise<State>;
-  onDelete?: (id: string) => Promise<State>;
-  onClose: () => void;
-  whenDone: (visit: Visit) => void;
+  onDeleteClientAction?: (visit: Visit) => void;
+  onDeleteServerAction?: (visit: Visit) => Promise<State>;
+  visit?: Visit;
 }
 
 export default function VisitPopup(props: VisitPopupProps) {
   const {
     autoFocusShop = false,
-    visit,
-    onConfirm,
-    onDelete,
     onClose,
-    whenDone,
+    onConfirmClientAction,
+    onConfirmServerAction,
+    onDeleteClientAction,
+    onDeleteServerAction,
+    visit,
   } = props;
 
   const initialState: State = {message: null, visit: null};
@@ -44,12 +45,12 @@ export default function VisitPopup(props: VisitPopupProps) {
     prevState: State | undefined,
     formData: FormData,
   ): Promise<State> => {
-    whenDone(getVisitFromFormData(formData));
+    onConfirmClientAction(getVisitFromFormData(formData));
     onClose();
 
     let state: State = {};
     setTimeout(async () => {
-      state = await onConfirm(prevState, formData);
+      state = await onConfirmServerAction(prevState, formData);
     }, 100);
     return state;
   };
@@ -62,10 +63,12 @@ export default function VisitPopup(props: VisitPopupProps) {
   ) => {
     event.preventDefault();
     onClose();
-    if (onDelete && visit) {
-      // whenDone(visit);
+    if (onDeleteServerAction && visit) {
+      if (onDeleteClientAction) {
+        onDeleteClientAction(visit);
+      }
       setTimeout(async () => {
-        await onDelete(visit.id);
+        await onDeleteServerAction(visit);
       }, 100);
     }
   };
@@ -105,7 +108,7 @@ export default function VisitPopup(props: VisitPopupProps) {
     <DateInput key={0} defaultValue={visit?.date ?? undefined} />,
     <RatingInput key={1} defaultValue={visit?.rating ?? undefined} />,
     <NotesInput key={2} defaultValue={visit?.notes ?? undefined} />,
-    ...(onDelete ? [deleteButton] : []),
+    ...(onDeleteServerAction ? [deleteButton] : []),
     confirmButton,
   ];
 
