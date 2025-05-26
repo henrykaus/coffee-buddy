@@ -1,11 +1,15 @@
-import React from 'react';
-import {Visit} from '@/app/lib/types';
-import {listVisits, searchVisits} from '@/app/server/visits/actions';
+import React, {Suspense} from 'react';
 import {Route} from '@/app/lib/enums';
 import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
-import CoffeeList from '@/app/ui/home-page/CoffeeList';
 import HomeHeader from '@/app/ui/home-page/HomeHeader';
+import {MugIcon} from '@/app/ui/icons';
+import TestComponent from '@/app/ui/coffee-list/TestComponent';
+import {
+  CardSkeleton,
+  CardSkeletonList,
+  DashboardSkeleton,
+} from '@/app/ui/skeletons';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -23,15 +27,13 @@ export default async function Page(props: PageProps) {
     redirect(`/${Route.Login}`);
   }
 
-  const visits: Visit[] =
-    query === '' ? await listVisits() : await searchVisits(query);
-
-  console.log('IMPORTANT: re-rendered home');
-
   return (
     <>
       <HomeHeader user={session?.user} />
-      <CoffeeList visits={visits} query={query} />
+      <Suspense fallback={<DashboardSkeleton />}>
+        <TestComponent query={query} />
+      </Suspense>
+      {/*<DashboardSkeleton />*/}
     </>
   );
 }

@@ -82,6 +82,7 @@ export default function CoffeeList(props: CoffeeListProps) {
     }
   }, [visitAction]);
 
+  // SERVER-SIDE METHODS
   const addVisitToDB = async (
     prevState: State | undefined,
     formData: FormData,
@@ -129,6 +130,7 @@ export default function CoffeeList(props: CoffeeListProps) {
     return newState;
   };
 
+  // CLIENT-SIDE METHODS
   const addVisitToClient = (visit: Visit) => {
     setVisitAction({
       action: VisitActionType.Add,
