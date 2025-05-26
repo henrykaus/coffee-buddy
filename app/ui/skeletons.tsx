@@ -50,3 +50,26 @@ export function DashboardSkeleton() {
     </div>
   );
 }
+
+export function HeaderSkeleton() {
+  return (
+    <div
+      className={clsx(
+        shimmer,
+        'relative flex justify-between gap-y-3 px-6 sm:px-20 py-6',
+      )}
+    >
+      <div className='bg-slate-200 h-11 w-30 rounded-md' />
+      <div className='bg-slate-200 h-11 w-11 rounded-md' />
+    </div>
+  );
+}
+
+export function FullDashboardSkeleton() {
+  return (
+    <>
+      <HeaderSkeleton />
+      <DashboardSkeleton />
+    </>
+  );
+}
