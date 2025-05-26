@@ -7,7 +7,7 @@ interface TestComponentProps {
   query: string;
 }
 
-export default async function TestComponent(props: TestComponentProps) {
+export default async function CoffeeListWrapper(props: TestComponentProps) {
   const {query} = props;
 
   const visits: Visit[] =

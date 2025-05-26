@@ -3,13 +3,8 @@ import {Route} from '@/app/lib/enums';
 import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
 import HomeHeader from '@/app/ui/home-page/HomeHeader';
-import {MugIcon} from '@/app/ui/icons';
-import TestComponent from '@/app/ui/coffee-list/TestComponent';
-import {
-  CardSkeleton,
-  CardSkeletonList,
-  DashboardSkeleton,
-} from '@/app/ui/skeletons';
+import CoffeeListWrapper from '@/app/ui/coffee-list/CoffeeListWrapper';
+import {DashboardSkeleton} from '@/app/ui/skeletons';
 
 interface PageProps {
   searchParams?: Promise<{
@@ -31,9 +26,8 @@ export default async function Page(props: PageProps) {
     <>
       <HomeHeader user={session?.user} />
       <Suspense fallback={<DashboardSkeleton />}>
-        <TestComponent query={query} />
+        <CoffeeListWrapper query={query} />
       </Suspense>
-      {/*<DashboardSkeleton />*/}
     </>
   );
 }
