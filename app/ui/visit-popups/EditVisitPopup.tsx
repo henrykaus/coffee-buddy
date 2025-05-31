@@ -4,7 +4,7 @@ import {Visit} from '@/app/lib/types';
 
 interface EditVisitPopupProps {
   onClose: () => void;
-  onConfirmClientAction: (visit: Visit) => void;
+  onConfirmClientAction: (state: State) => void;
   onConfirmServerAction: (
     prevState: State | undefined,
     formData: FormData,

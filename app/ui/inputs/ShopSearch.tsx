@@ -94,7 +94,6 @@ export default function ShopSearch(props: ShopSearchProps) {
       setShops([]);
       idRef.current.value = '';
       nameRef.current.value = '';
-      nameRef.current.focus(); // TODO: this doesn't work?
     }
   };
 

@@ -1,15 +1,8 @@
 'use server';
 
-import {z} from 'zod';
 import {prisma} from '@/app/server/prisma';
 import {User} from '@/app/lib/types';
-
-const UserSchema = z.object({
-  id: z.string(),
-  email: z.string().email(),
-});
-
-const AddUser = UserSchema.omit({id: true});
+import {AddUser} from '@/app/server/schemas';
 
 export const addUser = async (email: string): Promise<User | null> => {
   const validatedFields = AddUser.safeParse({

@@ -3,6 +3,7 @@ import {Prisma} from '@prisma/client';
 import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
 import {State} from '@/app/server/visits/actions';
+import {CreateVisit} from '@/app/server/schemas';
 
 type VisitWithShop = Prisma.VisitGetPayload<{
   include: {shop: true};
@@ -43,26 +44,42 @@ export const getVisitForClient = (
   };
 };
 
-// FIXME: This is very basic and incorrect, this should use proper validation before it is sent to client rather than defaults
-export const getVisitFromFormData = (formData: FormData): Visit => {
-  const visit = {
-    id: formData.get('id')?.toString() ?? 'FIXME id',
-    reconId: formData.get('recon-id')?.toString() ?? 'FIXME reconID',
-    shopId: formData.get('shop-id')?.toString() ?? 'FIXME shopId',
-    shopName: formData.get('shop-name')?.toString() ?? 'FIXME shop',
-    size: parseInt(formData.get('size')?.toString() ?? '0') ?? null,
-    drink: formData.get('drink')?.toString() ?? 'FIXME drink',
-    rating: parseInt(formData.get('rating')?.toString() ?? '0') ?? null,
-    price: parseFloat(formData.get('price')?.toString() ?? '-1'),
-    date: formData.get('date')?.toString() ?? null,
-    notes: formData.get('notes')?.toString() ?? null,
+export const getVisitFromFormData = (formData: FormData): State => {
+  const validatedFields = CreateVisit.safeParse({
+    reconId: formData.get('recon-id'),
+    shopId: formData.get('shop-id'),
+    shopName: formData.get('shop-name'),
+    size: formData.get('size'),
+    drink: formData.get('drink'),
+    rating: formData.get('rating'),
+    price: formData.get('price'),
+    date: formData.get('date'),
+    notes: formData.get('notes'),
+    orderType: formData.get('order-type'),
+  });
+
+  if (!validatedFields.success) {
+    return {message: 'Unable to create/update visit...'};
+  }
+
+  const visit: Visit = {
+    id: formData.get('id')?.toString() ?? 'no_id',
+    reconId: validatedFields.data.reconId,
+    shopId: validatedFields.data.shopId,
+    shopName: validatedFields.data.shopName,
+    size: validatedFields.data.size,
+    drink: validatedFields.data.drink,
+    rating: validatedFields.data.rating,
+    price: validatedFields.data.price,
+    date: validatedFields.data.date ?? null,
+    notes: validatedFields.data.notes ?? null,
     orderType:
-      formData.get('order-type')?.toString() === OrderType.ForHere
+      validatedFields.data?.orderType === OrderType.ForHere
         ? OrderType.ForHere
         : OrderType.ToGo,
   };
 
-  return visit;
+  return {visit: visit};
 };
 
 // FORMAT: 4.45 -> 445

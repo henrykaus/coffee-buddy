@@ -7,6 +7,8 @@
   --foreground: #171717;
   --animate-login: login-animation 40s linear infinite;
   --animate-shop-search: searching-animation 2s ease-in-out infinite;
+  --animate-slide-up: slide-up 0.15s ease-out forwards;
+  --animate-slide-down: slide-down 0.15s ease-in-out forwards;
   box-sizing: border-box;
 }
 
@@ -85,6 +87,24 @@ input[type='date'].calendar.icon-only {
   100% {
     transform: scale(90%);
     opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
   }
 }
 

@@ -1,10 +1,9 @@
 import VisitPopup from '@/app/ui/visit-popups/VisitPopup';
 import {State} from '@/app/server/visits/actions';
-import {Visit} from '@/app/lib/types';
 
 interface AddVisitPopupProps {
   onClose: () => void;
-  onConfirmClientAction: (visit: Visit) => void;
+  onConfirmClientAction: (state: State) => void;
   onConfirmServerAction: (
     prevState: State | undefined,
     formData: FormData,

@@ -18,7 +18,7 @@ import {v4 as uuidv4} from 'uuid';
 export interface VisitPopupProps {
   autoFocusShop?: boolean;
   onClose: () => void;
-  onConfirmClientAction: (visit: Visit) => void;
+  onConfirmClientAction: (state: State) => void;
   onConfirmServerAction: (
     prevState: State | undefined,
     formData: FormData,

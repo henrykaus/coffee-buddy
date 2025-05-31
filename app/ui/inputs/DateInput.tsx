@@ -1,4 +1,3 @@
-import {getDateForClient} from '@/app/server/common';
 import {CalendarIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
 
@@ -11,8 +10,8 @@ export default function DateInput(props: DateInput) {
   const {defaultValue, iconOnly = true} = props;
 
   const getTodaysDate = () => {
-    const today = new Date();
-    return getDateForClient(today);
+    const todayParts = new Date().toLocaleDateString().split('/');
+    return `${todayParts[2]}-${todayParts[0].padStart(2, '0')}-${todayParts[1].padStart(2, '0')}`;
   };
 
   return (

@@ -1,6 +1,5 @@
 'use server';
 
-import {z} from 'zod';
 import {prisma} from '@/app/server/prisma';
 import {Visit} from '@/app/lib/types';
 import {getUser} from '@/app/server/users/actions';
@@ -11,47 +10,12 @@ import {
   getVisitForClient,
   logError,
 } from '@/app/server/common';
+import {CreateVisit, UpdateVisit} from '@/app/server/schemas';
 
 export type State = {
   message?: string | null;
   visit?: Visit | null;
 };
-
-const VisitSchema = z.object({
-  id: z.string(),
-  reconId: z.string(),
-  userId: z.string({
-    invalid_type_error: 'Please select a customer.',
-  }),
-  shopId: z.string().min(1),
-  shopName: z.string().min(1),
-  size: z.coerce.number(),
-  drink: z.string().min(1),
-  rating: z
-    .null()
-    .or(
-      z
-        .string()
-        .length(0)
-        .transform(() => null),
-    )
-    .or(
-      z.coerce
-        .number()
-        .min(0, {message: 'Please enter a valid rating between 0 and 5'})
-        .max(5, {message: 'Please enter a valid rating between 0 and 5'}),
-    ),
-  price: z.coerce.number().min(0, {
-    message: 'Please enter a valid price greater than or equal to $0',
-  }),
-  date: z.ostring(),
-  notes: z.ostring(),
-  orderType: z.enum(['TO GO', 'FOR HERE'], {
-    invalid_type_error: 'Please select an order type.....',
-  }),
-});
-
-const CreateVisit = VisitSchema.omit({id: true, userId: true});
 
 export const createVisit = async (
   prevState: State | undefined,
@@ -78,13 +42,13 @@ export const createVisit = async (
     });
 
     if (!validatedFields.success) {
-      console.log(
+      console.error(
         `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.notes}`,
       );
-      console.log(
+      console.error(
         `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.rating}`,
       );
-      console.log(
+      console.error(
         `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.size}`,
       );
       return {
@@ -208,8 +172,6 @@ export const listVisits = async (): Promise<Visit[]> => {
     return [];
   }
 };
-
-const UpdateVisit = VisitSchema.omit({userId: true});
 
 export const updateVisit = async (
   prevState: State | undefined,

@@ -18,7 +18,7 @@ export default function Page() {
         </h1>
         <form action={handleLoginClick}>
           <button
-            className='border-2 border-slate-200 rounded-full py-2 px-4 hover:bg-slate-100 active:bg-slate-100 bg-(--background) transition cursor-pointer'
+            className='border-2 border-slate-200 rounded-full py-2 px-4 hover:bg-slate-100 active:bg-slate-100 active:scale-97 bg-(--background) transition cursor-pointer'
             type='submit'
           >
             Log in with Google

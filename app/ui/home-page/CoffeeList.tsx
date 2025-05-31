@@ -131,20 +131,28 @@ export default function CoffeeList(props: CoffeeListProps) {
   };
 
   // CLIENT-SIDE METHODS
-  const addVisitToClient = (visit: Visit) => {
-    setVisitAction({
-      action: VisitActionType.Add,
-      isClient: true,
-      visit: visit,
-    });
+  const addVisitToClient = (state: State) => {
+    if (state.visit) {
+      setVisitAction({
+        action: VisitActionType.Add,
+        isClient: true,
+        visit: state.visit,
+      });
+    } else if (state.message) {
+      console.error(state.message);
+    }
   };
 
-  const updateVisitOnClient = (visit: Visit) => {
-    setVisitAction({
-      action: VisitActionType.Edit,
-      isClient: true,
-      visit: visit,
-    });
+  const updateVisitOnClient = (state: State) => {
+    if (state.visit) {
+      setVisitAction({
+        action: VisitActionType.Edit,
+        isClient: true,
+        visit: state.visit,
+      });
+    } else if (state.message) {
+      console.error(state.message);
+    }
   };
 
   const deleteVisitOnClient = (visit: Visit) => {

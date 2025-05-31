@@ -14,6 +14,7 @@ interface ModalProps {
   primaryButtonText?: string;
   showClose?: boolean;
   title?: string;
+  modalAnimation?: ModalAnimation;
 }
 
 export default function Modal(props: ModalProps) {
@@ -24,6 +25,7 @@ export default function Modal(props: ModalProps) {
     onClose,
     showClose = true,
     title,
+    modalAnimation = ModalAnimation.SlideUp,
   } = props;
 
   useEffect(() => {
@@ -40,7 +42,13 @@ export default function Modal(props: ModalProps) {
       <dialog
         className={clsx(
           'rounded-t-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10',
-          {'h-[75%]': fullscreen},
+          {
+            'h-[75%]': fullscreen,
+            'animate-(--animate-slide-up)':
+              modalAnimation === ModalAnimation.SlideUp,
+            'animate-(--animate-slide-down)':
+              modalAnimation === ModalAnimation.SlideDown,
+          },
         )}
         open
       >
@@ -67,4 +75,9 @@ export default function Modal(props: ModalProps) {
       </dialog>
     </>
   );
+}
+
+export enum ModalAnimation {
+  SlideUp = 'slide-up',
+  SlideDown = 'slide-down',
 }
