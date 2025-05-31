@@ -14,6 +14,7 @@ import {Shop} from '@/app/lib/types';
 import clsx from 'clsx';
 import useCloseableDropdown from '@/app/hooks/useCloseableDropdown';
 import {
+  CloseIcon,
   SearchCheckIcon,
   SearchIcon,
   SearchXIcon,
@@ -32,10 +33,9 @@ export default function ShopSearch(props: ShopSearchProps) {
   const {autoFocus = false, className, defaultId, defaultName} = props;
 
   const [shops, setShops] = useState<Shop[]>([]);
-  const [searchInputState, setSearchInputState] =
-    useState<ShopSearchState | null>(
-      defaultId ? ShopSearchState.SelectedShop : null,
-    );
+  const [searchInputState, setSearchInputState] = useState<ShopSearchState>(
+    defaultId ? ShopSearchState.SelectedShop : ShopSearchState.Default,
+  );
   const [dropdownHeight, setDropdownHeight] = useState<
     CSSProperties | undefined
   >(undefined);
@@ -43,7 +43,9 @@ export default function ShopSearch(props: ShopSearchProps) {
   const clearShops = useCallback(() => {
     if (shops.length) {
       setSearchInputState(
-        idRef.current?.value.length ? ShopSearchState.SelectedShop : null,
+        idRef.current?.value.length
+          ? ShopSearchState.SelectedShop
+          : ShopSearchState.Default,
       );
       setShops([]);
     }
@@ -81,8 +83,18 @@ export default function ShopSearch(props: ShopSearchProps) {
       );
       setShops(shopData);
     } else {
-      setSearchInputState(null);
+      setSearchInputState(ShopSearchState.Default);
       setShops([]);
+    }
+  };
+
+  const handleClearShop = () => {
+    if (nameRef.current && idRef.current) {
+      setSearchInputState(ShopSearchState.Default);
+      setShops([]);
+      idRef.current.value = '';
+      nameRef.current.value = '';
+      nameRef.current.focus(); // TODO: this doesn't work?
     }
   };
 
@@ -133,10 +145,15 @@ export default function ShopSearch(props: ShopSearchProps) {
         placeholder='Shop'
         name='shop-name'
         aria-label='Shop'
-        className={clsx(className, 'w-full')}
+        className={clsx(
+          className,
+          'w-full pr-[2.35rem]',
+          'read-only:bg-slate-100 read-only:text-slate-500 read-only:rounded-md read-only:pl-10 read-only:focus:border-slate-300',
+        )}
         defaultValue={defaultName}
         onChange={handleOnChange}
         autoFocus={autoFocus}
+        readOnly={searchInputState === ShopSearchState.SelectedShop}
         required
       />
       <ul
@@ -160,24 +177,37 @@ export default function ShopSearch(props: ShopSearchProps) {
           </li>
         ))}
       </ul>
+      {searchInputState === ShopSearchState.SelectedShop && (
+        <button
+          className='absolute transition right-2 top-[0.31rem] text-slate-500 rounded-md bg-slate-300 p-[0.1rem]
+          hover:bg-slate-400/50 active:bg-slate-400/50 active:scale-95'
+          type='button'
+          onClick={handleClearShop}
+        >
+          <CloseIcon height={23} width={23} />
+        </button>
+      )}
       <ShopSearchIcon
-        className='absolute right-1 top-1 text-slate-500'
+        className='absolute right-1.5 top-[0.3rem] text-slate-400'
         icon={searchInputState}
       />
-      <input ref={idRef} name='shop-id' defaultValue={defaultId} hidden />
+      <input
+        ref={idRef}
+        name='shop-id'
+        defaultValue={defaultId}
+        required
+        hidden
+      />
     </div>
   );
 }
 
-function ShopSearchIcon(props: {
-  icon: ShopSearchState | null;
-  className?: string;
-}) {
+function ShopSearchIcon(props: {icon: ShopSearchState; className?: string}) {
   const {icon, className} = props;
 
   switch (icon) {
     case ShopSearchState.SelectedShop:
-      return <StoreIcon className={className} />;
+      return <StoreIcon className={clsx(className, 'left-[0.45rem]')} />;
     case ShopSearchState.Searching:
       return (
         <SearchIcon

@@ -22,6 +22,7 @@ export enum Route {
 }
 
 export enum ShopSearchState {
+  Default = 'default',
   SelectedShop = 'selected-shop',
   Searching = 'searching',
   NoShops = 'no-shops',
