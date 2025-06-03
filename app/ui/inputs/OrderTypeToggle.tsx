@@ -9,8 +9,8 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   const {defaultValue} = props;
 
   const commonButtonClasses =
-    'w-10.5 flex rounded-md transition cursor-pointer text-slate-400 hover:bg-slate-200 active:bg-slate-200 ' +
-    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:bg-slate-300/90 has-checked:active:bg-slate-300/90 has-checked:active:scale-85';
+    'w-10.5 flex rounded-md transition cursor-pointer text-slate-400 hover:text-slate-500 active:text-slate-500 ' +
+    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:text-slate-700 has-checked:active:text-slate-700 has-checked:active:scale-90';
 
   return (
     <fieldset className='flex bg-slate-100 rounded-lg p-1 gap-1'>
