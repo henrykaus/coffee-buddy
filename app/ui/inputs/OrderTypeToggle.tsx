@@ -1,7 +1,3 @@
-'use client';
-
-import clsx from 'clsx';
-import {ChangeEvent, useState} from 'react';
 import {OrderType} from '@/app/lib/enums';
 import {MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 
@@ -12,31 +8,18 @@ interface OrderTypeToggleProps {
 export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   const {defaultValue} = props;
 
-  const [selectedOption, setSelectedOption] = useState<OrderType>(
-    defaultValue === OrderType.ToGo ? OrderType.ToGo : OrderType.ForHere,
-  );
-
   const commonButtonClasses =
-    'w-10 flex rounded-md transition cursor-pointer text-slate-400 hover:bg-slate-200 active:bg-slate-200';
-
-  const handleOptionSelected = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.currentTarget.value as OrderType);
-  };
+    'w-10 flex rounded-md transition cursor-pointer text-slate-400 hover:bg-slate-200 active:bg-slate-200 ' +
+    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:bg-slate-300/90 has-checked:active:bg-slate-300/90 has-checked:active:scale-90';
 
   return (
     <fieldset className='flex bg-slate-100 rounded-lg p-1 gap-1'>
-      <span
-        className={clsx(commonButtonClasses, {
-          'bg-slate-300/90 shadow-md text-slate-700 hover:bg-slate-300/90 active:bg-slate-300/90 active:scale-90':
-            selectedOption === OrderType.ForHere,
-        })}
-      >
+      <span className={commonButtonClasses}>
         <input
           type='radio'
           id='for-here-option'
           name='order-type'
           value={OrderType.ForHere}
-          onChange={handleOptionSelected}
           defaultChecked={defaultValue !== OrderType.ToGo}
           hidden
         />
@@ -49,18 +32,12 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           <MugIcon className='transition mx-auto' />
         </label>
       </span>
-      <span
-        className={clsx(commonButtonClasses, {
-          'bg-slate-300/90 shadow-md text-slate-700 hover:bg-slate-300/90 active:bg-slate-300/90 active:scale-90':
-            selectedOption === OrderType.ToGo,
-        })}
-      >
+      <span className={commonButtonClasses}>
         <input
           type='radio'
           id='to-go-option'
           name='order-type'
           value={OrderType.ToGo}
-          onChange={handleOptionSelected}
           defaultChecked={defaultValue === OrderType.ToGo}
           hidden
         />
