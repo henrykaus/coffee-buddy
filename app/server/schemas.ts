@@ -13,20 +13,10 @@ const VisitSchema = z.object({
   shopName: z.string().min(1),
   size: z.coerce.number(),
   drink: z.string().min(1),
-  rating: z
-    .null()
-    .or(
-      z
-        .string()
-        .length(0)
-        .transform(() => null),
-    )
-    .or(
-      z.coerce
-        .number()
-        .min(0, {message: 'Please enter a valid rating between 0 and 5'})
-        .max(5, {message: 'Please enter a valid rating between 0 and 5'}),
-    ),
+  rating: z.coerce
+    .number()
+    .min(-1, {message: 'Please enter a valid rating between -1 and 5'})
+    .max(5, {message: 'Please enter a valid rating between -1 and 5'}),
   price: z.coerce.number().min(0, {
     message: 'Please enter a valid price greater than or equal to $0',
   }),

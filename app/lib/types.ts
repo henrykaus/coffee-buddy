@@ -14,10 +14,10 @@ export interface Visit {
   drink: string;
   orderType: OrderType;
   price: number;
-  rating: number | null;
+  rating: number;
   shopName: string;
   shopId: string;
-  size: number | null;
+  size: number;
 }
 
 export interface Shop {

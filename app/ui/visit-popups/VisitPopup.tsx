@@ -106,7 +106,7 @@ export default function VisitPopup(props: VisitPopupProps) {
 
   const actions = [
     <DateInput key={0} defaultValue={visit?.date ?? undefined} />,
-    <RatingInput key={1} defaultValue={visit?.rating ?? undefined} />,
+    <RatingInput key={1} defaultValue={visit?.rating} />,
     <NotesInput key={2} defaultValue={visit?.notes ?? undefined} />,
     ...(onDeleteServerAction ? [deleteButton] : []),
     confirmButton,
@@ -124,7 +124,7 @@ export default function VisitPopup(props: VisitPopupProps) {
         <DrinkInput
           className={inputClasses}
           defaultDrink={visit?.drink}
-          defaultSize={visit?.size ?? undefined}
+          defaultSize={visit?.size}
         />
         <div className='flex gap-3'>
           <PriceInput className={inputClasses} defaultValue={visit?.price} />

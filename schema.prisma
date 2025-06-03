@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
@@ -15,33 +9,29 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  email String @unique
-
+  id     String  @id @default(uuid())
+  email  String  @unique
   visits Visit[]
 }
 
 model Shop {
-  id    String @id @default(uuid())
-  osmId String @unique
-  name  String
-
+  id     String  @id @default(uuid())
+  osmId  String  @unique
+  name   String
   visits Visit[]
 }
 
 model Visit {
-  id     String @id @default(uuid())
-  userId String
-  shopId String
-
+  id        String    @id @default(uuid())
+  userId    String
+  shopId    String
   date      DateTime? @db.Date
   notes     String?
   drink     String
   orderType String
   price     Int
-  rating    Int?
-  size      Int?
-
-  shop Shop @relation(fields: [shopId], references: [id])
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating    Int
+  size      Int
+  shop      Shop      @relation(fields: [shopId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

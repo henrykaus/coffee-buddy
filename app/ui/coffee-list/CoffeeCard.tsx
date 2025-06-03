@@ -29,7 +29,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
   return (
     <article
       className={clsx(
-        'border-2 border-slate-200 pb-2 pt-3 px-3 rounded-md text-lg text-slate-700 text-left transition cursor-pointer',
+        'border-2 border-slate-200 pb-2 pt-3 px-3 rounded-md text-lg text-slate-700 transition cursor-pointer bg-(--background)',
         {'shadow-lg': isExpanded},
       )}
       onClick={handleClick}
@@ -48,7 +48,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
           </p>
         </span>
         <span className='flex gap-2 min-h-8'>
-          {visit.rating !== null && visit.rating !== 0 && (
+          {visit.rating >= 0 && (
             <p>
               <span className='font-bold text-2xl/8'>{visit.rating}</span>
               /5
@@ -69,12 +69,12 @@ export default function CoffeeCard(props: CoffeeCardProps) {
         </span>
       </header>
       <p>{formattedDrink}</p>
-      {/* TODO: Make this accessible, the description is still visible to screen-readers */}
       <div
         className={clsx('grid transition-all', {
           'grid-rows-[1fr]': isExpanded,
           'grid-rows-[0fr]': !isExpanded,
         })}
+        aria-hidden={!isExpanded}
       >
         <div className='overflow-hidden'>
           {/* This is required for shrinking cards to work */}

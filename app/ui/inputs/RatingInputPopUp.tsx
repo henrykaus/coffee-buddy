@@ -3,15 +3,15 @@
 import {useRef, useState} from 'react';
 import {StarIcon} from '@/app/ui/icons';
 
-interface RatingInputProps {
+interface RatingInputPopUpProps {
   defaultValue?: number;
   shouldShowIcon?: (showIcon: boolean) => void;
 }
 
-export default function RatingInputText(props: RatingInputProps) {
+export default function RatingInputPopUp(props: RatingInputPopUpProps) {
   const {defaultValue, shouldShowIcon} = props;
 
-  const [currentRating, setCurrentRating] = useState(defaultValue ?? 0);
+  const [currentRating, setCurrentRating] = useState(defaultValue ?? -1);
 
   const showSelectedIcon = (showIcon: boolean) => {
     if (shouldShowIcon) {
@@ -21,7 +21,7 @@ export default function RatingInputText(props: RatingInputProps) {
 
   const handleStarSelect = (rating: number) => {
     if (rating === currentRating) {
-      setCurrentRating(0);
+      setCurrentRating(-1);
       showSelectedIcon(false);
     } else {
       setCurrentRating(rating);

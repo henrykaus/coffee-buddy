@@ -59,6 +59,7 @@ export const getVisitFromFormData = (formData: FormData): State => {
   });
 
   if (!validatedFields.success) {
+    console.error(validatedFields.error);
     return {message: 'Unable to create/update visit...'};
   }
 

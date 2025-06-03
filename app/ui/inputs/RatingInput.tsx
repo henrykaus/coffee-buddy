@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import FieldPopup from '@/app/ui/common/FieldPopup';
 import {RatingOffIcon, StarIcon} from '@/app/ui/icons';
-import RatingInputText from '@/app/ui/inputs/RatingInputText';
+import RatingInputPopUp from '@/app/ui/inputs/RatingInputPopUp';
 
 interface RatingInputProps {
   defaultValue?: number;
 }
 
 export default function RatingInput(props: RatingInputProps) {
-  const {defaultValue} = props;
+  const {defaultValue = -1} = props;
 
-  const [showAltIcon, setShowAltIcon] = useState(!!defaultValue);
+  const [showAltIcon, setShowAltIcon] = useState(defaultValue > -1);
 
   return (
     <FieldPopup
@@ -18,7 +18,7 @@ export default function RatingInput(props: RatingInputProps) {
       altIcon={<StarIcon fill='#94a3b8' strokeWidth={2.25} />}
       showAltIcon={showAltIcon}
     >
-      <RatingInputText
+      <RatingInputPopUp
         defaultValue={defaultValue}
         shouldShowIcon={(showIcon) => setShowAltIcon(showIcon)}
       />

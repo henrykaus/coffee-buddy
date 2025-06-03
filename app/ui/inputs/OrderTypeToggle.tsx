@@ -20,7 +20,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           id='for-here-option'
           name='order-type'
           value={OrderType.ForHere}
-          defaultChecked={defaultValue !== OrderType.ForHere}
+          defaultChecked={defaultValue !== OrderType.ToGo}
           hidden
         />
         <label

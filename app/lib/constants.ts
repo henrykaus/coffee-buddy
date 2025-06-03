@@ -8,10 +8,11 @@ export const SEARCH_PLACEHOLDER_KEYWORDS = [
   'Flat White',
   'Smoothie',
   'Caramel',
-  'Frappucino',
+  'Frappuccino',
   'Mocha',
   'Oat milk',
   'Lavender',
+  'Cappuccino',
 ];
 
 export const NOTES_PLACEHOLDER_KEYWORDS = [

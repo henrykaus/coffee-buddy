@@ -6,7 +6,6 @@ const NOMINATIM_SEARCH_URL = `${NOMINATIM_BASE_URL}/search?countrycodes=us&addre
 const NOMINATIM_LOOKUP_URL = `${NOMINATIM_BASE_URL}/lookup?format=jsonv2`;
 
 const shortenAddress = (address: string) => {
-  // TODO: Why is "address" coming in as undefined when the term "Flag" is searched?
   if (!address) {
     return '';
   }
@@ -74,7 +73,8 @@ export const searchShops = async (query: string) => {
   const entryDict: Map<string, NominatimEntry[]> = new Map();
   data.forEach((entry: NominatimEntry) => {
     if (entry.name) {
-      const key = `${entry.name}-${entry.address.city ?? entry.address.town}`;
+      const key =
+        `${entry.name}-${entry.address.city ?? entry.address.town}`.toLowerCase();
 
       const dictValue = entryDict.get(key);
       if (dictValue) {
