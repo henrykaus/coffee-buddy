@@ -9,8 +9,8 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   const {defaultValue} = props;
 
   const commonButtonClasses =
-    'w-10 flex rounded-md transition cursor-pointer text-slate-400 hover:bg-slate-200 active:bg-slate-200 active:scale-90 ' +
-    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:bg-slate-300/90 has-checked:active:bg-slate-300/90';
+    'w-10.5 flex rounded-md transition cursor-pointer text-slate-400 hover:bg-slate-200 active:bg-slate-200 ' +
+    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:bg-slate-300/90 has-checked:active:bg-slate-300/90 has-checked:active:scale-85';
 
   return (
     <fieldset className='flex bg-slate-100 rounded-lg p-1 gap-1'>
@@ -20,7 +20,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           id='for-here-option'
           name='order-type'
           value={OrderType.ForHere}
-          defaultChecked={defaultValue !== OrderType.ToGo}
+          defaultChecked={defaultValue !== OrderType.ForHere}
           hidden
         />
         <label
@@ -29,7 +29,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           className='cursor-pointer w-full h-full p-1'
           title='For here'
         >
-          <MugIcon className='transition mx-auto' />
+          <MugIcon className='mx-auto' />
         </label>
       </span>
       <span className={commonButtonClasses}>
@@ -47,7 +47,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           title='To go'
           className='cursor-pointer w-full h-full p-1'
         >
-          <ToGoCupIcon className='transition mx-auto' />
+          <ToGoCupIcon className='mx-auto' />
         </label>
       </span>
     </fieldset>
