@@ -612,10 +612,10 @@ export const ToGoCupIcon = (props: IconProps) => {
       strokeLinejoin='round'
       className={className}
     >
-      <path d='m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8' />
-      <path d='M5 8h14' />
-      <path d='M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0' />
-      <path d='m12 8 1-6h2' />
+      <path d='M4 7h16' />
+      <path d='m18.2 11 .8-4-.8-4c-.1-.5-.6-1-1.2-1H7c-.6 0-1.1.4-1.2 1C5.5 4.4 5 7 5 7l.8 4' />
+      <path d='M18 18H6l-1-7h14Z' fill='currentColor' fill-opacity='0.5' />
+      <path d='m7.2 18 .6 3c.1.5.6 1 1.2 1h6c.6 0 1.1-.4 1.2-1l.6-3' />
     </svg>
   );
 };
