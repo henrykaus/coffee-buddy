@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "Visit" ALTER COLUMN "rating" SET NOT NULL,
-ALTER COLUMN "size" SET NOT NULL;
-
