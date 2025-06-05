@@ -44,9 +44,9 @@ export default function Modal(props: ModalProps) {
           'rounded-t-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10',
           {
             'h-[75%]': fullscreen,
-            'animate-(--animate-slide-up)':
+            'animate-(--animate-popup-slide-up)':
               modalAnimation === ModalAnimation.SlideUp,
-            'animate-(--animate-slide-down)':
+            'animate-(--animate-popup-slide-down)':
               modalAnimation === ModalAnimation.SlideDown,
           },
         )}

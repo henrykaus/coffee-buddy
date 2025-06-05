@@ -4,6 +4,7 @@ import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
 import {State} from '@/app/server/visits/actions';
 import {CreateVisit} from '@/app/server/schemas';
+import {ZodError} from 'zod';
 
 type VisitWithShop = Prisma.VisitGetPayload<{
   include: {shop: true};
@@ -59,8 +60,7 @@ export const getVisitFromFormData = (formData: FormData): State => {
   });
 
   if (!validatedFields.success) {
-    console.error(validatedFields.error);
-    return {message: 'Unable to create/update visit...'};
+    return generateErrorForClient(validatedFields.error);
   }
 
   const visit: Visit = {
@@ -125,9 +125,19 @@ export const generateErrorForClient = (
   error: unknown,
   context?: string,
 ): State => {
-  if (error instanceof Error) {
+  if (error instanceof ZodError) {
+    return {message: condenseZodErrors(error)};
+  } else if (error instanceof Error) {
     return {message: error.message};
   } else {
     return {message: `Unknown error occurred when ${context}`};
   }
+};
+
+export const condenseZodErrors = (error: ZodError) => {
+  return error.errors.reduce(
+    (fullMessage, error) =>
+      fullMessage ? `${fullMessage}\n${error.message}` : error.message,
+    '',
+  );
 };

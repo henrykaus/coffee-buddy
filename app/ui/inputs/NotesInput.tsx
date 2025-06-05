@@ -43,6 +43,7 @@ export default function NotesInput(props: NotesInputProps) {
         defaultValue={defaultValue}
         suppressHydrationWarning
         onChange={handleChange}
+        maxLength={500}
       />
     </FieldPopup>
   );

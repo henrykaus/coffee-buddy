@@ -28,3 +28,9 @@ export enum ShopSearchState {
   NoShops = 'no-shops',
   FoundShops = 'found-shops',
 }
+
+export enum ToastType {
+  Success = 'success',
+  Info = 'info',
+  Error = 'error',
+}

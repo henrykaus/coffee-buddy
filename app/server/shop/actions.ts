@@ -1,4 +1,5 @@
 import {NominatimEntry, Shop} from '@/app/lib/types';
+import {logError} from '@/app/server/common';
 
 const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org';
 
@@ -65,10 +66,10 @@ export const searchShops = async (query: string) => {
       return response.json();
     })
     .catch((error) => {
-      console.error(error);
+      logError(error);
     });
 
-  console.log('Nominatim', data);
+  // console.log('Nominatim', data);
 
   const entryDict: Map<string, NominatimEntry[]> = new Map();
   data.forEach((entry: NominatimEntry) => {
@@ -117,10 +118,10 @@ export const lookupShop = async (id: string) => {
       return response.json();
     })
     .catch((error) => {
-      console.error(error);
+      logError(error);
     });
 
-  console.log('Nominatim Lookup', data);
+  // console.log('Nominatim Lookup', data);
 
   if (data.length > 0) {
     return convertNominatimEntryToShop(data[0]);

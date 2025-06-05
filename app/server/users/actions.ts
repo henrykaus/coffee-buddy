@@ -3,6 +3,7 @@
 import {prisma} from '@/app/server/prisma';
 import {User} from '@/app/lib/types';
 import {AddUser} from '@/app/server/schemas';
+import {generateErrorForClient} from '@/app/server/common';
 
 export const addUser = async (email: string): Promise<User | null> => {
   const validatedFields = AddUser.safeParse({
@@ -11,7 +12,7 @@ export const addUser = async (email: string): Promise<User | null> => {
 
   if (!validatedFields.success) {
     console.error(
-      `Failed to add user.\n${validatedFields.error.flatten().fieldErrors}`,
+      `Failed to add user.\n${generateErrorForClient(validatedFields.error).message}`,
     );
     return null;
   }

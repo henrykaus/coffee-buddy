@@ -42,18 +42,11 @@ export const createVisit = async (
     });
 
     if (!validatedFields.success) {
-      console.error(
-        `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.notes}`,
+      logError(
+        `Failed to add location.\n${generateErrorForClient(validatedFields.error).message}`,
       );
-      console.error(
-        `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.rating}`,
-      );
-      console.error(
-        `Failed to add location.\n${validatedFields.error.flatten().fieldErrors.size}`,
-      );
-      return {
-        message: `Failed to add location.\n${validatedFields.error.flatten().fieldErrors}`,
-      };
+
+      return generateErrorForClient(validatedFields.error);
     }
 
     const {
@@ -100,15 +93,10 @@ export const createVisit = async (
       },
     });
 
-    console.log(dbVisit);
-
     return {visit: getVisitForClient(dbVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
-
-    return error instanceof Error
-      ? {message: error.message}
-      : {message: 'unknown error while adding visit'};
+    return generateErrorForClient(error, 'adding visit');
   }
 };
 
@@ -131,10 +119,8 @@ export const getVisit = async (id: string): Promise<State> => {
     });
 
     if (!dbVisit) {
-      return {message: `Visit with ID ${id} was not found.`};
+      throw new Error(`Visit with ID ${id} was not found.`);
     }
-
-    console.log(dbVisit);
 
     return {visit: getVisitForClient(dbVisit)};
   } catch (error: unknown) {
@@ -199,9 +185,7 @@ export const updateVisit = async (
     });
 
     if (!validatedFields.success) {
-      return {
-        message: `Failed to update location.\n${validatedFields.error.flatten().fieldErrors}`,
-      };
+      return generateErrorForClient(validatedFields.error);
     }
 
     const {
@@ -253,8 +237,6 @@ export const updateVisit = async (
       },
     });
 
-    console.log(rawVisit);
-
     return {visit: getVisitForClient(rawVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
@@ -296,7 +278,6 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
       throw new Error(`User with email ${session.user?.email} does not exist.`);
     }
 
-    console.log(query);
     const rawVisits = await prisma.visit.findMany({
       where: {
         userId: user.id,
@@ -328,8 +309,6 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
         shop: true,
       },
     });
-
-    console.log(rawVisits);
 
     const visits = rawVisits.map((visit) => getVisitForClient(visit));
     return visits;

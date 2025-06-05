@@ -13,7 +13,5 @@ export default async function CoffeeListWrapper(props: TestComponentProps) {
   const visits: Visit[] =
     query === '' ? await listVisits() : await searchVisits(query);
 
-  console.log('IMPORTANT: re-rendered home');
-
   return <CoffeeList visits={visits} query={query} />;
 }

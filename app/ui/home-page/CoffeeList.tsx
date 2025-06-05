@@ -6,14 +6,15 @@ import AddVisitButton from '@/app/ui/coffee-list/AddVisitButton';
 import AddVisitPopup from '@/app/ui/visit-popups/AddVisitPopup';
 import EditVisitPopup from '@/app/ui/visit-popups/EditVisitPopup';
 import React, {useEffect, useState} from 'react';
-import {Visit, VisitAction} from '@/app/lib/types';
+import {ToastConfig, Visit, VisitAction} from '@/app/lib/types';
 import {
   createVisit,
   deleteVisit,
   State,
   updateVisit,
 } from '@/app/server/visits/actions';
-import {VisitActionType} from '@/app/lib/enums';
+import {ToastType, VisitActionType} from '@/app/lib/enums';
+import Toast from '@/app/ui/common/Toast';
 
 interface CoffeeListProps {
   visits: Visit[];
@@ -27,6 +28,7 @@ export default function CoffeeList(props: CoffeeListProps) {
   const [visitAction, setVisitAction] = useState<VisitAction | null>(null);
   const [showAddVisitPopup, setShowAddVisitPopup] = useState(false);
   const [activeVisit, setActiveVisit] = useState<Visit | null>(null);
+  const [toastConfig, setToastConfig] = useState<ToastConfig | null>(null);
 
   useEffect(() => {
     setCoffeeVisits(visits);
@@ -97,6 +99,10 @@ export default function CoffeeList(props: CoffeeListProps) {
       });
     }
 
+    if (newState.message) {
+      setToastConfig({type: ToastType.Error, message: newState.message});
+    }
+
     return newState;
   };
 
@@ -114,17 +120,26 @@ export default function CoffeeList(props: CoffeeListProps) {
       });
     }
 
+    if (newState.message) {
+      setToastConfig({type: ToastType.Error, message: newState.message});
+    }
+
     return newState;
   };
 
   const removeVisitFromDB = async (visit: Visit) => {
     const newState = await deleteVisit(visit.id);
+
     if (newState.visit) {
       setVisitAction({
         action: VisitActionType.Delete,
         isClient: false,
         visit: newState.visit,
       });
+    }
+
+    if (newState.message) {
+      setToastConfig({type: ToastType.Error, message: newState.message});
     }
 
     return newState;
@@ -138,8 +153,10 @@ export default function CoffeeList(props: CoffeeListProps) {
         isClient: true,
         visit: state.visit,
       });
-    } else if (state.message) {
-      console.error(state.message);
+    }
+
+    if (state.message) {
+      setToastConfig({type: ToastType.Error, message: state.message});
     }
   };
 
@@ -150,8 +167,10 @@ export default function CoffeeList(props: CoffeeListProps) {
         isClient: true,
         visit: state.visit,
       });
-    } else if (state.message) {
-      console.error(state.message);
+    }
+
+    if (state.message) {
+      setToastConfig({type: ToastType.Error, message: state.message});
     }
   };
 
@@ -165,6 +184,13 @@ export default function CoffeeList(props: CoffeeListProps) {
 
   return (
     <>
+      <Toast
+        onToastClose={() => setToastConfig(null)}
+        show={toastConfig !== null}
+        type={ToastType.Error}
+      >
+        {toastConfig?.message}
+      </Toast>
       <section className='flex gap-y-3 flex-col mb-24 pb-10 px-6 sm:px-20'>
         {(coffeeVisits.length || query.length > 0) && <VisitSearch />}
         {coffeeVisits.length ? (

@@ -1,4 +1,4 @@
-import {OrderType, VisitActionType} from './enums';
+import {OrderType, ToastType, VisitActionType} from './enums';
 
 export interface User {
   id?: string;
@@ -50,4 +50,9 @@ export interface VisitAction {
   action: VisitActionType;
   isClient: boolean;
   visit: Visit;
+}
+
+export interface ToastConfig {
+  message: string;
+  type: ToastType;
 }

@@ -78,7 +78,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
       >
         <div className='overflow-hidden'>
           {/* This is required for shrinking cards to work */}
-          <p className='bg-slate-100 rounded-md p-2 text-sm my-1.5'>
+          <p className='bg-slate-100 rounded-md p-2 text-sm my-1.5 whitespace-pre-wrap'>
             {visit.notes ? (
               visit.notes
             ) : (
