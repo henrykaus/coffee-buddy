@@ -192,7 +192,9 @@ export default function CoffeeList(props: CoffeeListProps) {
         {toastConfig?.message}
       </Toast>
       <section className='flex gap-y-3 flex-col mb-24 pb-10 px-6 sm:px-20'>
-        {(coffeeVisits.length || query.length > 0) && <VisitSearch />}
+        {(coffeeVisits.length || query.length > 0) && (
+          <VisitSearch query={query} />
+        )}
         {coffeeVisits.length ? (
           coffeeVisits.map((visit) => (
             <CoffeeCard

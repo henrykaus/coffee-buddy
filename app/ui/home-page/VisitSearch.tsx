@@ -3,7 +3,13 @@
 import SearchInput from '@/app/ui/inputs/SearchInput';
 import {useSearchParams, usePathname, useRouter} from 'next/navigation';
 
-export default function VisitSearch() {
+interface VisitSearchProps {
+  query: string;
+}
+
+export default function VisitSearch(props: VisitSearchProps) {
+  const {query} = props;
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const {replace} = useRouter();
@@ -19,5 +25,5 @@ export default function VisitSearch() {
     replace(`${pathname}?${params.toString()}`);
   };
 
-  return <SearchInput onSearch={handleSearch} />;
+  return <SearchInput onSearch={handleSearch} query={query} />;
 }
