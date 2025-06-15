@@ -9,6 +9,8 @@
   --animate-shop-search: searching-animation 2s ease-in-out infinite;
   --animate-popup-slide-up: popup-slide-up 0.2s ease-out forwards;
   --animate-popup-slide-down: popup-slide-down 0.2s ease-in-out forwards;
+  --animate-popup-slide-left: popup-slide-left 0.15s ease-in-out forwards;
+  --animate-popup-slide-right: popup-slide-right 0.15s ease-in-out forwards;
   --animate-toast-slide-down: toast-slide-down 0.2s ease-in-out forwards;
   --animate-toast-slide-up: toast-slide-up 0.2s ease-in-out forwards;
   box-sizing: border-box;
@@ -109,6 +111,25 @@ input[type='date'].calendar.icon-only {
     transform: translateY(100%);
   }
 }
+
+@keyframes popup-slide-left {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes popup-slide-right {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
 
 @keyframes toast-slide-down {
   from {

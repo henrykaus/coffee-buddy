@@ -56,3 +56,9 @@ export interface ToastConfig {
   message: string;
   type: ToastType;
 }
+
+export interface PatchNotes {
+  title: string;
+  date: string;
+  description: string;
+}

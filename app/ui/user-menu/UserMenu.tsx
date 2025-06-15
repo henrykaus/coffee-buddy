@@ -23,16 +23,21 @@ export default function UserMenu(props: UserMenuProps) {
 
   const handleOptionClicked = async (option: UserMenuOption) => {
     switch (option) {
-      case UserMenuOption.MoreOptions: {
-        setMenuOpen(UserMenuOption.MoreOptions);
-        break;
-      }
       case UserMenuOption.DeleteAccount: {
         setMenuOpen(UserMenuOption.DeleteAccount);
         break;
       }
       case UserMenuOption.LogOut: {
-        await signOut({redirectTo: `/${Route.Login}`});
+        await signOut({redirectTo: Route.Login});
+        break;
+      }
+      case UserMenuOption.MoreOptions: {
+        setMenuOpen(UserMenuOption.MoreOptions);
+        break;
+      }
+      case UserMenuOption.WhatsNew: {
+        // What's New is navigated to from a Link component
+        setMenuOpen(null);
         break;
       }
     }
@@ -47,7 +52,7 @@ export default function UserMenu(props: UserMenuProps) {
       <div className='relative text-slate-700 font-medium' ref={ref}>
         <button
           aria-label='Open user menu'
-          className='rounded-full p-1 transition hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
+          className='rounded-full transition hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
           onClick={() => setIsOpen(!isOpen)}
         >
           <UserAvatar imageUrl={imageUrl} />

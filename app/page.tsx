@@ -6,8 +6,8 @@ export default async function Page() {
   const session = await auth();
 
   if (session) {
-    redirect(`/${Route.Home}`);
+    redirect(Route.Home);
   } else {
-    redirect(`/${Route.Login}`);
+    redirect(Route.Login);
   }
 }

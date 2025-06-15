@@ -9,6 +9,7 @@ interface ModalProps {
   actions?: ReactNode[];
   children?: ReactNode;
   fullscreen?: boolean;
+  centered?: boolean;
   onClose: (...args: never[]) => void;
   onConfirm?: (formData: FormData) => void | Promise<void>;
   primaryButtonText?: string;
@@ -22,10 +23,11 @@ export default function Modal(props: ModalProps) {
     actions,
     children,
     fullscreen = true,
+    centered = false,
     onClose,
     showClose = true,
     title,
-    modalAnimation = ModalAnimation.SlideUp,
+    modalAnimation = ModalAnimation.Enter,
   } = props;
 
   useEffect(() => {
@@ -41,13 +43,17 @@ export default function Modal(props: ModalProps) {
       <ModalBackground />
       <dialog
         className={clsx(
-          'rounded-t-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10',
+          'rounded-t-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10 shadow-md',
+          'md:start-auto md:w-[31rem]',
           {
             'h-[75%]': fullscreen,
-            'animate-(--animate-popup-slide-up)':
-              modalAnimation === ModalAnimation.SlideUp,
-            'animate-(--animate-popup-slide-down)':
-              modalAnimation === ModalAnimation.SlideDown,
+            'md:h-auto md:m-auto md:end-[50%] md:bottom-[50%] md:translate-1/2 md:rounded-xl':
+              centered,
+            'md:h-full md:end-0 md:rounded-t-none md:rounded-l-xl': !centered,
+            'animate-(--animate-popup-slide-up) md:animate-(--animate-popup-slide-left)':
+              modalAnimation === ModalAnimation.Enter,
+            'animate-(--animate-popup-slide-down) md:animate-(--animate-popup-slide-right)':
+              modalAnimation === ModalAnimation.Exit,
           },
         )}
         open
@@ -78,6 +84,6 @@ export default function Modal(props: ModalProps) {
 }
 
 export enum ModalAnimation {
-  SlideUp = 'slide-up',
-  SlideDown = 'slide-down',
+  Enter = 'enter',
+  Exit = 'exit',
 }

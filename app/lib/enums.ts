@@ -4,9 +4,10 @@ export enum OrderType {
 }
 
 export enum UserMenuOption {
+  DeleteAccount = 'delete-account',
   LogOut = 'log-out',
   MoreOptions = 'more-options',
-  DeleteAccount = 'delete-account',
+  WhatsNew = 'whats-new',
 }
 
 export enum VisitActionType {
@@ -16,9 +17,15 @@ export enum VisitActionType {
 }
 
 export enum Route {
-  Root = '',
-  Home = 'home',
-  Login = 'login',
+  Root = '/',
+  Home = '/home',
+  Login = '/login',
+  WhatsNew = '/home/updates',
+}
+
+export enum PageTitle {
+  Home = 'Recent visits',
+  WhatsNew = "What's new",
 }
 
 export enum ShopSearchState {

@@ -14,7 +14,7 @@ export function UserAvatar(props: UserAvatarProps) {
 
   return imageUrl ? (
     <Image
-      className='rounded-full'
+      className='rounded-full m-1'
       src={imageUrl}
       alt='User avatar'
       height={imageHeight}

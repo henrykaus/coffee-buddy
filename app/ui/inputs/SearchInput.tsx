@@ -38,7 +38,7 @@ export default function SearchInput(props: SearchInputProps) {
         type='text'
         placeholder={`${selectRandomPlaceholder()}...`}
         className='peer border-2 border-slate-300 rounded-lg outline-hidden focus:border-b-slate-400 text-slate-600 transition py-2 pl-4 pr-11 placeholder:text-slate-400/80
-          text-xl grow shadow-sm w-full bg-(--background)'
+          text-xl grow shadow-xs w-full bg-(--background)'
         onChange={debouncedSearchShops}
         defaultValue={query}
         suppressHydrationWarning

@@ -17,24 +17,25 @@ export default function DeleteAccountPopup(props: DeleteAccountPopupProps) {
 
   const handleDeleteAccount = async () => {
     await deleteUserData();
-    replace(`/${Route.Login}`);
+    replace(Route.Login);
   };
 
   return (
     <Modal
       title='Are You Sure?'
+      centered
       fullscreen={false}
       showClose={false}
       onClose={onClose}
     >
       <p className='mb-5 mx-2 text-lg text-slate-700'>
-        All of your information will be permanently deleted. This action CANNOT
-        be undone.
+        All of your information will be permanently deleted. This action{' '}
+        <span className='font-bold'>cannot</span> be undone.
       </p>
       <div className='mx-5'>
         <button
           type='button'
-          className='flex justify-center transition hover:bg-rose-100 active:bg-rose-100 text-rose-700 rounded-lg border-rose-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap font-medium'
+          className='flex justify-center items-center transition hover:bg-rose-100 active:bg-rose-100 text-rose-700 rounded-lg border-rose-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap font-medium'
           onClick={handleDeleteAccount}
         >
           <GhostIcon />
@@ -42,7 +43,7 @@ export default function DeleteAccountPopup(props: DeleteAccountPopupProps) {
         </button>
         <button
           type='button'
-          className='flex justify-center transition hover:bg-slate-200/90 active:bg-slate-200/90 text-slate-700 rounded-lg border-slate-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap mt-3'
+          className='flex justify-center items-center transition hover:bg-slate-200/90 active:bg-slate-200/90 text-slate-700 rounded-lg border-slate-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap mt-3'
           onClick={onClose}
         >
           <CancelIcon />

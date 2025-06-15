@@ -6,7 +6,7 @@ export default function Page() {
   const handleLoginClick = async () => {
     'use server';
     await signIn('google', {
-      redirectTo: `/${Route.Home}`,
+      redirectTo: Route.Home,
     });
   };
 
