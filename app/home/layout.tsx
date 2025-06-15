@@ -1,8 +1,9 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, Suspense} from 'react';
 import HomeHeader from '@/app/ui/home-page/HomeHeader';
 import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
 import {Route} from '@/app/lib/enums';
+import {HeaderSkeleton} from '@/app/ui/skeletons';
 
 interface LayoutProps {
   children: Readonly<ReactNode>;
@@ -19,7 +20,9 @@ export default async function Layout(props: LayoutProps) {
 
   return (
     <main className='w-full min-h-screen font-[family-name:var(--font-geist-sans)]'>
-      <HomeHeader user={session?.user} />
+      <Suspense fallback={<HeaderSkeleton />}>
+        <HomeHeader user={session?.user} />
+      </Suspense>
       {children}
     </main>
   );
