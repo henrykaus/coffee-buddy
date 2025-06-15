@@ -42,6 +42,7 @@ export interface NominatimEntry {
     road: string;
     state: string;
     town: string;
+    village: string;
   };
   name: string;
 }

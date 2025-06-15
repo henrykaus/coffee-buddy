@@ -41,7 +41,7 @@ const convertNominatimEntryToShop = (
   return {
     id: id,
     name: entry.name,
-    city: entry.address.city ?? entry.address.town,
+    city: entry.address.city ?? entry.address.town ?? entry.address.village,
     state: entry.address.state,
     street: street,
     houseNumber: houseNumber,
@@ -69,7 +69,7 @@ export const searchShops = async (query: string) => {
       logError(error);
     });
 
-  // console.log('Nominatim', data);
+  console.log('Nominatim', data);
 
   const entryDict: Map<string, NominatimEntry[]> = new Map();
   data.forEach((entry: NominatimEntry) => {
