@@ -37,6 +37,7 @@ export interface NominatimEntry {
   osm_type: string;
   address: {
     city: string;
+    hamlet: string;
     house_number: string;
     neighborhood: string;
     road: string;
