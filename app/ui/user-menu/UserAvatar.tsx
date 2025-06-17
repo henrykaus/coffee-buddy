@@ -21,6 +21,11 @@ export function UserAvatar(props: UserAvatarProps) {
       width={imageWidth}
     />
   ) : (
-    <UserIcon height={imageHeight} width={imageWidth} />
+    <UserIcon
+      height={imageHeight}
+      width={imageWidth}
+      strokeWidth={2}
+      className='m-1'
+    />
   );
 }

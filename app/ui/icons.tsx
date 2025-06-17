@@ -124,6 +124,33 @@ export const ChevronDownIcon = (props: IconProps) => {
   );
 };
 
+export const CircleIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill={fill}
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <circle cx='12' cy='12' r='10' />
+    </svg>
+  );
+};
+
 export const CircleAlertIcon = (props: IconProps) => {
   const {
     className,

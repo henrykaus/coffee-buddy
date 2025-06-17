@@ -60,7 +60,9 @@ export interface ToastConfig {
 }
 
 export interface PatchNotes {
+  date?: string;
+  divider?: boolean;
+  features?: string[];
+  fixes?: string[];
   title: string;
-  date: string;
-  description: string;
 }

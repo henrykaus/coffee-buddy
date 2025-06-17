@@ -73,7 +73,7 @@ export const searchShops = async (query: string) => {
       logError(error);
     });
 
-  console.log('Nominatim', data);
+  // console.log('Nominatim', data);
 
   const entryDict: Map<string, NominatimEntry[]> = new Map();
   data.forEach((entry: NominatimEntry) => {

@@ -22,13 +22,13 @@ export default function HomeHeader(props: HomeHeaderProps) {
       <h1 className='text-3xl font-medium font-[family-name:var(--font-header)]'>
         {convertRouteToTitle(pathname as Route)}
       </h1>
-      <span className='flex items-start gap-2'>
+      <span className='flex items-center gap-2'>
         {pathname !== Route.Home && (
           <Link
             href={Route.Home}
-            className='rounded-full flex items-center justify-center m-1 h-[44px] w-[44px] text-slate-500 transition hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
+            className='rounded-full flex items-center justify-center p-[0.4rem] text-slate-500 transition bg-slate-200/60 hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
           >
-            <HomeIcon height={30} width={30} />
+            <HomeIcon height={28} width={28} strokeWidth={2.3} />
           </Link>
         )}
         <UserMenu imageUrl={user?.image} />
