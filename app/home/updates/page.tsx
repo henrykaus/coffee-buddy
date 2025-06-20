@@ -17,7 +17,7 @@ export default function Page() {
           </div>
         ) : (
           <article
-            className='flex flex-col gap-4 relative bg-slate-50 p-5 rounded-md shadow-xs text-slate-700'
+            className='flex flex-col gap-4 bg-slate-50 p-5 rounded-md shadow-xs text-slate-700'
             key={index}
           >
             <header className='flex justify-between items-baseline'>
