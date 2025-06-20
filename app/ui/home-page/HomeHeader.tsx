@@ -1,12 +1,13 @@
 'use client';
 
 import UserMenu from '@/app/ui/user-menu/UserMenu';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {User} from 'next-auth';
 import {usePathname} from 'next/navigation';
 import {PageTitle, Route} from '@/app/lib/enums';
 import Link from 'next/link';
 import {HomeIcon} from '@/app/ui/icons';
+import clsx from 'clsx';
 
 interface HomeHeaderProps {
   user: User | undefined;
@@ -15,10 +16,34 @@ interface HomeHeaderProps {
 export default function HomeHeader(props: HomeHeaderProps) {
   const {user} = props;
 
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
+  // Indicator that the page has been scrolled
+  useEffect(() => {
+    const handleScrolled = () => {
+      if (!isScrolled && window.scrollY >= 10) {
+        setIsScrolled(true);
+      } else if (window.scrollY < 10) {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScrolled);
+    return () => {
+      window.removeEventListener('scroll', handleScrolled);
+    };
+  }, [isScrolled]);
+
   return (
-    <header className='flex sticky top-0 items-center justify-between w-full py-6 px-6 sm:px-20 bg-(--background) z-10'>
+    <header
+      className={clsx(
+        'flex sticky transition top-0 items-center justify-between w-full py-6 px-6 sm:px-20 bg-(--background) z-10',
+        {
+          'shadow-sm': isScrolled,
+        },
+      )}
+    >
       <h1 className='text-3xl font-medium font-[family-name:var(--font-header)]'>
         {convertRouteToTitle(pathname as Route)}
       </h1>

@@ -10,6 +10,7 @@ export const PatchNoteContents: PatchNotes[] = [
     date: 'June 19, 2025',
     features: [
       'We now prevent you from even attempting to save when required visit fields — shop, drink, and price — are missing.',
+      'Added a handy shadow to the header when the page has been scrolled (hint: try scrolling down on this page).',
     ],
     fixes: ['Fixed issue where you could save empty whitespace as a drink.'],
   },
