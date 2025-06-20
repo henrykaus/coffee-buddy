@@ -3,7 +3,7 @@ import {CircleIcon} from '@/app/ui/icons';
 
 export default function Page() {
   return (
-    <div className='flex gap-y-8 flex-col my-3 px-6 sm:px-20'>
+    <div className='flex gap-y-8 flex-col mt-3 mb-12 px-6 sm:px-20'>
       {PatchNoteContents.map((note, index) => {
         return note.divider ? (
           <div className='relative w-full' key={index}>

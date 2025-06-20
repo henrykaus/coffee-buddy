@@ -6,7 +6,7 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'June 2025',
   },
   {
-    title: 'No more missing fields',
+    title: 'A Little Help',
     date: 'June 19, 2025',
     features: [
       'We now prevent you from even attempting to save when required visit fields — shop, drink, and price — are missing.',
