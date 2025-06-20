@@ -12,20 +12,19 @@ export default function PriceInput(props: PriceInputProps) {
   const [value, setValue] = useState(defaultValue ?? '');
 
   const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const numberString = event.target.value;
-    const number = Number.parseFloat(numberString);
+    const inputValue = event.target.value;
+    const number = Number.parseFloat(inputValue);
 
-    if (numberString === '') {
-      setValue('');
-    }
-
-    if (isNaN(number)) {
+    // When non-empty non-number characters, don't update input
+    if (isNaN(number) && inputValue !== '') {
+      if (onChange) onChange('');
       return;
-    } else if (number >= 0) {
-      setValue(numberString);
     }
 
-    if (onChange) onChange(numberString);
+    // Otherwise update input with value
+    setValue(inputValue);
+
+    if (onChange) onChange(inputValue);
   };
 
   const handleBlur = (event: ChangeEvent<HTMLInputElement>) => {
