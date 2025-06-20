@@ -41,3 +41,14 @@ export enum ToastType {
   Info = 'info',
   Error = 'error',
 }
+
+export enum VisitFormField {
+  Date = 'date',
+  Rating = 'rating',
+  Notes = 'notes',
+  Shop = 'shop',
+  Drink = 'drink',
+  Size = 'size',
+  Price = 'price',
+  OrderType = 'order-type',
+}

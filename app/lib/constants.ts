@@ -1,3 +1,5 @@
+import {RequiredVisitFieldsValidity} from '@/app/lib/types';
+
 export const SEARCH_PLACEHOLDER_KEYWORDS = [
   'Vanilla Latte',
   'Starbucks',
@@ -27,3 +29,15 @@ export const NOTES_PLACEHOLDER_KEYWORDS = [
   'Too loud?',
   'Is this your new home?',
 ];
+
+export const DEFAULT_ADD_VISIT_REQUIRED_FIELDS: RequiredVisitFieldsValidity = {
+  shopIsValid: false,
+  drinkIsValid: false,
+  priceIsValid: false,
+};
+
+export const DEFAULT_EDIT_VISIT_REQUIRED_FIELDS: RequiredVisitFieldsValidity = {
+  shopIsValid: true,
+  drinkIsValid: true,
+  priceIsValid: true,
+};

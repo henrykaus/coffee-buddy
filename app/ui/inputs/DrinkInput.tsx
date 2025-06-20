@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import clsx from 'clsx';
 import {ChevronDownIcon} from '@/app/ui/icons';
 
@@ -6,10 +6,27 @@ interface SizeInputProps {
   className?: string;
   defaultSize?: number;
   defaultDrink?: string;
+  onChange?: (drink: string) => void;
 }
 
 export default function DrinkInput(props: SizeInputProps) {
-  const {className, defaultSize, defaultDrink} = props;
+  const {className, defaultSize, defaultDrink, onChange} = props;
+
+  const [drink, setDrink] = useState(defaultDrink ?? '');
+
+  const handleDrinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newDrinkValue = event.target.value.trimStart();
+
+    setDrink(newDrinkValue);
+    if (onChange) onChange(newDrinkValue);
+  };
+
+  const handleDrinkBlur = (event: ChangeEvent<HTMLInputElement>) => {
+    const newDrinkValue = event.target.value.trim();
+
+    setDrink(newDrinkValue);
+    if (onChange) onChange(newDrinkValue);
+  };
 
   return (
     <span className='flex relative w-full text-slate-500'>
@@ -19,7 +36,9 @@ export default function DrinkInput(props: SizeInputProps) {
         name='drink'
         aria-label='Drink'
         className={clsx(className, 'pr-26')}
-        defaultValue={defaultDrink}
+        value={drink}
+        onChange={handleDrinkChange}
+        onBlur={handleDrinkBlur}
         required
       />
       <span className='absolute end-1 top-1'>

@@ -66,3 +66,9 @@ export interface PatchNotes {
   fixes?: string[];
   title: string;
 }
+
+export interface RequiredVisitFieldsValidity {
+  shopIsValid: boolean;
+  drinkIsValid: boolean;
+  priceIsValid: boolean;
+}

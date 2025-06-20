@@ -23,14 +23,14 @@ import {
 import {ShopSearchState} from '@/app/lib/enums';
 
 interface ShopSearchProps {
-  autoFocus?: boolean;
   className?: string;
   defaultId?: string | number;
-  defaultName?: string | number;
+  defaultValue?: string | number;
+  onChange?: (shopName: string) => void;
 }
 
 export default function ShopSearch(props: ShopSearchProps) {
-  const {autoFocus = false, className, defaultId, defaultName} = props;
+  const {className, defaultId, defaultValue, onChange} = props;
 
   const [shops, setShops] = useState<Shop[]>([]);
   const [searchInputState, setSearchInputState] = useState<ShopSearchState>(
@@ -76,7 +76,6 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const handleSearchInput = async () => {
     if (nameRef.current?.value && idRef.current) {
-      idRef.current.value = '';
       const shopData = await searchShops(nameRef.current.value);
       setSearchInputState(
         shopData.length ? ShopSearchState.FoundShops : ShopSearchState.NoShops,
@@ -94,6 +93,8 @@ export default function ShopSearch(props: ShopSearchProps) {
       setShops([]);
       idRef.current.value = '';
       nameRef.current.value = '';
+
+      if (onChange) onChange('');
     }
   };
 
@@ -113,6 +114,8 @@ export default function ShopSearch(props: ShopSearchProps) {
       nameRef.current.value = shop.name;
       setSearchInputState(ShopSearchState.SelectedShop);
       setShops([]);
+
+      if (onChange) onChange(shop.name);
     }
   };
 
@@ -149,9 +152,8 @@ export default function ShopSearch(props: ShopSearchProps) {
           'w-full pr-[2.35rem]',
           'read-only:bg-slate-100 read-only:text-slate-500 read-only:rounded-md read-only:pl-10 read-only:focus:border-slate-300',
         )}
-        defaultValue={defaultName}
+        defaultValue={defaultValue}
         onChange={handleOnChange}
-        autoFocus={autoFocus}
         readOnly={searchInputState === ShopSearchState.SelectedShop}
         required
       />

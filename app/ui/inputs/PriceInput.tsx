@@ -3,40 +3,42 @@ import {ChangeEvent, useState} from 'react';
 interface PriceInputProps {
   className?: string;
   defaultValue?: number | string;
+  onChange?: (price: string) => void;
 }
 
 export default function PriceInput(props: PriceInputProps) {
-  const {className, defaultValue} = props;
+  const {className, defaultValue, onChange} = props;
 
   const [value, setValue] = useState(defaultValue ?? '');
 
   const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const rating = event.target.value;
+    const numberString = event.target.value;
+    const number = Number.parseFloat(numberString);
 
-    if (rating === '') {
+    if (numberString === '') {
       setValue('');
     }
 
-    const ratingNumber = Number.parseFloat(rating);
-
-    if (isNaN(ratingNumber)) {
+    if (isNaN(number)) {
       return;
+    } else if (number >= 0) {
+      setValue(numberString);
     }
 
-    if (ratingNumber >= 0) {
-      setValue(rating);
-    }
+    if (onChange) onChange(numberString);
   };
 
   const handleBlur = (event: ChangeEvent<HTMLInputElement>) => {
-    const rating = event.target.value;
-    const ratingNumber = Number.parseFloat(rating);
+    const numberString = event.target.value;
+    const number = Number.parseFloat(numberString);
 
-    if (isNaN(ratingNumber)) {
-      setValue('');
-    } else {
-      setValue(Number.parseFloat(rating).toFixed(2));
-    }
+    const numberToSet = isNaN(number)
+      ? ''
+      : Number.parseFloat(numberString).toFixed(2);
+
+    setValue(numberToSet);
+
+    if (onChange) onChange(numberString);
   };
 
   return (

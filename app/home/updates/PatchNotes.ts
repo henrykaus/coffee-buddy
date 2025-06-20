@@ -6,6 +6,14 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'June 2025',
   },
   {
+    title: 'No more missing fields',
+    date: 'June 19, 2025',
+    features: [
+      'We now prevent you from even attempting to save when required visit fields — shop, drink, and price — are missing.',
+    ],
+    fixes: ['Fixed issue where you could save empty whitespace as a drink.'],
+  },
+  {
     title: "What's New!",
     date: 'June 15, 2025',
     features: [
