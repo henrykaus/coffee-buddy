@@ -6,12 +6,16 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'July 2025',
   },
   {
-    title: 'Small Improvements',
+    title: 'Catching Those Errors',
     date: 'July 7, 2025',
-    features: ['We now show login error messages if any occur.'],
+    features: [
+      'We now show login error messages if any occur.',
+      'Added a character counter to the shop notes input.',
+    ],
     fixes: [
-      'When searching for shops, the entries now utilize the dropdown space better.',
+      'When searching for shops, the entries now utilize the dropdown area better.',
       'Fixed issue where a failed login would redirect you to an unknown page.',
+      'Added better placeholder text for the Coffee shop search field when adding a visit.',
       'Security updates.',
     ],
   },

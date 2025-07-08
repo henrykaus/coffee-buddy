@@ -34,7 +34,7 @@ export default function DrinkInput(props: SizeInputProps) {
         type='text'
         placeholder='Drink'
         name='drink'
-        aria-label='Drink'
+        aria-label='Drink order'
         className={clsx(className, 'pr-26')}
         value={drink}
         onChange={handleDrinkChange}

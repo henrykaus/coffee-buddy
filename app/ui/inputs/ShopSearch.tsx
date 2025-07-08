@@ -144,9 +144,9 @@ export default function ShopSearch(props: ShopSearchProps) {
       <input
         ref={nameRef}
         type='text'
-        placeholder='Shop'
+        placeholder='Coffee shop'
         name='shop-name'
-        aria-label='Shop'
+        aria-label='Coffee shop search'
         className={clsx(
           className,
           'w-full pr-[2.35rem]',
