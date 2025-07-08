@@ -166,11 +166,11 @@ export default function ShopSearch(props: ShopSearchProps) {
         {shops.map((shop: Shop) => (
           <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
             <button
-              className='w-full flex justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left h-[51px]'
+              className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left h-[51px]'
               onClick={() => handleSelection(shop)}
             >
-              {shop.name}
-              <span className='text-sm font-normal text-slate-500 text-right leading-tight'>
+              <p className='flex-1/4 leading-tight'>{shop.name}</p>
+              <span className='text-sm font-normal text-slate-500 text-right leading-tight tracking-tight'>
                 {shop.street && <p>{formatSpecificLocation(shop)}</p>}
                 <p>{formatBroadLocation(shop)}</p>
               </span>

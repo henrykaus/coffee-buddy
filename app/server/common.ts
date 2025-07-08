@@ -141,3 +141,22 @@ export const condenseZodErrors = (error: ZodError) => {
     '',
   );
 };
+
+export const getLoginError = (error: string) => {
+  switch (error) {
+    case 'SignInError':
+    case 'OAuthSignInError':
+    case 'OAuthCallbackError':
+      return 'Try signing in with a different account.';
+    case 'AccessDenied':
+      return 'Access denied.';
+    case 'AccountNotLinked':
+      return 'To confirm your identity, sign in with the same account you used originally.';
+    case 'EmailSignInError':
+      return 'Sign in failed. Check your email address.';
+    case 'CredentialsSignin':
+      return 'Sign in failed. Check the details you provided are correct.';
+    default:
+      return 'Unable to sign in.';
+  }
+};

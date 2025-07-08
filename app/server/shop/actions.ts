@@ -25,6 +25,7 @@ const shortenAddress = (address: string) => {
   newAddress = newAddress.replace(/ street$/i, ' St');
   newAddress = newAddress.replace(/ highway$/i, ' Hwy');
   newAddress = newAddress.replace(/ boulevard$/i, ' Blvd');
+  newAddress = newAddress.replace(/ avenue$/i, ' Ave');
 
   return newAddress;
 };

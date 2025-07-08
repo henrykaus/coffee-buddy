@@ -1,11 +1,13 @@
-import {ReactNode, useState} from 'react';
+'use client';
+
+import {ReactNode, useEffect, useState} from 'react';
 import {ToastType} from '@/app/lib/enums';
 import {CircleAlertIcon, CircleCheckIcon, InfoIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
 
 interface ToastProps {
   children?: ReactNode;
-  onToastClose: () => void;
+  onToastClose?: () => void;
   show: boolean;
   type: ToastType;
 }
@@ -17,20 +19,26 @@ export default function Toast(props: ToastProps) {
     'animate-(--animate-toast-slide-down)',
   );
 
-  if (show) {
-    setTimeout(() => {
-      setAnimation('animate-(--animate-toast-slide-up)');
+  useEffect(() => {
+    if (show) {
+      setAnimation('animate-(--animate-toast-slide-down)');
+
       setTimeout(() => {
-        onToastClose();
-        setAnimation('animate-(--animate-toast-slide-down)');
-      }, 500);
-    }, 5500);
-  }
+        setAnimation('animate-(--animate-toast-slide-up)');
+
+        setTimeout(() => {
+          if (onToastClose) {
+            onToastClose();
+          }
+        }, 500);
+      }, 5500);
+    }
+  }, [show]);
 
   return show ? (
     <article
       className={clsx(
-        'flex gap-3 items-center text-xl rounded-lg shadow-lg mx-4 p-4 fixed top-5 z-10 w-[calc(100%-2rem)] whitespace-pre-wrap',
+        'flex gap-3 items-center text-lg leading-snug rounded-lg shadow-lg mx-4 px-4 py-3.5 fixed top-5 z-10 w-[calc(100%-2rem)] whitespace-pre-wrap',
         {
           'bg-red-200 text-red-700': type === ToastType.Error,
           'bg-green-200 text-emerald-700': type === ToastType.Success,
@@ -40,7 +48,7 @@ export default function Toast(props: ToastProps) {
       )}
     >
       <ToastIcon icon={type} />
-      {children}
+      <p className='my-[1px]'>{children}</p>
     </article>
   ) : null;
 }
@@ -52,22 +60,22 @@ function ToastIcon(props: {icon: ToastType}) {
     case ToastType.Error:
       return (
         <CircleAlertIcon
-          height={30}
-          width={30}
+          height={26}
+          width={26}
           className='shrink-0 self-stretch'
         />
       );
     case ToastType.Success:
       return (
         <CircleCheckIcon
-          height={30}
-          width={30}
+          height={26}
+          width={26}
           className='shrink-0 self-stretch'
         />
       );
     case ToastType.Info:
       return (
-        <InfoIcon height={30} width={30} className='shrink-0 self-stretch' />
+        <InfoIcon height={26} width={26} className='shrink-0 self-stretch' />
       );
     default:
       return null;

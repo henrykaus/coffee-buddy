@@ -1,8 +1,20 @@
 import {signIn} from '@/auth';
 import MovingBackground from '@/app/ui/login/MovingBackground';
-import {Route} from '@/app/lib/enums';
+import {Route, ToastType} from '@/app/lib/enums';
+import Toast from '@/app/ui/common/Toast';
+import React from 'react';
+import {getLoginError} from '@/app/server/common';
 
-export default function Page() {
+interface PageProps {
+  searchParams?: Promise<{
+    error?: string;
+  }>;
+}
+
+export default async function Page(props: PageProps) {
+  const searchParams = await props.searchParams;
+  const error = searchParams?.error || '';
+
   const handleLoginClick = async () => {
     'use server';
     await signIn('google', {
@@ -12,6 +24,9 @@ export default function Page() {
 
   return (
     <main className='relative flex gap-3 items-center justify-center h-screen overflow-hidden'>
+      <Toast show={error !== ''} type={ToastType.Error}>
+        {getLoginError(error)}
+      </Toast>
       <section className='p-5 py-5 flex flex-col gap-7 items-center justify-center rounded-2xl backdrop-blur-xs'>
         <h1 className='font-semibold text-4xl text-slate-700 font-[family-name:var(--font-header)]'>
           Coffee Buddy

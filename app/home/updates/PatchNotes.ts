@@ -3,6 +3,20 @@ import {PatchNotes} from '@/app/lib/types';
 export const PatchNoteContents: PatchNotes[] = [
   {
     divider: true,
+    title: 'July 2025',
+  },
+  {
+    title: 'Small Improvements',
+    date: 'July 7, 2025',
+    features: ['We now show login error messages if any occur.'],
+    fixes: [
+      'When searching for shops, the entries now utilize the dropdown space better.',
+      'Fixed issue where a failed login would redirect you to an unknown page.',
+      'Security updates.',
+    ],
+  },
+  {
+    divider: true,
     title: 'June 2025',
   },
   {
