@@ -6,6 +6,13 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'July 2025',
   },
   {
+    title: 'Skeletons in the Closet',
+    date: 'July 14, 2025',
+    features: [
+      'Added a loading "Skeleton" to the What\'s New page to improve perceived load time.',
+    ],
+  },
+  {
     title: 'Catching Those Errors',
     date: 'July 7, 2025',
     features: [
