@@ -109,10 +109,8 @@ export function FullDashboardSkeleton() {
 
 export function PatchNoteSkeleton() {
   return (
-    <div
-      className={clsx(shimmer, 'relative flex flex-col gap-y-3 px-6 sm:px-20')}
-    >
-      <div className='bg-slate-50 flex flex-col gap-y-3 p-6 sm:px-20 rounded-lg'>
+    <div className={clsx(shimmer, 'relative px-6 sm:px-20')}>
+      <div className='bg-slate-50 flex flex-col gap-y-3 p-5 rounded-lg'>
         <div className='flex justify-between items-center mb-3'>
           <SkeletonRow width='w-45' height='h-6' />
           <SkeletonRow width='w-18' height='h-5' />
