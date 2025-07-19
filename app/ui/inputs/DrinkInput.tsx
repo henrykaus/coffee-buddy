@@ -49,7 +49,7 @@ export default function DrinkInput(props: SizeInputProps) {
         >
           <option value={-1}># oz.</option>
           <option value={2}>2 oz.</option>
-          <option value={5}>5 oz.</option>
+          <option value={4}>4 oz.</option>
           <option value={6}>6 oz.</option>
           <option value={8}>8 oz.</option>
           <option value={10}>10 oz.</option>
