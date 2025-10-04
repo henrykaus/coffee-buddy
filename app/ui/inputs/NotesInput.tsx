@@ -41,7 +41,7 @@ export default function NotesInput(props: NotesInputProps) {
         placeholder={selectRandomPlaceholder()}
         name='notes'
         aria-label='Notes'
-        className='border-2 border-slate-300 focus:border-slate-400 bg-(--background) shadow-xl rounded-2xl outline-hidden text-slate-600 transition p-4 py-3 resize-none text-base w-[calc(100vw-2.5rem)] mx-5'
+        className='border-2 border-slate-300 focus:border-slate-400 bg-(--background) shadow-xl rounded-2xl outline-hidden text-slate-600 transition p-4 py-3 resize-none text-base w-[calc(100%-2.5rem)] mx-5'
         rows={5}
         defaultValue={defaultValue}
         suppressHydrationWarning
