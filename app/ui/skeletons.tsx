@@ -71,6 +71,7 @@ export function DashboardSkeleton() {
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />
+      <CardSkeleton />
     </div>
   );
 }
