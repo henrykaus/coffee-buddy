@@ -3,6 +3,26 @@ import {PatchNotes} from '@/app/lib/types';
 export const PatchNoteContents: PatchNotes[] = [
   {
     divider: true,
+    title: 'November 2025',
+  },
+  {
+    title: 'Details, details, details',
+    date: 'November 23, 2025',
+    features: ['Updated the little icon in the tab to be coffee-themed.'],
+  },
+  {
+    divider: true,
+    title: 'October 2025',
+  },
+  {
+    title: 'The Little Things',
+    date: 'October 4, 2025',
+    fixes: [
+      'Fixed issue where editing a visit description on desktop could cause the text would run off-screen.',
+    ],
+  },
+  {
+    divider: true,
     title: 'July 2025',
   },
   {
