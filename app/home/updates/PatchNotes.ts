@@ -7,7 +7,7 @@ export const PatchNoteContents: PatchNotes[] = [
   },
   {
     title: 'Details, details, details',
-    date: 'November 23, 2025',
+    date: 'Nov. 23, 2025',
     features: ['Updated the little icon in the tab to be coffee-themed.'],
   },
   {
@@ -16,7 +16,7 @@ export const PatchNoteContents: PatchNotes[] = [
   },
   {
     title: 'The Little Things',
-    date: 'October 4, 2025',
+    date: 'Oct. 4, 2025',
     fixes: [
       'Fixed issue where editing a visit description on desktop could cause the text would run off-screen.',
     ],
