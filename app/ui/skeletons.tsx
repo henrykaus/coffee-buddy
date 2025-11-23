@@ -58,16 +58,6 @@ export function CardSkeleton() {
   );
 }
 
-export function CardSkeletonList() {
-  return (
-    <div className='flex flex-col gap-y-3 px-6 sm:px-20'>
-      <CardSkeleton />
-      <CardSkeleton />
-      <CardSkeleton />
-    </div>
-  );
-}
-
 export function DashboardSkeleton() {
   return (
     <div
@@ -77,6 +67,7 @@ export function DashboardSkeleton() {
         <SkeletonRow width='w-30' height='h-6' />
         <SkeletonRow width='w-7' height='h-6' />
       </div>
+      <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />
       <CardSkeleton />
@@ -95,15 +86,6 @@ export function HeaderSkeleton() {
       <SkeletonRow width='w-[13rem]' height='h-11' />
       <SkeletonAvatar diameter={11} />
     </div>
-  );
-}
-
-export function FullDashboardSkeleton() {
-  return (
-    <>
-      <HeaderSkeleton />
-      <DashboardSkeleton />
-    </>
   );
 }
 
