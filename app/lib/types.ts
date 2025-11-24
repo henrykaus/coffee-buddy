@@ -48,6 +48,15 @@ export interface NominatimEntry {
   name: string;
 }
 
+export interface GoogleMapsEntry {
+  id: string;
+  displayName: {
+    text: string;
+  };
+  formattedAddress: string;
+  businessStatus: string;
+}
+
 export interface VisitAction {
   action: VisitActionType;
   isClient: boolean;

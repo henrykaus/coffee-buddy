@@ -1,10 +1,14 @@
-import {NominatimEntry, Shop} from '@/app/lib/types';
+'use server';
+
+import {GoogleMapsEntry, NominatimEntry, Shop} from '@/app/lib/types';
 import {logError} from '@/app/server/common';
 
 const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org';
 
 const NOMINATIM_SEARCH_URL = `${NOMINATIM_BASE_URL}/search?countrycodes=us&addressdetails=1&layer=poi,address&format=jsonv2`;
-const NOMINATIM_LOOKUP_URL = `${NOMINATIM_BASE_URL}/lookup?format=jsonv2`;
+
+const GOOGLE_PLACES_BASE_URL =
+  'https://places.googleapis.com/v1/places:searchText';
 
 const shortenAddress = (address: string) => {
   if (!address) {
@@ -50,6 +54,38 @@ const convertNominatimEntryToShop = (
     state: entry.address.state,
     street: street,
     houseNumber: houseNumber,
+  };
+};
+
+const convertGoogleMapsEntryToShop = (entry: GoogleMapsEntry): Shop => {
+  const address = entry.formattedAddress;
+  let cleanAddress = address
+    .split('')
+    .reverse()
+    .join('')
+    .replace(/^.*\d{5}\s/, '')
+    .split('')
+    .reverse()
+    .join('')
+    .trim();
+
+  const streetNumber = cleanAddress.split(' ', 1)[0];
+
+  cleanAddress = cleanAddress.replace(streetNumber, '');
+  cleanAddress = cleanAddress.trimStart();
+  const splitAddress = cleanAddress.split(', ');
+
+  const city = splitAddress[splitAddress.length - 2];
+  const state = splitAddress[splitAddress.length - 1];
+  const street = splitAddress[0];
+
+  return {
+    id: entry.id,
+    name: entry.displayName.text,
+    city: city,
+    state: state,
+    street: street,
+    houseNumber: streetNumber,
   };
 };
 
@@ -105,16 +141,18 @@ export const searchShops = async (query: string) => {
   return shops;
 };
 
-export const lookupShop = async (id: string) => {
-  const data = await fetch(
-    `${NOMINATIM_LOOKUP_URL}&osm_ids=${encodeURIComponent(id)}`,
-    {
-      method: 'GET',
-      headers: {
-        Referer: 'https://coffee-buddy.henrykaus.com',
-      },
+export const searchGoogleMapsShops = async (query: string) => {
+  const data = await fetch(GOOGLE_PLACES_BASE_URL, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Goog-FieldMask':
+        'places.id,places.displayName,places.formattedAddress,places.businessStatus',
+      'X-Goog-Api-Key': process.env.GOOGLE_PLACES_API_KEY ?? 'INVALID_KEY',
     },
-  )
+    body: JSON.stringify({textQuery: query}),
+  })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error. Status: ${response.status}`);
@@ -126,11 +164,17 @@ export const lookupShop = async (id: string) => {
       logError(error);
     });
 
-  // console.log('Nominatim Lookup', data);
+  console.log('Google Maps:', data);
 
-  if (data.length > 0) {
-    return convertNominatimEntryToShop(data[0]);
-  } else {
-    return null;
+  const shops: Shop[] = [];
+
+  if (data.places) {
+    data.places.forEach((entry: GoogleMapsEntry) => {
+      if (entry.displayName?.text) {
+        shops.push(convertGoogleMapsEntryToShop(entry));
+      }
+    });
   }
+
+  return shops;
 };

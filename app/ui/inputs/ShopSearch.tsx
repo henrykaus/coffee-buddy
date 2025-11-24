@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import {searchShops} from '@/app/server/shop/actions';
+import {searchGoogleMapsShops} from '@/app/server/shop/actions';
 import {debounce} from 'lodash';
 import {Shop} from '@/app/lib/types';
 import clsx from 'clsx';
@@ -76,7 +76,7 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const handleSearchInput = async () => {
     if (nameRef.current?.value && idRef.current) {
-      const shopData = await searchShops(nameRef.current.value);
+      const shopData = await searchGoogleMapsShops(nameRef.current.value);
       setSearchInputState(
         shopData.length ? ShopSearchState.FoundShops : ShopSearchState.NoShops,
       );

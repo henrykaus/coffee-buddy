@@ -79,10 +79,10 @@ export const createVisit = async (
         shop: {
           connectOrCreate: {
             where: {
-              osmId: shopId,
+              googleId: shopId,
             },
             create: {
-              osmId: shopId,
+              googleId: shopId,
               name: shopName,
             },
           },
@@ -223,10 +223,10 @@ export const updateVisit = async (
         shop: {
           connectOrCreate: {
             where: {
-              osmId: shopId,
+              googleId: shopId,
             },
             create: {
-              osmId: shopId,
+              googleId: shopId,
               name: shopName,
             },
           },

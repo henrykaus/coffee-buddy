@@ -8,7 +8,10 @@ export const PatchNoteContents: PatchNotes[] = [
   {
     title: 'Details, details, details',
     date: 'Nov. 23, 2025',
-    features: ['Updated the little icon in the tab to be coffee-themed.'],
+    features: [
+      'Switched over to Google Maps for location searching.',
+      'Updated the little icon in the tab to be coffee-themed.',
+    ],
   },
   {
     divider: true,
