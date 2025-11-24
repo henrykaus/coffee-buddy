@@ -34,7 +34,7 @@ export const getVisitForClient = (
     notes: dbVisit.notes,
     drink: dbVisit.drink,
     shopName: dbVisit.shop.name,
-    shopId: dbVisit.shop.osmId,
+    shopId: dbVisit.shop.googleId,
     orderType:
       dbVisit.orderType === OrderType.ForHere
         ? OrderType.ForHere
