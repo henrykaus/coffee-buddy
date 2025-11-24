@@ -34,7 +34,7 @@ export const getVisitForClient = (
     notes: dbVisit.notes,
     drink: dbVisit.drink,
     shopName: dbVisit.shop.name,
-    shopId: dbVisit.shop.googleId,
+    shopId: dbVisit.shop.googleId ?? '', // FIXME: THIS IS TEMPORARY
     orderType:
       dbVisit.orderType === OrderType.ForHere
         ? OrderType.ForHere
