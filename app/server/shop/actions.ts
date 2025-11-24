@@ -151,7 +151,17 @@ export const searchGoogleMapsShops = async (query: string) => {
         'places.id,places.displayName,places.formattedAddress,places.businessStatus',
       'X-Goog-Api-Key': process.env.GOOGLE_PLACES_API_KEY ?? 'INVALID_KEY',
     },
-    body: JSON.stringify({textQuery: query}),
+    body: JSON.stringify({
+      textQuery: query,
+      locationBias: {
+        circle: {
+          center: {
+            latitude: 45.51887,
+            longitude: -122.6793,
+          },
+        },
+      },
+    }),
   })
     .then((response) => {
       if (!response.ok) {
