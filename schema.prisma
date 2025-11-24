@@ -17,7 +17,7 @@ model User {
 model Shop {
   id       String  @id @default(uuid())
   osmId    String? @unique
-  googleId String  @unique @default("")
+  googleId String? @unique
   name     String
   visits   Visit[]
 }

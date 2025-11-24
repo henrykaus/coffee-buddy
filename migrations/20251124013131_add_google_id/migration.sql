@@ -5,7 +5,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "Shop" ADD COLUMN     "googleId" TEXT NOT NULL DEFAULT '',
+ALTER TABLE "Shop" ADD COLUMN     "googleId" TEXT,
 ALTER COLUMN "osmId" DROP NOT NULL;
 
 -- CreateIndex

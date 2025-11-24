@@ -81,10 +81,10 @@ const seedData = async () => {
           shop: {
             connectOrCreate: {
               where: {
-                osmId: visitData.shopId,
+                googleId: visitData.shopId,
               },
               create: {
-                osmId: visitData.shopId,
+                googleId: visitData.shopId,
                 name: visitData.shopName,
               },
             },
