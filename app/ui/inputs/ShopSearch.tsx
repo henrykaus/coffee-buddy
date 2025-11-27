@@ -121,11 +121,7 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const formatSpecificLocation = (shop: Shop) => {
     let location = '';
-    if (shop.houseNumber) {
-      location = location.concat(shop.houseNumber, ' ');
-    }
     location = location.concat(shop.street);
-
     return location;
   };
 

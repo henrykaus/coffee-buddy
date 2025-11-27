@@ -26,7 +26,6 @@ export interface Shop {
   city: string;
   state: string;
   street: string;
-  houseNumber: string;
 }
 
 /**

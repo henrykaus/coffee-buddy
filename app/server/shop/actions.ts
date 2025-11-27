@@ -52,32 +52,30 @@ const convertNominatimEntryToShop = (
       entry.address.village ??
       entry.address.hamlet,
     state: entry.address.state,
-    street: street,
-    houseNumber: houseNumber,
+    street: `${houseNumber} ${street}`,
   };
 };
 
 const convertGoogleMapsEntryToShop = (entry: GoogleMapsEntry): Shop => {
   const address = entry.formattedAddress;
-  let cleanAddress = address
+  const cleanAddress = address
     .split('')
     .reverse()
     .join('')
-    .replace(/^.*\d{5}\s/, '')
+    .replace(/^.*?\d{5}\s/, '')
     .split('')
     .reverse()
     .join('')
     .trim();
 
-  const streetNumber = cleanAddress.split(' ', 1)[0];
-
-  cleanAddress = cleanAddress.replace(streetNumber, '');
-  cleanAddress = cleanAddress.trimStart();
   const splitAddress = cleanAddress.split(', ');
 
   const city = splitAddress[splitAddress.length - 2];
   const state = splitAddress[splitAddress.length - 1];
-  const street = splitAddress[0];
+
+  // Street is substring excluding num characters at end of string the lengths of combined ", " + city + ", " + state
+  const lengthToTrim = 2 + city.length + 2 + state.length;
+  const street = cleanAddress.substring(0, cleanAddress.length - lengthToTrim);
 
   return {
     id: entry.id,
@@ -85,7 +83,6 @@ const convertGoogleMapsEntryToShop = (entry: GoogleMapsEntry): Shop => {
     city: city,
     state: state,
     street: street,
-    houseNumber: streetNumber,
   };
 };
 
@@ -174,7 +171,7 @@ export const searchGoogleMapsShops = async (query: string) => {
       logError(error);
     });
 
-  console.log('Google Maps:', data);
+  // console.log('Google Maps:', data);
 
   const shops: Shop[] = [];
 
@@ -185,6 +182,8 @@ export const searchGoogleMapsShops = async (query: string) => {
       }
     });
   }
+
+  // console.log(shops);
 
   return shops;
 };
