@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import {searchGoogleMapsShops} from '@/app/server/shop/actions';
+import {searchShops} from '@/app/server/shop/actions';
 import {debounce} from 'lodash';
 import {Shop} from '@/app/lib/types';
 import clsx from 'clsx';
@@ -76,7 +76,7 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const handleSearchInput = async () => {
     if (nameRef.current?.value && idRef.current) {
-      const shopData = await searchGoogleMapsShops(nameRef.current.value);
+      const shopData = await searchShops(nameRef.current.value);
       setSearchInputState(
         shopData.length ? ShopSearchState.FoundShops : ShopSearchState.NoShops,
       );
@@ -120,9 +120,7 @@ export default function ShopSearch(props: ShopSearchProps) {
   };
 
   const formatSpecificLocation = (shop: Shop) => {
-    let location = '';
-    location = location.concat(shop.street);
-    return location;
+    return shop.address;
   };
 
   const formatBroadLocation = (shop: Shop) => {
@@ -167,7 +165,7 @@ export default function ShopSearch(props: ShopSearchProps) {
             >
               <p className='flex-1/4 leading-tight'>{shop.name}</p>
               <span className='text-sm font-normal text-slate-500 text-right leading-tight tracking-tight'>
-                {shop.street && <p>{formatSpecificLocation(shop)}</p>}
+                <p>{formatSpecificLocation(shop)}</p>
                 <p>{formatBroadLocation(shop)}</p>
               </span>
             </button>

@@ -25,28 +25,12 @@ export interface Shop {
   name: string;
   city: string;
   state: string;
-  street: string;
+  address: string;
 }
 
 /**
- * This class maps exactly what Nominatim responds with for queries
+ * This class maps exactly what Google Places responds with for queries
  */
-export interface NominatimEntry {
-  osm_id: number;
-  osm_type: string;
-  address: {
-    city: string;
-    hamlet: string;
-    house_number: string;
-    neighborhood: string;
-    road: string;
-    state: string;
-    town: string;
-    village: string;
-  };
-  name: string;
-}
-
 export interface GoogleMapsEntry {
   id: string;
   displayName: {
