@@ -236,6 +236,34 @@ export const CloseIcon = (props: IconProps) => {
   );
 };
 
+export const CoffeeBeanIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill={fill}
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='M4.05 19.95a11.24 8.585 135 0 0 15.9-15.9 11.24 8.585 135 0 0-15.9 15.9' />
+      <path d='M19.8 4.2C20 14 4 10 4.2 19.8' />
+    </svg>
+  );
+};
+
 export const DrinkGlassIcon = (props: IconProps) => {
   const {
     className,

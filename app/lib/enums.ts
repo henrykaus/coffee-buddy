@@ -1,6 +1,7 @@
 export enum OrderType {
   ToGo = 'TO GO',
   ForHere = 'FOR HERE',
+  CoffeeBeans = 'BEANS',
 }
 
 export enum UserMenuOption {

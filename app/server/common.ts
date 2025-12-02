@@ -35,10 +35,7 @@ export const getVisitForClient = (
     drink: dbVisit.drink,
     shopName: dbVisit.shop.name,
     shopId: dbVisit.shop.googleId,
-    orderType:
-      dbVisit.orderType === OrderType.ForHere
-        ? OrderType.ForHere
-        : OrderType.ToGo,
+    orderType: getOrderType(dbVisit.orderType),
     price: getPriceForUser(dbVisit.price),
     rating: dbVisit.rating,
     size: dbVisit.size,
@@ -74,10 +71,7 @@ export const getVisitFromFormData = (formData: FormData): State => {
     price: validatedFields.data.price,
     date: validatedFields.data.date ?? null,
     notes: validatedFields.data.notes ?? null,
-    orderType:
-      validatedFields.data?.orderType === OrderType.ForHere
-        ? OrderType.ForHere
-        : OrderType.ToGo,
+    orderType: getOrderType(validatedFields.data?.orderType),
   };
 
   return {visit: visit};
@@ -111,6 +105,17 @@ export const getDateForClient = (dateFromDatabase: Date) => {
 export const getDateForUser = (dateForClient: string) => {
   const dateParts = dateForClient.split('-');
   return `${dateParts[1].replace(/^0*/, '')}/${dateParts[2].replace(/^0*/, '')}/${dateParts[0]}`;
+};
+
+export const getOrderType = (orderType: string) => {
+  switch (orderType) {
+    case OrderType.ForHere:
+      return OrderType.ForHere;
+    case OrderType.CoffeeBeans:
+      return OrderType.CoffeeBeans;
+    default:
+      return OrderType.ToGo;
+  }
 };
 
 export const logError = (error: unknown) => {

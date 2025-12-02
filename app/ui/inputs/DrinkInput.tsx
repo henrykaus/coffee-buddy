@@ -6,11 +6,18 @@ interface SizeInputProps {
   className?: string;
   defaultSize?: number;
   defaultDrink?: string;
+  isForDrink?: boolean;
   onChange?: (drink: string) => void;
 }
 
 export default function DrinkInput(props: SizeInputProps) {
-  const {className, defaultSize, defaultDrink, onChange} = props;
+  const {
+    className,
+    defaultSize,
+    defaultDrink,
+    isForDrink = true,
+    onChange,
+  } = props;
 
   const [drink, setDrink] = useState(defaultDrink ?? '');
 
@@ -32,9 +39,9 @@ export default function DrinkInput(props: SizeInputProps) {
     <span className='flex relative w-full text-slate-500'>
       <input
         type='text'
-        placeholder='Drink'
+        placeholder={isForDrink ? 'Drink' : 'Roast'}
         name='drink'
-        aria-label='Drink order'
+        aria-label={isForDrink ? 'Drink order' : 'Coffee beans roast'}
         className={clsx(className, 'pr-26')}
         value={drink}
         onChange={handleDrinkChange}

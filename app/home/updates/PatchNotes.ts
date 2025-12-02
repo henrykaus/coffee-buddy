@@ -3,6 +3,17 @@ import {PatchNotes} from '@/app/lib/types';
 export const PatchNoteContents: PatchNotes[] = [
   {
     divider: true,
+    title: 'December 2025',
+  },
+  {
+    title: 'Coffee At Home',
+    date: 'Dec. 1, 2025',
+    features: [
+      "Added a new Coffee Beans order type! This is in addition to 'For Here' and 'To Go' for when you want to rate your local shop's coffee roasts.",
+    ],
+  },
+  {
+    divider: true,
     title: 'November 2025',
   },
   {

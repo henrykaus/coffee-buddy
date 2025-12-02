@@ -6,7 +6,7 @@ import OrderTypeToggle from '@/app/ui/inputs/OrderTypeToggle';
 import PriceInput from '@/app/ui/inputs/PriceInput';
 import {CheckIcon, TrashIcon} from '@/app/ui/icons';
 import ShopSearch from '@/app/ui/inputs/ShopSearch';
-import {Visit, RequiredVisitFieldsValidity} from '@/app/lib/types';
+import {RequiredVisitFieldsValidity, Visit} from '@/app/lib/types';
 import Modal from '@/app/ui/common/Modal';
 import DrinkInput from '@/app/ui/inputs/DrinkInput';
 import NotesInput from '@/app/ui/inputs/NotesInput';
@@ -18,7 +18,7 @@ import {
   DEFAULT_ADD_VISIT_REQUIRED_FIELDS,
   DEFAULT_EDIT_VISIT_REQUIRED_FIELDS,
 } from '@/app/lib/constants';
-import {VisitFormField} from '@/app/lib/enums';
+import {OrderType, VisitFormField} from '@/app/lib/enums';
 
 export interface VisitPopupProps {
   onClose: () => void;
@@ -50,6 +50,9 @@ export default function VisitPopup(props: VisitPopupProps) {
         ? DEFAULT_ADD_VISIT_REQUIRED_FIELDS
         : DEFAULT_EDIT_VISIT_REQUIRED_FIELDS,
     );
+  const [orderType, setOrderType] = useState<OrderType>(
+    visit?.orderType ?? OrderType.ToGo,
+  );
 
   const reconId = useMemo(() => uuidv4().substring(0, 6), []);
 
@@ -178,6 +181,7 @@ export default function VisitPopup(props: VisitPopupProps) {
           onChange={(drink: string) =>
             handleRequiredFieldChange(drink, VisitFormField.Drink)
           }
+          isForDrink={orderType !== OrderType.CoffeeBeans}
         />
         <div className='flex gap-3'>
           <PriceInput
@@ -187,7 +191,10 @@ export default function VisitPopup(props: VisitPopupProps) {
               handleRequiredFieldChange(price, VisitFormField.Price)
             }
           />
-          <OrderTypeToggle defaultValue={visit?.orderType} />
+          <OrderTypeToggle
+            initialValue={visit?.orderType}
+            onChange={(orderType: OrderType) => setOrderType(orderType)}
+          />
         </div>
         <input type='text' defaultValue={visit?.id} name='id' readOnly hidden />
         <input

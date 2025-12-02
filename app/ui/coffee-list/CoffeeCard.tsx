@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
-import {EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
+import {CoffeeBeanIcon, EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
 import {getDateForUser, getPriceForDisplay} from '@/app/server/common';
 
@@ -38,10 +38,15 @@ export default function CoffeeCard(props: CoffeeCardProps) {
     >
       <header className='flex justify-between gap-4'>
         <span className='flex gap-2'>
-          {visit.orderType === OrderType.ForHere ? (
+          {visit.orderType !== OrderType.ForHere &&
+            visit.orderType !== OrderType.CoffeeBeans && (
+              <ToGoCupIcon className='text-slate-600 shrink-0' />
+            )}
+          {visit.orderType === OrderType.ForHere && (
             <MugIcon className='text-slate-600 shrink-0' />
-          ) : (
-            <ToGoCupIcon className='text-slate-600 shrink-0' />
+          )}
+          {visit.orderType === OrderType.CoffeeBeans && (
+            <CoffeeBeanIcon className='text-slate-600 shrink-0' />
           )}
           <p className='font-semibold text-lg/5 mt-[0.2rem] mb-[0.2rem]'>
             {visit.shopName}

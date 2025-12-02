@@ -30,8 +30,8 @@ const VisitSchema = z.object({
   notes: z.string().min(0).max(500, {
     message: 'The shop notes must be 500 characters or less.',
   }),
-  orderType: z.enum(['TO GO', 'FOR HERE'], {
-    message: "The order type must be either 'TO GO' or 'FOR HERE'.",
+  orderType: z.enum(['TO GO', 'FOR HERE', 'BEANS'], {
+    message: "The order type must be either 'TO GO', 'FOR HERE', or 'BEANS'.",
   }),
 });
 
