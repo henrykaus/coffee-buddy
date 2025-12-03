@@ -3,20 +3,23 @@ import clsx from 'clsx';
 import {ChevronDownIcon} from '@/app/ui/icons';
 
 interface SizeInputProps {
+  ariaLabel?: string;
   className?: string;
   defaultSize?: number;
   defaultDrink?: string;
   isForDrink?: boolean;
   onChange?: (drink: string) => void;
+  placeholder?: string;
 }
 
 export default function DrinkInput(props: SizeInputProps) {
   const {
+    ariaLabel = '',
     className,
     defaultSize,
     defaultDrink,
-    isForDrink = true,
     onChange,
+    placeholder = '',
   } = props;
 
   const [drink, setDrink] = useState(defaultDrink ?? '');
@@ -39,9 +42,9 @@ export default function DrinkInput(props: SizeInputProps) {
     <span className='flex relative w-full text-slate-500'>
       <input
         type='text'
-        placeholder={isForDrink ? 'Drink' : 'Roast'}
+        placeholder={placeholder}
         name='drink'
-        aria-label={isForDrink ? 'Drink order' : 'Coffee beans roast'}
+        aria-label={ariaLabel}
         className={clsx(className, 'pr-26')}
         value={drink}
         onChange={handleDrinkChange}

@@ -43,6 +43,7 @@ export interface GoogleMapsEntry {
 export interface VisitAction {
   action: VisitActionType;
   isClient: boolean;
+  isError: boolean;
   visit: Visit;
 }
 

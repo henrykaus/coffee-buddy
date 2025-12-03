@@ -11,10 +11,34 @@ import {
   logError,
 } from '@/app/server/common';
 import {CreateVisit, UpdateVisit} from '@/app/server/schemas';
+import {EMPTY_VISIT} from '@/app/lib/constants';
 
 export type State = {
   message?: string | null;
   visit?: Visit | null;
+};
+
+const getSanitizedFormDataString = (str: FormDataEntryValue | null) => {
+  return str === null || typeof str !== 'string' ? '' : str;
+};
+
+const getVisitForError = async (id: FormDataEntryValue | null) => {
+  try {
+    const visitId = getSanitizedFormDataString(id);
+    if (visitId === '') {
+      return undefined;
+    }
+
+    const visit = await getVisit(visitId);
+    if (!visit.visit) {
+      return undefined;
+    }
+
+    return visit.visit;
+  } catch {
+    // Ignore any error
+    return undefined;
+  }
 };
 
 export const createVisit = async (
@@ -46,7 +70,10 @@ export const createVisit = async (
         `Failed to add location.\n${generateErrorForClient(validatedFields.error).message}`,
       );
 
-      return generateErrorForClient(validatedFields.error);
+      return generateErrorForClient(validatedFields.error, undefined, {
+        ...EMPTY_VISIT,
+        reconId: getSanitizedFormDataString(formData.get('recon-id')),
+      });
     }
 
     const {
@@ -96,7 +123,11 @@ export const createVisit = async (
     return {visit: getVisitForClient(dbVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
-    return generateErrorForClient(error, 'adding visit');
+
+    return generateErrorForClient(error, 'adding visit', {
+      ...EMPTY_VISIT,
+      reconId: getSanitizedFormDataString(formData.get('recon-id')),
+    });
   }
 };
 
@@ -185,7 +216,11 @@ export const updateVisit = async (
     });
 
     if (!validatedFields.success) {
-      return generateErrorForClient(validatedFields.error);
+      return generateErrorForClient(
+        validatedFields.error,
+        undefined,
+        await getVisitForError(formData.get('id')),
+      );
     }
 
     const {
@@ -240,11 +275,15 @@ export const updateVisit = async (
     return {visit: getVisitForClient(rawVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
-    return generateErrorForClient(error, 'updating visit');
+
+    return generateErrorForClient(
+      error,
+      'updating visit',
+      await getVisitForError(formData.get('id')),
+    );
   }
 };
 
-// TODO: need to also use reconId here
 export const deleteVisit = async (id: string): Promise<State> => {
   try {
     const session = await getValidSession();
@@ -266,7 +305,11 @@ export const deleteVisit = async (id: string): Promise<State> => {
     return {visit: getVisitForClient(dbVisit)};
   } catch (error: unknown) {
     logError(error);
-    return generateErrorForClient(error, `deleting visit with ID ${id}`);
+    return generateErrorForClient(
+      error,
+      `deleting visit with ID ${id}`,
+      await getVisitForError(id),
+    );
   }
 };
 

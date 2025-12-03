@@ -1,4 +1,6 @@
 import {RequiredVisitFieldsValidity} from '@/app/lib/types';
+import {OrderType} from '@/app/lib/enums';
+import {Visit} from '@/app/lib/types';
 
 export const SEARCH_PLACEHOLDER_KEYWORDS = [
   'Vanilla Latte',
@@ -40,4 +42,19 @@ export const DEFAULT_EDIT_VISIT_REQUIRED_FIELDS: RequiredVisitFieldsValidity = {
   shopIsValid: true,
   drinkIsValid: true,
   priceIsValid: true,
+};
+
+export const EMPTY_VISIT: Visit = {
+  id: '',
+  reconId: '',
+  userId: '',
+  date: null,
+  notes: null,
+  drink: '',
+  orderType: OrderType.ToGo,
+  price: -1,
+  rating: -1,
+  shopName: '',
+  shopId: '',
+  size: -1,
 };

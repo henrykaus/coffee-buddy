@@ -6,7 +6,16 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'December 2025',
   },
   {
-    title: 'Coffee At Home',
+    title: 'For When Things Go Wrong',
+    date: 'Dec. 2, 2025',
+    fixes: [
+      'In the event that adding, updating, or deleting a visit just fails, we now immediately update your list to show your real visit info (rather than any inaccurate visit information).',
+      'Shrunk size of home icon on this page in the toolbar (just look up).',
+      'Security updates.',
+    ],
+  },
+  {
+    title: 'Coffee at Home',
     date: 'Dec. 1, 2025',
     features: [
       "Added a new Coffee Beans order type! This is in addition to 'For Here' and 'To Go' for when you want to rate your local shop's coffee roasts.",

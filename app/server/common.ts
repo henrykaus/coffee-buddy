@@ -129,13 +129,30 @@ export const logError = (error: unknown) => {
 export const generateErrorForClient = (
   error: unknown,
   context?: string,
+  visit?: Visit,
 ): State => {
   if (error instanceof ZodError) {
-    return {message: condenseZodErrors(error)};
+    const msg = condenseZodErrors(error);
+    return {
+      message: msg !== '' ? msg : 'Unknown error occurred',
+      visit: visit,
+    };
   } else if (error instanceof Error) {
-    return {message: error.message};
+    const msg = error.message;
+    return {
+      message: msg !== '' ? msg : 'Unknown error occurred',
+      visit: visit,
+    };
+  } else if (context && context !== '') {
+    return {
+      message: `Unknown error occurred when ${context}`,
+      visit: visit,
+    };
   } else {
-    return {message: `Unknown error occurred when ${context}`};
+    return {
+      message: 'Unknown error occurred',
+      visit: visit,
+    };
   }
 };
 

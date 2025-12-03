@@ -26,6 +26,7 @@ export default function CoffeeList(props: CoffeeListProps) {
 
   const [coffeeVisits, setCoffeeVisits] = useState(visits);
   const [visitAction, setVisitAction] = useState<VisitAction | null>(null);
+  const [deletedVisitIndex, setDeletedVisitIndex] = useState(0);
   const [showAddVisitPopup, setShowAddVisitPopup] = useState(false);
   const [activeVisit, setActiveVisit] = useState<Visit | null>(null);
   const [toastConfig, setToastConfig] = useState<ToastConfig | null>(null);
@@ -34,123 +35,171 @@ export default function CoffeeList(props: CoffeeListProps) {
     setCoffeeVisits(visits);
   }, [visits]);
 
+  /**
+   * This useEffect is my implementation for "Optimistic Rendering". Although this code
+   * doesn't look very optimistic, it takes a VisitAction and accordingly updates the
+   * list of visit entries based on a variety of factors such as... Add, Edit, Delete;
+   * Success, Failure; and Client-side, Server-side.
+   */
   useEffect(() => {
     if (visitAction) {
-      switch (visitAction.action) {
-        case VisitActionType.Add:
-          const addedVisitIndex = coffeeVisits.findIndex(
-            (visit) => visit.reconId === visitAction.visit.reconId,
-          );
+      let visitIndex: number = -1;
 
-          if (addedVisitIndex >= 0 && !visitAction.isClient) {
-            const newVisits = [...coffeeVisits];
-            newVisits[addedVisitIndex] = visitAction.visit;
-            setCoffeeVisits(newVisits);
-          } else if (addedVisitIndex < 0) {
-            setCoffeeVisits([visitAction.visit, ...coffeeVisits]);
-            window.scrollTo(0, 0);
-          }
+      if (!visitAction.isError) {
+        // Success case
+        switch (visitAction.action) {
+          case VisitActionType.Add:
+            visitIndex = coffeeVisits.findIndex(
+              (visit) => visit.reconId === visitAction.visit.reconId,
+            );
 
-          break;
-        case VisitActionType.Edit:
-          const updatedVisitIndex = coffeeVisits.findIndex(
-            (visit) => visit.id === visitAction.visit.id,
-          );
+            if (visitIndex >= 0 && !visitAction.isClient) {
+              const newVisits = [...coffeeVisits];
+              newVisits[visitIndex] = visitAction.visit;
+              setCoffeeVisits(newVisits);
+            } else if (visitIndex < 0) {
+              setCoffeeVisits((prevState) => [visitAction.visit, ...prevState]);
+              window.scrollTo(0, 0);
+            }
 
-          if (
-            updatedVisitIndex >= 0 &&
-            (!visitAction.isClient ||
-              coffeeVisits[updatedVisitIndex].reconId !==
-                visitAction.visit.reconId)
-          ) {
-            // Since using server value updates reconId, if reconId is different than client, it has not been touched by server yet
-            const newVisits = [...coffeeVisits];
-            newVisits[updatedVisitIndex] = visitAction.visit;
-            setCoffeeVisits(newVisits);
-          }
+            break;
+          case VisitActionType.Edit:
+            visitIndex = coffeeVisits.findIndex(
+              (visit) => visit.id === visitAction.visit.id,
+            );
 
-          break;
-        case VisitActionType.Delete:
-          const deletedVisitIndex = coffeeVisits.findIndex(
-            (visit) => visit.id === visitAction.visit.id,
-          );
+            if (
+              visitIndex >= 0 &&
+              (!visitAction.isClient ||
+                coffeeVisits[visitIndex].reconId !== visitAction.visit.reconId)
+            ) {
+              // Since using server value updates reconId, if reconId is different than client, it has not been touched by server yet
+              const newVisits = [...coffeeVisits];
+              newVisits[visitIndex] = visitAction.visit;
+              setCoffeeVisits(newVisits);
+            }
 
-          if (deletedVisitIndex >= 0) {
-            const newVisits = coffeeVisits.toSpliced(deletedVisitIndex, 1);
-            setCoffeeVisits(newVisits);
-          }
-          break;
+            break;
+          case VisitActionType.Delete:
+            visitIndex = coffeeVisits.findIndex(
+              (visit) => visit.id === visitAction.visit.id,
+            );
+
+            if (visitIndex >= 0) {
+              const newVisits = coffeeVisits.toSpliced(visitIndex, 1);
+              setDeletedVisitIndex(visitIndex);
+              setCoffeeVisits(newVisits);
+            }
+            break;
+        }
+      } else {
+        // Error case - undo changes (only happens from server-side)
+        switch (visitAction.action) {
+          case VisitActionType.Add:
+            visitIndex = coffeeVisits.findIndex(
+              (visit) => visit.reconId === visitAction.visit.reconId,
+            );
+
+            if (visitIndex >= 0) {
+              const newVisits = coffeeVisits.toSpliced(visitIndex, 1);
+              setCoffeeVisits(newVisits);
+            }
+            break;
+          case VisitActionType.Edit:
+            visitIndex = coffeeVisits.findIndex(
+              (visit) => visit.id === visitAction.visit.id,
+            );
+
+            if (visitIndex >= 0) {
+              const newVisits = [...coffeeVisits];
+              newVisits[visitIndex] = visitAction.visit;
+              setCoffeeVisits(newVisits);
+            }
+            break;
+          case VisitActionType.Delete:
+            visitIndex = coffeeVisits.findIndex(
+              (visit) => visit.id === visitAction.visit.id,
+            );
+
+            if (visitIndex < 0) {
+              const insertIndex = Math.min(
+                deletedVisitIndex,
+                coffeeVisits.length,
+              );
+              const newVisits = coffeeVisits.toSpliced(
+                insertIndex,
+                0,
+                visitAction.visit,
+              );
+              setCoffeeVisits(newVisits);
+            }
+            break;
+        }
       }
     }
   }, [visitAction]);
 
   // SERVER-SIDE METHODS
+
+  const refreshVisitFromServerResponse = (
+    state: State,
+    actionType: VisitActionType,
+  ) => {
+    if (!state.message && state.visit) {
+      // Success
+      setVisitAction({
+        action: actionType,
+        isClient: false,
+        isError: false,
+        visit: state.visit,
+      });
+    } else if (state.message && state.visit) {
+      // Error
+      setVisitAction({
+        action: actionType,
+        isClient: false,
+        isError: true,
+        visit: state.visit,
+      });
+    }
+
+    if (state.message) {
+      setToastConfig({type: ToastType.Error, message: state.message});
+    }
+  };
+
   const addVisitToDB = async (
     prevState: State | undefined,
     formData: FormData,
   ) => {
     const newState = await createVisit(prevState, formData);
-
-    if (newState.visit) {
-      setVisitAction({
-        action: VisitActionType.Add,
-        isClient: false,
-        visit: newState.visit,
-      });
-    }
-
-    if (newState.message) {
-      setToastConfig({type: ToastType.Error, message: newState.message});
-    }
-
+    refreshVisitFromServerResponse(newState, VisitActionType.Add);
     return newState;
   };
 
-  const updateVisitToDB = async (
+  const updateVisitOnDB = async (
     prevState: State | undefined,
     formData: FormData,
   ) => {
     const newState = await updateVisit(prevState, formData);
-
-    if (newState.visit) {
-      setVisitAction({
-        action: VisitActionType.Edit,
-        isClient: false,
-        visit: newState.visit,
-      });
-    }
-
-    if (newState.message) {
-      setToastConfig({type: ToastType.Error, message: newState.message});
-    }
-
+    refreshVisitFromServerResponse(newState, VisitActionType.Edit);
     return newState;
   };
 
   const removeVisitFromDB = async (visit: Visit) => {
     const newState = await deleteVisit(visit.id);
-
-    if (newState.visit) {
-      setVisitAction({
-        action: VisitActionType.Delete,
-        isClient: false,
-        visit: newState.visit,
-      });
-    }
-
-    if (newState.message) {
-      setToastConfig({type: ToastType.Error, message: newState.message});
-    }
-
+    refreshVisitFromServerResponse(newState, VisitActionType.Delete);
     return newState;
   };
 
   // CLIENT-SIDE METHODS
+
   const addVisitToClient = (state: State) => {
     if (state.visit) {
       setVisitAction({
         action: VisitActionType.Add,
         isClient: true,
+        isError: false,
         visit: state.visit,
       });
     }
@@ -165,6 +214,7 @@ export default function CoffeeList(props: CoffeeListProps) {
       setVisitAction({
         action: VisitActionType.Edit,
         isClient: true,
+        isError: false,
         visit: state.visit,
       });
     }
@@ -178,6 +228,7 @@ export default function CoffeeList(props: CoffeeListProps) {
     setVisitAction({
       action: VisitActionType.Delete,
       isClient: true,
+      isError: false,
       visit: visit,
     });
   };
@@ -208,7 +259,7 @@ export default function CoffeeList(props: CoffeeListProps) {
             <p className='font-semibold text-xl text-slate-500'>No visits</p>
             {query.length === 0 && (
               <p className='text-lg text-slate-400'>
-                Click the + button to add
+                Click the + button to get started
               </p>
             )}
           </div>
@@ -226,7 +277,7 @@ export default function CoffeeList(props: CoffeeListProps) {
         <EditVisitPopup
           onClose={() => setActiveVisit(null)}
           onConfirmClientAction={updateVisitOnClient}
-          onConfirmServerAction={updateVisitToDB}
+          onConfirmServerAction={updateVisitOnDB}
           onDeleteClientAction={deleteVisitOnClient}
           onDeleteServerAction={removeVisitFromDB}
           visit={activeVisit}
