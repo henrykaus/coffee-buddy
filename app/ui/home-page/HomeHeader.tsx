@@ -51,9 +51,9 @@ export default function HomeHeader(props: HomeHeaderProps) {
         {pathname !== Route.Home && (
           <Link
             href={Route.Home}
-            className='rounded-full flex items-center justify-center p-[0.4rem] text-slate-500 transition bg-slate-200/60 hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
+            className='rounded-full flex items-center justify-center p-[0.5rem] text-slate-500 transition bg-slate-200/60 hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
           >
-            <HomeIcon height={28} width={28} strokeWidth={2.3} />
+            <HomeIcon height={25} width={25} strokeWidth={2.3} />
           </Link>
         )}
         <UserMenu imageUrl={user?.image} />
