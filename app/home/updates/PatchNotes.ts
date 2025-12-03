@@ -6,7 +6,7 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'December 2025',
   },
   {
-    title: 'For When Things Go Wrong',
+    title: 'In Case of Error',
     date: 'Dec. 2, 2025',
     fixes: [
       'In the event that adding, updating, or deleting a visit just fails, we now immediately update your list to show your real visit info (rather than any inaccurate visit information).',
