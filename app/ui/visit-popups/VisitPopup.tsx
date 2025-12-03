@@ -175,13 +175,18 @@ export default function VisitPopup(props: VisitPopupProps) {
           }
         />
         <DrinkInput
+          ariaLabel={
+            orderType !== OrderType.CoffeeBeans
+              ? 'Drink order'
+              : 'Coffee bean roast'
+          }
           className={inputClasses}
           defaultDrink={visit?.drink}
           defaultSize={visit?.size}
           onChange={(drink: string) =>
             handleRequiredFieldChange(drink, VisitFormField.Drink)
           }
-          isForDrink={orderType !== OrderType.CoffeeBeans}
+          placeholder={orderType !== OrderType.CoffeeBeans ? 'Drink' : 'Roast'}
         />
         <div className='flex gap-3'>
           <PriceInput
