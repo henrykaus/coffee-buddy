@@ -1,5 +1,7 @@
 ## Getting Started
 
+Pre-req: ensure Node v21 is installed.
+
 First, start the DB:
 
 ```bash
