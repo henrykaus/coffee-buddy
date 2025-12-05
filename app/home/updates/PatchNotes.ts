@@ -3,6 +3,10 @@ import {PatchNotes} from '@/app/lib/types';
 export const PatchNoteContents: PatchNotes[] = [
   {
     divider: true,
+    title: 'Notice: For the best experience, use mobile!',
+  },
+  {
+    divider: true,
     title: 'December 2025',
   },
   {
