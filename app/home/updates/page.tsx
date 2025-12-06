@@ -1,9 +1,13 @@
 import {PatchNoteContents} from '@/app/home/updates/PatchNotes';
-import {CircleIcon} from '@/app/ui/icons';
+import {CircleIcon, InfoIcon} from '@/app/ui/icons';
 
 export default function Page() {
   return (
     <div className='flex gap-y-8 flex-col mt-3 mb-12 px-6 sm:px-20'>
+      <article className='flex gap-3 items-center text-lg leading-snug rounded-lg shadow-sm px-3 py-2.5 whitespace-pre-wrap bg-sky-200 text-sky-700'>
+        <InfoIcon height={26} width={26} className='shrink-0 self-stretch' />
+        <p className='my-[1px]'>For best experience, use mobile!</p>
+      </article>
       {PatchNoteContents.map((note, index) => {
         return note.divider ? (
           <div className='relative w-full' key={index}>
