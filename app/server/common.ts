@@ -1,5 +1,5 @@
 import {auth} from '@/auth';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@/app/generated/prisma/client';
 import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
 import {State} from '@/app/server/visits/actions';

@@ -1,6 +1,7 @@
 'use server';
 
-import {prisma} from '@/app/server/prisma';
+import 'dotenv/config';
+import prisma from '@/app/server/prisma';
 import {User} from '@/app/lib/types';
 import {AddUser} from '@/app/server/schemas';
 import {generateErrorForClient} from '@/app/server/common';

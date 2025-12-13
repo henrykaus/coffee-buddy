@@ -1,8 +1,9 @@
 'use server';
 
+import 'dotenv/config';
+import prisma from '@/app/server/prisma';
 import {getValidSession, logError} from '@/app/server/common';
 import {getUser} from '@/app/server/users/actions';
-import {prisma} from '@/app/server/prisma';
 
 export const deleteUserData = async () => {
   try {

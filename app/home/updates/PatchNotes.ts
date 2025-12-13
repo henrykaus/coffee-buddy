@@ -8,7 +8,7 @@ export const PatchNoteContents: PatchNotes[] = [
   {
     title: 'Keeping This Site Up',
     date: 'Dec. 13, 2025',
-    fixes: ['Security updates.'],
+    fixes: ['Security updates and performance improvements.'],
   },
   {
     title: 'In Case of Error',

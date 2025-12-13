@@ -1,12 +1,11 @@
 'use server';
 
-import {PrismaClient} from '@prisma/client';
+import 'dotenv/config';
+import prisma from '@/app/server/prisma';
 import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
 import {getUser} from '@/app/server/users/actions';
 import {getValidSession} from '@/app/server/common';
-
-const prisma = new PrismaClient();
 
 const seedData = async () => {
   const session = await getValidSession();

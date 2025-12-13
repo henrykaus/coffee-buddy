@@ -1,6 +1,7 @@
 {
   "name": "coffee-buddy",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,7 +11,8 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@prisma/client": "^6.11.1",
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
     "clsx": "^2.1.1",
     "lodash": "^4.17.21",
     "next": "^16.0.10",
@@ -31,7 +33,7 @@
     "eslint-config-next": "^15.3.5",
     "postcss": "^8.5.3",
     "prettier": "3.6.2",
-    "prisma": "^6.11.1",
+    "prisma": "^7.1.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   }

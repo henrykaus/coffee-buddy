@@ -1,6 +1,6 @@
 ## Getting Started
 
-Pre-req: ensure Node v21 is installed.
+Pre-req: ensure Node v22 is installed.
 
 First, start the DB:
 
