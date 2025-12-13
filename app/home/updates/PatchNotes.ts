@@ -6,6 +6,11 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'December 2025',
   },
   {
+    title: 'Keeping This Site Up',
+    date: 'Dec. 13, 2025',
+    fixes: ['Security updates.'],
+  },
+  {
     title: 'In Case of Error',
     date: 'Dec. 2, 2025',
     fixes: [
