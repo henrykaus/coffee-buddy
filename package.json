@@ -23,18 +23,18 @@
     "zod": "^3.25.75"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1.4",
-    "@types/lodash": "^4.17.16",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "^15.3.5",
-    "postcss": "^8.5.3",
+    "@eslint/eslintrc": "^3.3.3",
+    "@prisma/language-server": "^31.1.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/lodash": "^4.17.21",
+    "@types/node": "^22.19.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.0.10",
     "prettier": "3.6.2",
     "prisma": "^7.1.0",
-    "tailwindcss": "^4.1.17",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }
 }
