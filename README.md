@@ -30,6 +30,14 @@ If you want to perform the initial migration:
 1. Delete contents of `/migrations` (optional)
 2. run `prisma migrate dev --name init`
 
+## Database Changes
+
+1. Edit the `schema.prisma` file
+2. Create a new migration with `prisma migrate dev --name <name>`
+3. Re-generate your local prisma with `prisma generate`
+4. Switch the URL of the database in `.env` to point to production
+5. Run `prisma migrate deploy`
+
 ## Cleaning Up
 
 Quit out of the `npm run` session and then run the following command:
