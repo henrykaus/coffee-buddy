@@ -6,6 +6,13 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'December 2025',
   },
   {
+    title: "A Lil' Convenience",
+    date: 'Dec. 22, 2025',
+    fixes: [
+      "We'll now redirect you to your home page if you try to go to the login page while already logged in.",
+    ],
+  },
+  {
     title: 'Keeping This Site Up',
     date: 'Dec. 13, 2025',
     fixes: ['Security updates and performance improvements.'],
