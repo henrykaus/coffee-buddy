@@ -10,7 +10,7 @@ import {
 } from 'react';
 import {searchShops} from '@/app/server/shop/actions';
 import {debounce} from 'lodash';
-import {Shop} from '@/app/lib/types';
+import {Coordinates, Shop} from '@/app/lib/types';
 import clsx from 'clsx';
 import useCloseableDropdown from '@/app/hooks/useCloseableDropdown';
 import {
@@ -39,6 +39,7 @@ export default function ShopSearch(props: ShopSearchProps) {
   const [dropdownHeight, setDropdownHeight] = useState<
     CSSProperties | undefined
   >(undefined);
+  const [userLocation, setUserLocation] = useState<Coordinates>({});
 
   const clearShops = useCallback(() => {
     if (shops.length) {
@@ -55,6 +56,16 @@ export default function ShopSearch(props: ShopSearchProps) {
   const dropdownRef = useRef<HTMLUListElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const idRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // Get user's current location to bias search results from
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (shops.length > 0) {
@@ -74,9 +85,13 @@ export default function ShopSearch(props: ShopSearchProps) {
     }
   }, [shops.length, dropdownRef]);
 
-  const handleSearchInput = async () => {
+  const handleSearchInput = useCallback(async () => {
     if (nameRef.current?.value && idRef.current) {
-      const shopData = await searchShops(nameRef.current.value);
+      const shopData = await searchShops(
+        nameRef.current.value,
+        userLocation.latitude,
+        userLocation.longitude,
+      );
       setSearchInputState(
         shopData.length ? ShopSearchState.FoundShops : ShopSearchState.NoShops,
       );
@@ -85,7 +100,7 @@ export default function ShopSearch(props: ShopSearchProps) {
       setSearchInputState(ShopSearchState.Default);
       setShops([]);
     }
-  };
+  }, [userLocation]);
 
   const handleClearShop = () => {
     if (nameRef.current && idRef.current) {
@@ -100,7 +115,7 @@ export default function ShopSearch(props: ShopSearchProps) {
 
   const debouncedSearchShops = useMemo(
     () => debounce(handleSearchInput, 1000),
-    [],
+    [handleSearchInput],
   );
 
   const handleOnChange = () => {
@@ -160,7 +175,7 @@ export default function ShopSearch(props: ShopSearchProps) {
         {shops.map((shop: Shop) => (
           <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
             <button
-              className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left h-[51px]'
+              className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left h-12.75'
               onClick={() => handleSelection(shop)}
             >
               <p className='flex-1/4 leading-tight'>{shop.name}</p>

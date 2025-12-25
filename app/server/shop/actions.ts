@@ -43,10 +43,23 @@ const convertGoogleMapsEntryToShop = (entry: GoogleMapsEntry): Shop => {
 };
 
 /**
- * Searches Google Places entries based on user query while prioritizing the general area around
+ * Searches Google Places entries based on user query while prioritizing the user's
+ * current location. If no location is provided, it biases location results around
  * Portland Oregon's Pioneer Square.
  */
-export const searchShops = async (query: string) => {
+export const searchShops = async (
+  query: string,
+  lat?: number,
+  long?: number,
+) => {
+  let latitude = '45.51887';
+  let longitude = '-122.6793';
+
+  if (lat !== undefined && long !== undefined) {
+    latitude = lat.toFixed(5);
+    longitude = long.toFixed(5);
+  }
+
   const data = await fetch(GOOGLE_PLACES_BASE_URL, {
     method: 'POST',
     headers: {
@@ -60,8 +73,8 @@ export const searchShops = async (query: string) => {
       locationBias: {
         circle: {
           center: {
-            latitude: 45.51887,
-            longitude: -122.6793,
+            latitude: latitude,
+            longitude: longitude,
           },
         },
       },

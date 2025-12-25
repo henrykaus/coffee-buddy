@@ -6,6 +6,13 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'December 2025',
   },
   {
+    title: 'Local Results',
+    date: 'Dec. 24, 2025',
+    features: [
+      "When searching for a nearby coffee shop, we now use your location so you get more meaningful results! (don't worry, we don't store this information)",
+    ],
+  },
+  {
     title: "A Lil' Convenience",
     date: 'Dec. 22, 2025',
     fixes: [

@@ -40,6 +40,11 @@ export interface GoogleMapsEntry {
   businessStatus: string;
 }
 
+export interface Coordinates {
+  latitude?: number;
+  longitude?: number;
+}
+
 export interface VisitAction {
   action: VisitActionType;
   isClient: boolean;
