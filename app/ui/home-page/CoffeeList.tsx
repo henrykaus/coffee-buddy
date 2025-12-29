@@ -242,7 +242,7 @@ export default function CoffeeList(props: CoffeeListProps) {
       >
         {toastConfig?.message}
       </Toast>
-      <section className='flex gap-y-3 flex-col mb-24 pb-10 px-6 sm:px-20'>
+      <section className='flex gap-y-3 flex-col mb-24 md:mb-20 py-2 px-6 w-full h-full'>
         {(coffeeVisits.length || query.length > 0) && (
           <VisitSearch query={query} />
         )}
@@ -255,9 +255,9 @@ export default function CoffeeList(props: CoffeeListProps) {
             />
           ))
         ) : (
-          <div className='absolute start-0 mx-auto w-full text-center top-[calc(50%-28px)]'>
+          <div className='sticky top-[calc(50%-28px)] mx-auto text-center'>
             <p className='font-semibold text-xl text-slate-500'>No visits</p>
-            {query.length === 0 && (
+            {query.length >= 0 && (
               <p className='text-lg text-slate-400'>
                 Click the + button to get started
               </p>

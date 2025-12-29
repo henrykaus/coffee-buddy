@@ -1,13 +1,13 @@
 'use client';
 
 import React, {useState} from 'react';
-import {EllipsisIcon, LogOutIcon} from '@/app/ui/icons';
+import {EllipsisIcon, HomeIcon, LogOutIcon} from '@/app/ui/icons';
 import {Route, UserMenuOption} from '@/app/lib/enums';
 import {UserAvatar} from '@/app/ui/user-menu/UserAvatar';
 import useCloseableDropdown from '@/app/hooks/useCloseableDropdown';
 import MoreOptionsPopup from '@/app/ui/user-menu/MoreOptionsPopup';
-import DeleteAccountPopup from '@/app/ui/user-menu/DeleteAccountPopup';
 import {signOut} from 'next-auth/react';
+import Link from 'next/link';
 
 interface UserMenuProps {
   imageUrl?: string | null;
@@ -17,34 +17,34 @@ export default function UserMenu(props: UserMenuProps) {
   const {imageUrl} = props;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState<UserMenuOption | null>(null);
+  const [menuOption, setMenuOption] = useState<UserMenuOption | null>(null);
 
   const ref = useCloseableDropdown<HTMLDivElement>(() => setIsOpen(false));
 
+  const handleClosePopup = () => {
+    setMenuOption(null);
+    setIsOpen(false);
+  };
+
   const handleOptionClicked = async (option: UserMenuOption) => {
     switch (option) {
-      case UserMenuOption.DeleteAccount: {
-        setMenuOpen(UserMenuOption.DeleteAccount);
-        break;
-      }
-      case UserMenuOption.LogOut: {
-        await signOut({redirectTo: Route.Login});
+      case UserMenuOption.Home: {
+        // Navigating away should close popup
+        handleClosePopup();
         break;
       }
       case UserMenuOption.MoreOptions: {
-        setMenuOpen(UserMenuOption.MoreOptions);
+        // Close popup when more options menu opens
+        setIsOpen(false);
+        setMenuOption(UserMenuOption.MoreOptions);
         break;
       }
-      case UserMenuOption.WhatsNew: {
-        // What's New is navigated to from a Link component
-        setMenuOpen(null);
+      case UserMenuOption.LogOut: {
+        // TODO: Add spinner to logout when clicked
+        await signOut({redirectTo: Route.Login});
         break;
       }
     }
-  };
-
-  const handleClosePopup = () => {
-    setMenuOpen(null);
   };
 
   return (
@@ -57,18 +57,19 @@ export default function UserMenu(props: UserMenuProps) {
         >
           <UserAvatar imageUrl={imageUrl} />
         </button>
-        {isOpen && !menuOpen && (
-          <ul className='bg-(--background) rounded-lg shadow-xl w-fit absolute end-0 -bottom-22 transition'>
-            <li className='hover:bg-slate-100 active:bg-slate-100 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
-              <button
+        {isOpen && (
+          <ul className='bg-(--background) rounded-lg shadow-xl min-w-40 w-fit absolute end-0 -bottom-32 md:-bottom-12 transition'>
+            <li className='list-item md:hidden hover:bg-slate-100 active:bg-slate-100 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
+              <Link
+                href={Route.Home}
                 className='flex justify-between p-2 gap-4 w-full whitespace-nowrap'
-                onClick={() => handleOptionClicked(UserMenuOption.LogOut)}
+                onNavigate={() => handleOptionClicked(UserMenuOption.Home)}
               >
-                <span>Sign Out</span>
-                <LogOutIcon />
-              </button>
+                <span>Home</span>
+                <HomeIcon />
+              </Link>
             </li>
-            <li className='hover:bg-slate-100 active:bg-slate-100 border-b-2 border-l-2 border-r-2 border-slate-300 rounded-b-lg'>
+            <li className='list-item md:hidden hover:bg-slate-100 active:bg-slate-100 border-l-2 border-r-2 border-slate-300'>
               <button
                 className='flex justify-between p-2 gap-4 w-full whitespace-nowrap'
                 onClick={() => handleOptionClicked(UserMenuOption.MoreOptions)}
@@ -77,17 +78,20 @@ export default function UserMenu(props: UserMenuProps) {
                 <EllipsisIcon />
               </button>
             </li>
+            <li className='hover:bg-slate-100 active:bg-slate-100 border-b-2 md:border-t-2 border-l-2 border-r-2 border-slate-300 rounded-b-lg md:rounded-t-lg'>
+              <button
+                className='flex justify-between p-2 gap-4 w-full whitespace-nowrap'
+                onClick={() => handleOptionClicked(UserMenuOption.LogOut)}
+              >
+                <span>Sign Out</span>
+                <LogOutIcon />
+              </button>
+            </li>
           </ul>
         )}
       </div>
-      {menuOpen === UserMenuOption.MoreOptions && (
-        <MoreOptionsPopup
-          onClose={handleClosePopup}
-          handleOptionClicked={handleOptionClicked}
-        />
-      )}
-      {menuOpen === UserMenuOption.DeleteAccount && (
-        <DeleteAccountPopup onClose={handleClosePopup} />
+      {menuOption === UserMenuOption.MoreOptions && (
+        <MoreOptionsPopup onClose={handleClosePopup} />
       )}
     </>
   );

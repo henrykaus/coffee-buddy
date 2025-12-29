@@ -2,10 +2,10 @@
 
 import Modal from '@/app/ui/common/Modal';
 import React from 'react';
-import {useRouter} from 'next/navigation';
 import {CancelIcon, GhostIcon} from '@/app/ui/icons';
 import {deleteUserData} from '@/app/server/data-deletion/actions';
 import {Route} from '@/app/lib/enums';
+import {signOut} from 'next-auth/react';
 
 interface DeleteAccountPopupProps {
   onClose: () => void;
@@ -13,11 +13,11 @@ interface DeleteAccountPopupProps {
 
 export default function DeleteAccountPopup(props: DeleteAccountPopupProps) {
   const {onClose} = props;
-  const {replace} = useRouter();
 
   const handleDeleteAccount = async () => {
+    // TODO: add spinner to delete account button
     await deleteUserData();
-    replace(Route.Login);
+    await signOut({redirectTo: Route.Login});
   };
 
   return (

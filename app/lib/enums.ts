@@ -4,11 +4,20 @@ export enum OrderType {
   CoffeeBeans = 'BEANS',
 }
 
-export enum UserMenuOption {
-  DeleteAccount = 'delete-account',
-  LogOut = 'log-out',
+export enum MainMenuOption {
+  Home = 'home',
   MoreOptions = 'more-options',
+}
+
+export enum UserMenuOption {
+  Home = 'home',
+  MoreOptions = 'more-options',
+  LogOut = 'log-out',
+}
+
+export enum MoreMenuOption {
   WhatsNew = 'whats-new',
+  DeleteAccount = 'delete-account',
 }
 
 export enum VisitActionType {

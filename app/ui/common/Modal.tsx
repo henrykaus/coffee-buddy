@@ -44,7 +44,7 @@ export default function Modal(props: ModalProps) {
       <dialog
         className={clsx(
           'rounded-t-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10 shadow-md',
-          'md:start-auto md:w-[31rem]',
+          'md:start-auto md:w-124',
           {
             'h-[75%]': fullscreen,
             'md:h-auto md:m-auto md:end-[50%] md:bottom-[50%] md:translate-1/2 md:rounded-xl':
@@ -62,6 +62,7 @@ export default function Modal(props: ModalProps) {
           <header className='flex justify-center items-center text-2xl mb-4 min-h-8'>
             {showClose && (
               <button
+                type='button'
                 onClick={onClose}
                 aria-label='Close popup'
                 className='absolute start-6 top-6 hover:bg-slate-200 active:bg-slate-300 rounded-md p-2 flex items-center justify-center text-slate-600 transition'

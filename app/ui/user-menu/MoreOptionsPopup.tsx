@@ -1,12 +1,12 @@
 import Modal from '@/app/ui/common/Modal';
-import React from 'react';
-import {GhostIcon, LogOutIcon, WhatsNewIcon} from '@/app/ui/icons';
-import {Route, UserMenuOption} from '@/app/lib/enums';
+import React, {useState} from 'react';
+import {GhostIcon, WhatsNewIcon} from '@/app/ui/icons';
+import {MoreMenuOption, Route} from '@/app/lib/enums';
 import Link from 'next/link';
+import DeleteAccountPopup from '@/app/ui/user-menu/DeleteAccountPopup';
 
 interface MoreOptionsPopupProps {
   onClose: () => void;
-  handleOptionClicked: (option: UserMenuOption) => void;
 }
 
 const optionClasses =
@@ -16,42 +16,59 @@ const buttonClasses =
   'flex justify-between items-center p-3 mb-4 gap-2 w-full whitespace-nowrap';
 
 export default function MoreOptionsPopup(props: MoreOptionsPopupProps) {
-  const {onClose, handleOptionClicked} = props;
+  const {onClose} = props;
+
+  // FIXME: Temporary logic for deletion to work until this is moved into a settings page
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const handleCloseDelete = () => {
+    setIsDeleteOpen(false);
+    onClose();
+  };
+
+  const handleOptionClicked = async (option: MoreMenuOption) => {
+    switch (option) {
+      case MoreMenuOption.WhatsNew: {
+        onClose();
+        break;
+      }
+      case MoreMenuOption.DeleteAccount: {
+        setIsDeleteOpen(true);
+        break;
+      }
+    }
+  };
 
   return (
-    <Modal title='More Options' fullscreen={false} onClose={onClose}>
-      <ul>
-        <li className={optionClasses}>
-          <Link
-            className={buttonClasses}
-            href={Route.WhatsNew}
-            onNavigate={() => handleOptionClicked(UserMenuOption.WhatsNew)}
-          >
-            <span>What&apos;s New</span>
-            <WhatsNewIcon />
-          </Link>
-        </li>
-        <li className={optionClasses}>
-          <button
-            type='button'
-            className={buttonClasses}
-            onClick={() => handleOptionClicked(UserMenuOption.LogOut)}
-          >
-            <span>Sign Out</span>
-            <LogOutIcon />
-          </button>
-        </li>
-        <li className='transition hover:bg-rose-100 active:bg-rose-100 text-rose-700 rounded-lg'>
-          <button
-            type='button'
-            className='flex justify-between items-center p-3 mt-4 gap-2 w-full whitespace-nowrap'
-            onClick={() => handleOptionClicked(UserMenuOption.DeleteAccount)}
-          >
-            <span>Delete Account</span>
-            <GhostIcon />
-          </button>
-        </li>
-      </ul>
-    </Modal>
+    <>
+      {!isDeleteOpen && (
+        <Modal title='More Options' fullscreen={false} onClose={onClose}>
+          <ul>
+            <li className={optionClasses}>
+              <Link
+                className={buttonClasses}
+                href={Route.WhatsNew}
+                onNavigate={() => handleOptionClicked(MoreMenuOption.WhatsNew)}
+              >
+                <span>What&apos;s New</span>
+                <WhatsNewIcon />
+              </Link>
+            </li>
+            <li className='transition hover:bg-rose-100 active:bg-rose-100 text-rose-700 rounded-lg'>
+              <button
+                type='button'
+                className='flex justify-between items-center p-3 mt-4 gap-2 w-full whitespace-nowrap'
+                onClick={() =>
+                  handleOptionClicked(MoreMenuOption.DeleteAccount)
+                }
+              >
+                <span>Delete Account</span>
+                <GhostIcon />
+              </button>
+            </li>
+          </ul>
+        </Modal>
+      )}
+      {isDeleteOpen && <DeleteAccountPopup onClose={handleCloseDelete} />}
+    </>
   );
 }

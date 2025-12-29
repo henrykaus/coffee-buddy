@@ -60,9 +60,7 @@ export function CardSkeleton() {
 
 export function DashboardSkeleton() {
   return (
-    <div
-      className={clsx(shimmer, 'relative flex flex-col gap-y-3 px-6 sm:px-20')}
-    >
+    <div className={clsx(shimmer, 'relative flex flex-col gap-y-3 px-6')}>
       <div className='flex justify-between border-2 border-slate-200 rounded-lg transition py-2.5 px-3 w-full bg-(--background)'>
         <SkeletonRow width='w-30' height='h-6' />
         <SkeletonRow width='w-7' height='h-6' />

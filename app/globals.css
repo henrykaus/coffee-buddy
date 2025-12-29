@@ -13,6 +13,7 @@
   --animate-popup-slide-right: popup-slide-right 0.15s ease-in-out forwards;
   --animate-toast-slide-down: toast-slide-down 0.2s ease-in-out forwards;
   --animate-toast-slide-up: toast-slide-up 0.2s ease-in-out forwards;
+  --header-height: 5rem;
   box-sizing: border-box;
 }
 

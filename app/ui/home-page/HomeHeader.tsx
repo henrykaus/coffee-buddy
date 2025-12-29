@@ -5,9 +5,8 @@ import React, {useEffect, useState} from 'react';
 import {User} from 'next-auth';
 import {usePathname} from 'next/navigation';
 import {PageTitle, Route} from '@/app/lib/enums';
-import Link from 'next/link';
-import {HomeIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
+// import seedData from '@/app/server/seedData';
 
 interface HomeHeaderProps {
   user: User | undefined;
@@ -38,24 +37,22 @@ export default function HomeHeader(props: HomeHeaderProps) {
   return (
     <header
       className={clsx(
-        'flex sticky transition top-0 items-center justify-between w-full py-6 px-6 sm:px-20 bg-(--background) z-10',
+        'flex sticky transition top-0 items-center justify-between w-full h-(--header-height) py-4 px-6 bg-(--background) z-10',
         {
           'shadow-sm': isScrolled,
         },
       )}
     >
-      <h1 className='text-3xl font-medium font-[family-name:var(--font-header)]'>
+      <h1 className='text-3xl font-medium font-(family-name:--font-header)'>
         {convertRouteToTitle(pathname as Route)}
       </h1>
       <span className='flex items-center gap-2'>
-        {pathname !== Route.Home && (
-          <Link
-            href={Route.Home}
-            className='rounded-full flex items-center justify-center p-[0.5rem] text-slate-500 transition bg-slate-200/60 hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90'
-          >
-            <HomeIcon height={25} width={25} strokeWidth={2.3} />
-          </Link>
-        )}
+        {/*<button*/}
+        {/*  className='rounded-lg p-2 bg-slate-100 hover:bg-slate-200/80 active:bg-slate-200/80 active:scale-90 transition font-medium text-slate-700'*/}
+        {/*  onClick={async () => await seedData()}*/}
+        {/*>*/}
+        {/*  Seed*/}
+        {/*</button>*/}
         <UserMenu imageUrl={user?.image} />
       </span>
     </header>

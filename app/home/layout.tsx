@@ -4,6 +4,7 @@ import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
 import {Route} from '@/app/lib/enums';
 import {HeaderSkeleton} from '@/app/ui/skeletons';
+import MainMenu from '@/app/ui/common/MainMenu';
 
 interface LayoutProps {
   children: Readonly<ReactNode>;
@@ -19,11 +20,14 @@ export default async function Layout(props: LayoutProps) {
   }
 
   return (
-    <main className='w-full min-h-screen font-[family-name:var(--font-geist-sans)]'>
+    <main className='flex flex-col min-h-screen font-(family-name:--font-geist-sans)'>
       <Suspense fallback={<HeaderSkeleton />}>
         <HomeHeader user={session?.user} />
       </Suspense>
-      {children}
+      <div className='flex-1 flex relative'>
+        <MainMenu />
+        <div className='w-full mx-auto md:w-[50%]'>{children}</div>
+      </div>
     </main>
   );
 }

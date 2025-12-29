@@ -236,6 +236,35 @@ export const CloseIcon = (props: IconProps) => {
   );
 };
 
+export const ClosePanelIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill={fill}
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <rect width='18' height='18' x='3' y='3' rx='2' />
+      <path d='M15 3v18' />
+      <path d='m10 15-3-3 3-3' />
+    </svg>
+  );
+};
+
 export const CoffeeBeanIcon = (props: IconProps) => {
   const {
     className,
@@ -557,7 +586,7 @@ export const NoNotesIcon = (props: IconProps) => {
   );
 };
 
-export const WhatsNewIcon = (props: IconProps) => {
+export const OpenPanelIcon = (props: IconProps) => {
   const {
     className,
     height = 24,
@@ -579,9 +608,9 @@ export const WhatsNewIcon = (props: IconProps) => {
       strokeLinejoin='round'
       className={className}
     >
-      <path d='m18 16 4-4-4-4' />
-      <path d='m6 8-4 4 4 4' />
-      <path d='m14.5 4-5 16' />
+      <rect width='18' height='18' x='3' y='3' rx='2' />
+      <path d='M15 3v18' />
+      <path d='m8 9 3 3-3 3' />
     </svg>
   );
 };
@@ -874,6 +903,35 @@ export const UserIcon = (props: IconProps) => {
       <circle cx='12' cy='12' r='10' />
       <circle cx='12' cy='10' r='3' />
       <path d='M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662' />
+    </svg>
+  );
+};
+
+export const WhatsNewIcon = (props: IconProps) => {
+  const {
+    className,
+    height = 24,
+    width = 24,
+    strokeWidth = 2.5,
+    fill = 'none',
+  } = props;
+
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={width}
+      height={height}
+      viewBox='0 0 24 24'
+      fill={fill}
+      stroke='currentColor'
+      strokeWidth={strokeWidth}
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      className={className}
+    >
+      <path d='m18 16 4-4-4-4' />
+      <path d='m6 8-4 4 4 4' />
+      <path d='m14.5 4-5 16' />
     </svg>
   );
 };
