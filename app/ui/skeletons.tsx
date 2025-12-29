@@ -60,7 +60,7 @@ export function CardSkeleton() {
 
 export function DashboardSkeleton() {
   return (
-    <div className={clsx(shimmer, 'relative flex flex-col gap-y-3 px-6')}>
+    <div className={clsx(shimmer, 'relative flex flex-col gap-y-3 px-6 pt-2')}>
       <div className='flex justify-between border-2 border-slate-200 rounded-lg transition py-2.5 px-3 w-full bg-(--background)'>
         <SkeletonRow width='w-30' height='h-6' />
         <SkeletonRow width='w-7' height='h-6' />
@@ -90,7 +90,7 @@ export function HeaderSkeleton() {
 
 export function PatchNoteSkeleton() {
   return (
-    <div className={clsx(shimmer, 'relative px-6 sm:px-20')}>
+    <div className={clsx(shimmer, 'relative px-6')}>
       <div className='bg-slate-50 flex flex-col gap-y-3 p-5 rounded-lg'>
         <div className='flex justify-between items-center mb-3'>
           <SkeletonRow width='w-45' height='h-6' />
@@ -106,15 +106,10 @@ export function PatchNoteSkeleton() {
   );
 }
 
-export function LoadingSkeleton() {
+export function PatchNotesLoadingSkeleton() {
   return (
-    <div className='flex flex-col gap-6 mt-4'>
-      <div
-        className={clsx(
-          shimmer,
-          'relative flex flex-col gap-y-3 px-6 sm:px-20',
-        )}
-      >
+    <div className='flex flex-col gap-6 mt-3'>
+      <div className={clsx(shimmer, 'relative flex flex-col gap-y-3 px-6')}>
         <SkeletonRow color='bg-slate-100' width='w-30' height='h-6' />
       </div>
       <PatchNoteSkeleton />

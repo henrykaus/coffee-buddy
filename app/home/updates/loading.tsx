@@ -1,5 +1,5 @@
-import {LoadingSkeleton} from '@/app/ui/skeletons';
+import {PatchNotesLoadingSkeleton} from '@/app/ui/skeletons';
 
 export default function Loading() {
-  return <LoadingSkeleton />;
+  return <PatchNotesLoadingSkeleton />;
 }
