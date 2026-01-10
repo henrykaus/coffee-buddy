@@ -1,6 +1,7 @@
 export interface IconProps {
   className?: string;
   height?: number;
+  innerClassName?: string; // Used for animating parts of a svg
   width?: number;
   strokeWidth?: number;
   fill?: string;
@@ -232,35 +233,6 @@ export const CloseIcon = (props: IconProps) => {
     >
       <path d='M18 6 6 18' />
       <path d='m6 6 12 12' />
-    </svg>
-  );
-};
-
-export const ClosePanelIcon = (props: IconProps) => {
-  const {
-    className,
-    height = 24,
-    width = 24,
-    strokeWidth = 2.5,
-    fill = 'none',
-  } = props;
-
-  return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width={width}
-      height={height}
-      viewBox='0 0 24 24'
-      fill={fill}
-      stroke='currentColor'
-      strokeWidth={strokeWidth}
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      className={className}
-    >
-      <rect width='18' height='18' x='3' y='3' rx='2' />
-      <path d='M15 3v18' />
-      <path d='m10 15-3-3 3-3' />
     </svg>
   );
 };
@@ -586,10 +558,11 @@ export const NoNotesIcon = (props: IconProps) => {
   );
 };
 
-export const OpenPanelIcon = (props: IconProps) => {
+export const OpenClosePanelIcon = (props: IconProps) => {
   const {
     className,
     height = 24,
+    innerClassName,
     width = 24,
     strokeWidth = 2.5,
     fill = 'none',
@@ -609,8 +582,8 @@ export const OpenPanelIcon = (props: IconProps) => {
       className={className}
     >
       <rect width='18' height='18' x='3' y='3' rx='2' />
-      <path d='M15 3v18' />
-      <path d='m8 9 3 3-3 3' />
+      <path d='M9 3v18' />
+      <path d='m14 9 3 3-3 3' className={innerClassName} />
     </svg>
   );
 };

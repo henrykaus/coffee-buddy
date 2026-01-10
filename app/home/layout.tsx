@@ -4,7 +4,7 @@ import {auth} from '@/auth';
 import {redirect} from 'next/navigation';
 import {Route} from '@/app/lib/enums';
 import {HeaderSkeleton} from '@/app/ui/skeletons';
-import MainMenu from '@/app/ui/common/MainMenu';
+import MainMenu from '@/app/ui/main-menu/MainMenu';
 
 interface LayoutProps {
   children: Readonly<ReactNode>;
@@ -26,7 +26,7 @@ export default async function Layout(props: LayoutProps) {
       </Suspense>
       <div className='flex-1 flex relative'>
         <MainMenu />
-        <div className='w-full mx-auto md:w-[50%]'>{children}</div>
+        <div className='w-full mx-auto md:w-[60%]'>{children}</div>
       </div>
     </main>
   );

@@ -62,3 +62,12 @@ export enum VisitFormField {
   Price = 'price',
   OrderType = 'order-type',
 }
+
+export enum MenuPreference {
+  Expanded = 'expanded',
+  Collapsed = 'collapsed',
+}
+
+export enum LocalStorageItem {
+  MenuPreference = 'menu-preference',
+}

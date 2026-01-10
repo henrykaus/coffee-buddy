@@ -6,6 +6,7 @@ import {OrderType} from '@/app/lib/enums';
 import {CoffeeBeanIcon, EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
 import {getDateForUser, getPriceForDisplay} from '@/app/server/common';
+import Collapsible from '@/app/ui/common/Collapsible';
 
 interface CoffeeCardProps {
   onEditClick: () => void;
@@ -30,7 +31,10 @@ export default function CoffeeCard(props: CoffeeCardProps) {
     <article
       className={clsx(
         'border-2 border-slate-200 pb-2 pt-3 px-3 rounded-md text-lg text-slate-700 transition cursor-pointer bg-(--background)',
-        {'shadow-lg': isExpanded},
+        {
+          'shadow-lg hover:shadow-lg active:shadow-lg': isExpanded,
+          'hover:shadow-sm active:shadow-sm': !isExpanded,
+        },
       )}
       onClick={handleClick}
       aria-expanded={isExpanded}
@@ -74,24 +78,15 @@ export default function CoffeeCard(props: CoffeeCardProps) {
         </span>
       </header>
       <p>{formattedDrink}</p>
-      <div
-        className={clsx('grid transition-all', {
-          'grid-rows-[1fr]': isExpanded,
-          'grid-rows-[0fr]': !isExpanded,
-        })}
-        aria-hidden={!isExpanded}
-      >
-        <div className='overflow-hidden'>
-          {/* This is required for shrinking cards to work */}
-          <p className='bg-slate-100 rounded-md p-2 text-sm my-1.5 whitespace-pre-wrap'>
-            {visit.notes ? (
-              visit.notes
-            ) : (
-              <span className='text-slate-400'>No notes</span>
-            )}
-          </p>
-        </div>
-      </div>
+      <Collapsible direction='vertical' isCollapsed={!isExpanded}>
+        <p className='bg-slate-100 rounded-md p-2 text-sm my-1.5 whitespace-pre-wrap'>
+          {visit.notes ? (
+            visit.notes
+          ) : (
+            <span className='text-slate-400'>No notes</span>
+          )}
+        </p>
+      </Collapsible>
       <div className='flex justify-between items-baseline'>
         {visit.date && (
           <p className='text-sm'>Visited {getDateForUser(visit.date)}</p>

@@ -35,7 +35,7 @@ export default function DeleteAccountPopup(props: DeleteAccountPopupProps) {
       <div className='mx-5'>
         <button
           type='button'
-          className='flex justify-center items-center transition hover:bg-rose-100 active:bg-rose-100 text-rose-700 rounded-lg border-rose-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap font-medium'
+          className='flex justify-center items-center transition hover:bg-rose-100 active:bg-rose-200/90 text-rose-700 rounded-lg border-rose-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap font-medium'
           onClick={handleDeleteAccount}
         >
           <GhostIcon />
@@ -43,7 +43,7 @@ export default function DeleteAccountPopup(props: DeleteAccountPopupProps) {
         </button>
         <button
           type='button'
-          className='flex justify-center items-center transition hover:bg-slate-200/90 active:bg-slate-200/90 text-slate-700 rounded-lg border-slate-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap mt-3'
+          className='flex justify-center items-center transition hover:bg-slate-200/90 active:bg-slate-300/80 text-slate-700 rounded-lg border-slate-700/50 border-[3px] p-2 gap-2 w-full whitespace-nowrap mt-3'
           onClick={onClose}
         >
           <CancelIcon />

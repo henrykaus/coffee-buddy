@@ -3,6 +3,19 @@ import {PatchNotes} from '@/app/lib/types';
 export const PatchNoteContents: PatchNotes[] = [
   {
     divider: true,
+    title: 'January 2026',
+  },
+  {
+    title: "What's on the menu?",
+    date: 'Jan. 10, 2026',
+    features: [
+      'We enhanced the main menu when using Coffee Buddy on desktop. It now remembers whether you last left the menu collapsed or expanded. And, it now opens and closes more smoothly! (you should play with it)',
+      'All buttons are now more responsive on desktop.',
+      'Updated copyright to 2026 — new year, new me.',
+    ],
+  },
+  {
+    divider: true,
     title: 'December 2025',
   },
   {
