@@ -222,7 +222,7 @@ function DeleteButton(props: {
   const {onClick} = props;
   return (
     <button
-      className='rounded-full h-10 w-10 flex items-center justify-center text-rose-800 bg-rose-100 hover:bg-rose-200 active:bg-rose-200 active:scale-90 transition'
+      className='rounded-full h-10 w-10 flex items-center justify-center outline-none text-rose-800 bg-rose-100 hover:bg-rose-200 focus:bg-rose-200 active:bg-rose-200 active:scale-90 transition'
       onClick={onClick}
       aria-label='Delete visit'
     >
@@ -238,7 +238,7 @@ function ConfirmButton(props: {
   const {disabled, onClick} = props;
   return (
     <button
-      className='rounded-full h-10 w-10 flex items-center justify-center text-green-800 bg-green-100 hover:bg-green-200 active:bg-green-200 active:scale-90 transition
+      className='rounded-full h-10 w-10 flex items-center justify-center outline-none text-green-800 bg-green-100 hover:bg-green-200 focus:bg-green-200 active:bg-green-200 active:scale-90 transition
         disabled:bg-slate-100 disabled:text-slate-400 disabled:active:scale-none'
       disabled={disabled}
       formAction={onClick}

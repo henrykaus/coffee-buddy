@@ -19,7 +19,7 @@ export default function FieldPopup(props: FieldPopupProps) {
   const iconToDisplay = showAltIcon ? altIcon : icon;
 
   const classes =
-    'rounded-full bg-slate-200 hover:bg-slate-300 active:bg-slate-300 active:scale-90 transition h-10 w-10 flex items-center justify-center';
+    'rounded-full outline-none bg-slate-200 hover:bg-slate-300 focus:bg-slate-300 active:bg-slate-300 active:scale-90 transition h-10 w-10 flex items-center justify-center';
 
   return (
     <span ref={ref} className='relative'>

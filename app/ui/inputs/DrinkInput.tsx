@@ -54,7 +54,7 @@ export default function DrinkInput(props: SizeInputProps) {
       <span className='absolute end-1 top-1'>
         <select
           name='size'
-          className='rounded appearance-none peer bg-slate-200 px-2 py-0 w-[5.75rem] outline-none hover:bg-slate-300 transition cursor-pointer'
+          className='rounded appearance-none peer bg-slate-200 px-2 py-0 w-23 outline-none hover:bg-slate-300 focus:bg-slate-300 transition cursor-pointer'
           defaultValue={defaultSize ?? -1}
         >
           <option value={-1}># oz.</option>
@@ -68,7 +68,7 @@ export default function DrinkInput(props: SizeInputProps) {
           <option value={20}>20 oz.</option>
         </select>
         <ChevronDownIcon
-          className='absolute right-[0.1rem] top-[0.15rem] peer-open:rotate-x-180 transition duration-300'
+          className='absolute right-[0.1rem] top-[0.15rem] peer-open:rotate-x-180 transition duration-300 pointer-events-none'
           strokeWidth={2.1}
         />
       </span>

@@ -17,7 +17,7 @@ export default function DateInput(props: DateInput) {
   return (
     <span
       className='relative flex items-center justify-center rounded-full cursor-pointer
-    bg-slate-200 hover:bg-slate-300 active:bg-slate-300 active:scale-90 transition pr-3 h-10 min-w-10'
+        bg-slate-200 hover:bg-slate-300 focus-within:bg-slate-300 active:bg-slate-300 active:scale-90 transition pr-3 h-10 min-w-10'
     >
       <input
         type='date'

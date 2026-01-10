@@ -16,8 +16,8 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
   );
 
   const commonButtonClasses =
-    'w-10.5 flex rounded-md transition cursor-pointer text-slate-400 hover:text-slate-500 active:text-slate-500 ' +
-    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:text-slate-700 has-checked:active:text-slate-700 has-checked:active:scale-90';
+    'w-10.5 flex rounded-md transition cursor-pointer text-slate-400 hover:text-slate-500 focus-within:text-slate-500 active:text-slate-500 ' +
+    'has-checked:bg-slate-300/90 has-checked:shadow-md has-checked:text-slate-700 has-checked:hover:text-slate-700 has-checked:hover:bg-slate-400/45 has-checked:focus-within:bg-slate-400/45 has-checked:active:text-slate-700 has-checked:active:scale-90';
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newOrderType = getOrderType(event.target.value);
@@ -38,7 +38,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           onChange={handleChange}
           value={OrderType.ToGo}
           defaultChecked={orderType === OrderType.ToGo}
-          hidden
+          className='appearance-none fixed'
         />
         <label
           htmlFor='to-go-option'
@@ -57,7 +57,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           onChange={handleChange}
           value={OrderType.ForHere}
           defaultChecked={orderType === OrderType.ForHere}
-          hidden
+          className='appearance-none fixed'
         />
         <label
           htmlFor='for-here-option'
@@ -76,7 +76,7 @@ export default function OrderTypeToggle(props: OrderTypeToggleProps) {
           onChange={handleChange}
           value={OrderType.CoffeeBeans}
           defaultChecked={orderType === OrderType.CoffeeBeans}
-          hidden
+          className='appearance-none fixed'
         />
         <label
           htmlFor='beans-option'
