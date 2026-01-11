@@ -10,7 +10,7 @@ export const PatchNoteContents: PatchNotes[] = [
     date: 'Jan. 11, 2026',
     features: [
       'Officially releasing Coffee Buddy v1.0!',
-      "Now that we finally fully support desktop users with an enhanced coffee visit list, we are happy to call this update: version 1.0. When viewing Coffee Buddy on a desktop computer, the coffee list will split into multiple dynamic columns to adjust on your screen size. There are more feature enhancements to come (I'm sure some bug fixes as well), so stay tuned!",
+      "Now that we finally fully support desktop users with an enhanced coffee visit list, we are happy to call this update: version 1.0. When viewing Coffee Buddy on a desktop computer, the primary coffee list will adjust to your screen size by splitting into multiple dynamic columns. There are more feature enhancements to come (I'm sure some bug fixes as well), so stay tuned!",
     ],
   },
   {
