@@ -1,4 +1,4 @@
-import CoffeeList from '@/app/ui/home-page/CoffeeList';
+import CoffeeList from '@/app/ui/coffee-list/CoffeeList';
 import React from 'react';
 import {Visit} from '@/app/lib/types';
 import {listVisits, searchVisits} from '@/app/server/visits/actions';

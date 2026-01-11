@@ -182,3 +182,18 @@ export const getLoginError = (error: string) => {
       return 'Unable to sign in.';
   }
 };
+
+export const splitVisitsIntoColumns = (
+  items: Visit[],
+  numColumns: number,
+): Visit[][] => {
+  const cols: any[][] = Array.from({length: numColumns}, () => []);
+
+  let colNumber = 0;
+  items.forEach((item) => {
+    cols[colNumber].push(item);
+    colNumber = ++colNumber % numColumns;
+  });
+
+  return cols;
+};

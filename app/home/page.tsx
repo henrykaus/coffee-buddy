@@ -1,5 +1,5 @@
 import React, {Suspense} from 'react';
-import CoffeeListWrapper from '@/app/ui/coffee-list/CoffeeListWrapper';
+import CoffeeListWrapper from '@/app/ui/home-page/CoffeeListWrapper';
 import {DashboardSkeleton} from '@/app/ui/skeletons';
 
 interface PageProps {

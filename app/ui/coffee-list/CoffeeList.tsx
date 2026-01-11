@@ -1,7 +1,6 @@
 'use client';
 
 import VisitSearch from '@/app/ui/home-page/VisitSearch';
-import CoffeeCard from '@/app/ui/coffee-list/CoffeeCard';
 import AddVisitButton from '@/app/ui/coffee-list/AddVisitButton';
 import AddVisitPopup from '@/app/ui/visit-popups/AddVisitPopup';
 import EditVisitPopup from '@/app/ui/visit-popups/EditVisitPopup';
@@ -15,6 +14,7 @@ import {
 } from '@/app/server/visits/actions';
 import {ToastType, VisitActionType} from '@/app/lib/enums';
 import Toast from '@/app/ui/common/Toast';
+import CoffeeGrid from '@/app/ui/coffee-list/CoffeeGrid';
 
 interface CoffeeListProps {
   visits: Visit[];
@@ -247,13 +247,7 @@ export default function CoffeeList(props: CoffeeListProps) {
           <VisitSearch query={query} />
         )}
         {coffeeVisits.length ? (
-          coffeeVisits.map((visit) => (
-            <CoffeeCard
-              key={visit.id}
-              onEditClick={() => setActiveVisit(visit)}
-              visit={visit}
-            />
-          ))
+          <CoffeeGrid items={coffeeVisits} onEditClick={setActiveVisit} />
         ) : (
           <div className='sticky top-[calc(50%-28px)] mx-auto text-center'>
             <p className='font-semibold text-xl text-slate-500'>No visits</p>

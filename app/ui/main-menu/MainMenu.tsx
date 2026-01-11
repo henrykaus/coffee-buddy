@@ -94,7 +94,7 @@ export default function MainMenu() {
           </Collapsible>
           <button
             className={clsx(
-              'transition p-1.5 rounded-lg bg-slate-200/65 hover:bg-slate-200/90 active:bg-slate-200/90',
+              'transition p-1.5 rounded-lg text-slate-400 hover:text-slate-600 active:text-slate-600',
               {
                 'active:translate-x-1.5': isCollapsed,
                 'active:-translate-x-1.5': !isCollapsed,

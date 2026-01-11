@@ -38,7 +38,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
       )}
       onClick={handleClick}
       aria-expanded={isExpanded}
-      role='row'
+      role='gridcell'
     >
       <header className='flex justify-between gap-4'>
         <span className='flex gap-2'>
