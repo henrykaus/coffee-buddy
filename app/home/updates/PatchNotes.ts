@@ -6,7 +6,7 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'January 2026',
   },
   {
-    title: 'Full Desktop Support (v1.0)',
+    title: "It's Official (v1.0)",
     date: 'Jan. 11, 2026',
     features: [
       'Officially releasing Coffee Buddy v1.0!',
