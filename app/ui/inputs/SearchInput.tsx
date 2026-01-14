@@ -13,6 +13,14 @@ export default function SearchInput(props: SearchInputProps) {
 
   const ref = useRef<HTMLInputElement>(null);
 
+  const placeholder = useMemo(() => {
+    const randomNumber = Math.floor(
+      Math.random() * SEARCH_PLACEHOLDER_KEYWORDS.length,
+    );
+
+    return SEARCH_PLACEHOLDER_KEYWORDS[randomNumber];
+  }, []);
+
   const handleSearch = () => {
     if (ref.current) {
       onSearch(ref.current.value);
@@ -23,20 +31,12 @@ export default function SearchInput(props: SearchInputProps) {
 
   const debouncedSearchShops = useMemo(() => debounce(handleSearch, 300), []);
 
-  const selectRandomPlaceholder = () => {
-    const randomNumber = Math.floor(
-      Math.random() * SEARCH_PLACEHOLDER_KEYWORDS.length,
-    );
-
-    return SEARCH_PLACEHOLDER_KEYWORDS[randomNumber];
-  };
-
   return (
     <span className='relative w-full'>
       <input
         ref={ref}
         type='text'
-        placeholder={`${selectRandomPlaceholder()}...`}
+        placeholder={`${placeholder}...`}
         className='peer border-2 border-slate-300 rounded-lg outline-hidden focus:border-b-slate-400 text-slate-600 transition py-2 pl-4 pr-11 placeholder:text-slate-400/80
           text-xl grow shadow-xs w-full bg-(--background)'
         onChange={debouncedSearchShops}

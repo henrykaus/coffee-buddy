@@ -187,13 +187,11 @@ export const splitVisitsIntoColumns = (
   items: Visit[],
   numColumns: number,
 ): Visit[][] => {
-  const cols: any[][] = Array.from({length: numColumns}, () => []);
+  const columns: Visit[][] = Array.from({length: numColumns}, () => []);
 
-  let colNumber = 0;
-  items.forEach((item) => {
-    cols[colNumber].push(item);
-    colNumber = ++colNumber % numColumns;
+  items.forEach((item, index) => {
+    columns[index % numColumns].push(item);
   });
 
-  return cols;
+  return columns;
 };

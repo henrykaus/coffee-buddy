@@ -6,6 +6,14 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'January 2026',
   },
   {
+    title: 'Teeny Tiny Changes',
+    date: 'Jan. 13, 2026',
+    fixes: [
+      'Fixed issue where the placeholder text of the search bar would update upon opening and closing the coffee visit popup.',
+      'Made grid of visits load ever so slightly faster.',
+    ],
+  },
+  {
     title: "It's Official (v1.0)",
     date: 'Jan. 11, 2026',
     features: [
