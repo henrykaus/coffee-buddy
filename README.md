@@ -30,6 +30,8 @@ If you want to perform the initial migration:
 1. Delete contents of `/migrations` (optional)
 2. run `prisma migrate dev --name init`
 
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
 ## Database Changes
 
 1. Edit the `schema.prisma` file
@@ -45,5 +47,3 @@ Quit out of the `npm run` session and then run the following command:
 ```bash
 docker compose down -v
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
