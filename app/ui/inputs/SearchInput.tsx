@@ -37,7 +37,7 @@ export default function SearchInput(props: SearchInputProps) {
         ref={ref}
         type='text'
         placeholder={`${placeholder}...`}
-        className='peer border-2 border-slate-300 rounded-lg outline-hidden focus:border-b-slate-400 text-slate-600 transition py-2 pl-4 pr-11 placeholder:text-slate-400/80
+        className='peer border-2 border-slate-300 rounded-lg outline-hidden focus:border-b-slate-400 text-slate-600 transition py-2 ps-4 pe-11 placeholder:text-slate-400/80
           text-xl grow shadow-xs w-full bg-(--background)'
         onChange={debouncedSearchShops}
         defaultValue={query}

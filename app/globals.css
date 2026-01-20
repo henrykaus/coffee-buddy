@@ -9,8 +9,8 @@
   --animate-shop-search: searching-animation 2s ease-in-out infinite;
   --animate-popup-slide-up: popup-slide-up 0.2s ease-out forwards;
   --animate-popup-slide-down: popup-slide-down 0.2s ease-in-out forwards;
-  --animate-popup-slide-left: popup-slide-left 0.15s ease-in-out forwards;
-  --animate-popup-slide-right: popup-slide-right 0.15s ease-in-out forwards;
+  --animate-popup-slide-start: popup-slide-start 0.15s ease-in-out forwards;
+  --animate-popup-slide-end: popup-slide-end 0.15s ease-in-out forwards;
   --animate-toast-slide-down: toast-slide-down 0.2s ease-in-out forwards;
   --animate-toast-slide-up: toast-slide-up 0.2s ease-in-out forwards;
   --header-height: 5rem;
@@ -49,20 +49,20 @@ input[type='number']::-webkit-outer-spin-button {
 
 input[type='date'].calendar::-webkit-calendar-picker-indicator {
   position: absolute;
-  right: -0.25rem;
+  inset-inline-end: -0.25rem;
   width: 27px;
   height: 100%;
-  padding-right: 0.75em;
+  padding-inline-end: 0.75em;
   opacity: 0;
   cursor: pointer;
 }
 
 input[type='date'].calendar.icon-only {
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   width: 2.5rem;
   height: 100%;
-  padding-right: 0.75em;
+  padding-inline-end: 0.75em;
   opacity: 0;
   cursor: pointer;
   border-radius: calc(infinity * 1px);
@@ -72,11 +72,11 @@ input[type='date'].calendar.icon-only {
 @keyframes login-animation {
   from {
     bottom: 0;
-    left: 0;
+    inset-inline-start: 0;
   }
   to {
     bottom: 100%;
-    left: 100%;
+    inset-inline-start: 100%;
   }
 }
 
@@ -113,7 +113,7 @@ input[type='date'].calendar.icon-only {
   }
 }
 
-@keyframes popup-slide-left {
+@keyframes popup-slide-start {
   from {
     transform: translateX(100%);
   }
@@ -122,7 +122,7 @@ input[type='date'].calendar.icon-only {
   }
 }
 
-@keyframes popup-slide-right {
+@keyframes popup-slide-end {
   from {
     transform: translateX(0%);
   }

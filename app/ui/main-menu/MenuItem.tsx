@@ -45,7 +45,9 @@ export default function MenuItem(props: MenuItemProps) {
     >
       {icon}
       <Collapsible direction='horizontal' isCollapsed={isCollapsed}>
-        <span className='inline-block text-left ml-4 min-w-46'>{children}</span>
+        <span className='inline-block text-start ms-4 min-w-46'>
+          {children}
+        </span>
       </Collapsible>
     </Link>
   ) : (
@@ -57,7 +59,9 @@ export default function MenuItem(props: MenuItemProps) {
     >
       {icon}
       <Collapsible direction='horizontal' isCollapsed={isCollapsed}>
-        <span className='inline-block text-left ml-4 min-w-46'>{children}</span>
+        <span className='inline-block text-start ms-4 min-w-46'>
+          {children}
+        </span>
       </Collapsible>
     </button>
   );

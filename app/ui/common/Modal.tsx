@@ -43,16 +43,17 @@ export default function Modal(props: ModalProps) {
       <ModalBackground />
       <dialog
         className={clsx(
-          'rounded-t-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10 shadow-md',
+          'rounded-ss-2xl rounded-se-2xl margin-0 w-full fixed bottom-0 start-0 bg-white text-xl p-6 pt-8 pb-10 z-10 shadow-md',
           'md:start-auto md:w-124',
           {
             'h-[75%]': fullscreen,
-            'md:h-auto md:m-auto md:end-[50%] md:bottom-[50%] md:translate-1/2 md:rounded-xl':
+            'md:h-auto md:m-auto md:right-[50%] md:bottom-[50%] md:translate-1/2 md:rounded-xl':
               centered,
-            'md:h-full md:end-0 md:rounded-t-none md:rounded-l-xl': !centered,
-            'animate-(--animate-popup-slide-up) md:animate-(--animate-popup-slide-left)':
+            'md:h-full md:end-0 md:rounded-se-none md:rounded-ss-xl md:rounded-es-xl':
+              !centered,
+            'animate-(--animate-popup-slide-up) md:animate-(--animate-popup-slide-start)':
               modalAnimation === ModalAnimation.Enter,
-            'animate-(--animate-popup-slide-down) md:animate-(--animate-popup-slide-right)':
+            'animate-(--animate-popup-slide-down) md:animate-(--animate-popup-slide-end)':
               modalAnimation === ModalAnimation.Exit,
           },
         )}

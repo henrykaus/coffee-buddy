@@ -158,8 +158,8 @@ export default function ShopSearch(props: ShopSearchProps) {
         aria-label='Coffee shop search'
         className={clsx(
           className,
-          'w-full pr-[2.35rem]',
-          'read-only:bg-slate-100 read-only:text-slate-500 read-only:rounded-md read-only:pl-10 read-only:focus:border-slate-300',
+          'w-full pe-[2.35rem]',
+          'read-only:bg-slate-100 read-only:text-slate-500 read-only:rounded-md read-only:ps-10 read-only:focus:border-slate-300',
         )}
         defaultValue={defaultValue}
         onChange={handleOnChange}
@@ -175,11 +175,11 @@ export default function ShopSearch(props: ShopSearchProps) {
         {shops.map((shop: Shop) => (
           <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
             <button
-              className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-left h-12.75'
+              className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-start h-12.75'
               onClick={() => handleSelection(shop)}
             >
               <p className='flex-1/4 leading-tight'>{shop.name}</p>
-              <span className='text-sm font-normal text-slate-500 text-right leading-tight tracking-tight'>
+              <span className='text-sm font-normal text-slate-500 text-end leading-tight tracking-tight'>
                 <p>{formatSpecificLocation(shop)}</p>
                 <p>{formatBroadLocation(shop)}</p>
               </span>
@@ -189,7 +189,7 @@ export default function ShopSearch(props: ShopSearchProps) {
       </ul>
       {searchInputState === ShopSearchState.SelectedShop && (
         <button
-          className='absolute transition right-2 top-[0.31rem] text-slate-500 rounded-md bg-slate-300 p-[0.1rem]
+          className='absolute transition end-2 top-[0.31rem] text-slate-500 rounded-md bg-slate-300 p-[0.1rem]
           hover:bg-slate-400/50 active:bg-slate-400/50 active:scale-95'
           type='button'
           onClick={handleClearShop}
@@ -198,7 +198,7 @@ export default function ShopSearch(props: ShopSearchProps) {
         </button>
       )}
       <ShopSearchIcon
-        className='absolute right-1.5 top-[0.3rem] text-slate-400'
+        className='absolute end-1.5 top-[0.3rem] text-slate-400'
         icon={searchInputState}
       />
       <input
@@ -217,7 +217,7 @@ function ShopSearchIcon(props: {icon: ShopSearchState; className?: string}) {
 
   switch (icon) {
     case ShopSearchState.SelectedShop:
-      return <StoreIcon className={clsx(className, 'left-[0.45rem]')} />;
+      return <StoreIcon className={clsx(className, 'start-[0.45rem]')} />;
     case ShopSearchState.Searching:
       return (
         <SearchIcon

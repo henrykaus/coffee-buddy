@@ -59,7 +59,7 @@ export default function UserMenu(props: UserMenuProps) {
         </button>
         {isOpen && (
           <ul className='bg-(--background) rounded-lg shadow-xl min-w-40 w-fit absolute end-0 -bottom-32 md:-bottom-12 transition'>
-            <li className='transition list-item md:hidden hover:bg-slate-100 active:bg-slate-200/80 border-t-2 border-l-2 border-r-2 border-slate-300 rounded-t-lg'>
+            <li className='transition list-item md:hidden hover:bg-slate-100 active:bg-slate-200/80 border-t-2 border-x-2 border-slate-300 rounded-t-lg'>
               <Link
                 href={Route.Home}
                 className='flex justify-between p-2 gap-4 w-full whitespace-nowrap'
@@ -69,7 +69,7 @@ export default function UserMenu(props: UserMenuProps) {
                 <HomeIcon />
               </Link>
             </li>
-            <li className='transition list-item md:hidden hover:bg-slate-100 active:bg-slate-200/80 border-l-2 border-r-2 border-slate-300'>
+            <li className='transition list-item md:hidden hover:bg-slate-100 active:bg-slate-200/80 border-x-2 border-slate-300'>
               <button
                 className='flex justify-between p-2 gap-4 w-full whitespace-nowrap'
                 onClick={() => handleOptionClicked(UserMenuOption.MoreOptions)}
@@ -78,7 +78,7 @@ export default function UserMenu(props: UserMenuProps) {
                 <EllipsisIcon />
               </button>
             </li>
-            <li className='transition hover:bg-slate-100 active:bg-slate-200/80 border-b-2 md:border-t-2 border-l-2 border-r-2 border-slate-300 rounded-b-lg md:rounded-t-lg'>
+            <li className='transition hover:bg-slate-100 active:bg-slate-200/80 border-b-2 md:border-t-2 border-x-2 border-slate-300 rounded-b-lg md:rounded-t-lg'>
               <button
                 className='flex justify-between p-2 gap-4 w-full whitespace-nowrap'
                 onClick={() => handleOptionClicked(UserMenuOption.LogOut)}

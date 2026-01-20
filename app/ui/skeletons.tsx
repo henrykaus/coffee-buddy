@@ -23,7 +23,7 @@ export function SkeletonListItem(props: {
   const {width, height, color = 'bg-slate-200'} = props;
 
   return (
-    <div className={clsx(shimmer, 'ml-7 relative')}>
+    <div className={clsx(shimmer, 'ms-7 relative')}>
       <CircleIcon
         height={8}
         className='absolute -start-[1.65rem] top-2 text-slate-500/90'

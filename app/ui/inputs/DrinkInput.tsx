@@ -45,7 +45,7 @@ export default function DrinkInput(props: SizeInputProps) {
         placeholder={placeholder}
         name='drink'
         aria-label={ariaLabel}
-        className={clsx(className, 'pr-26')}
+        className={clsx(className, 'pe-26')}
         value={drink}
         onChange={handleDrinkChange}
         onBlur={handleDrinkBlur}
@@ -68,7 +68,7 @@ export default function DrinkInput(props: SizeInputProps) {
           <option value={20}>20 oz.</option>
         </select>
         <ChevronDownIcon
-          className='absolute right-[0.1rem] top-[0.15rem] peer-open:rotate-x-180 transition duration-300 pointer-events-none'
+          className='absolute end-[0.1rem] top-[0.15rem] peer-open:rotate-x-180 transition duration-300 pointer-events-none'
           strokeWidth={2.1}
         />
       </span>

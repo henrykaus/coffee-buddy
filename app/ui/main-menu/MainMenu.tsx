@@ -88,7 +88,7 @@ export default function MainMenu() {
           })}
         >
           <Collapsible direction='horizontal' isCollapsed={isCollapsed}>
-            <span className='inline-block text-left text-nowrap'>
+            <span className='inline-block text-start text-nowrap'>
               &#169; 2026 Henry Kaus
             </span>
           </Collapsible>

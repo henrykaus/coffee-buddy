@@ -48,7 +48,7 @@ export default function NotesInput(props: NotesInputProps) {
         onChange={handleChange}
         maxLength={500}
       />
-      <p className='absolute bottom-4 right-7 text-slate-500 font-medium text-sm bg-slate-200/50 backdrop-blur-xs px-2 py-1 rounded-full tracking-tighter'>
+      <p className='absolute bottom-4 end-7 text-slate-500 font-medium text-sm bg-slate-200/50 backdrop-blur-xs px-2 py-1 rounded-full tracking-tighter'>
         {numChars}/500
       </p>
     </FieldPopup>

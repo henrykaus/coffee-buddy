@@ -11,7 +11,7 @@ export default function Page() {
               className='bg-slate-200 h-0.5 w-full absolute top-3'
               aria-hidden
             />
-            <p className='bg-(--background) inline relative pl-1 pr-3 text-slate-500'>
+            <p className='bg-(--background) inline relative ps-1 pe-3 text-slate-500'>
               {note.title}
             </p>
           </div>
@@ -29,7 +29,7 @@ export default function Page() {
                 <h3 className='font-medium text-md mb-2'>New Features</h3>
                 <ul>
                   {note.features.map((feature, index) => (
-                    <li className='ml-7 relative' key={index}>
+                    <li className='ms-7 relative' key={index}>
                       <CircleIcon
                         height={8}
                         className='absolute -start-[1.65rem] top-2 text-slate-500/90'
@@ -46,7 +46,7 @@ export default function Page() {
                 <h3 className='font-medium text-md mb-2'>Bug Fixes</h3>
                 <ul>
                   {note.fixes.map((fix, index) => (
-                    <li className='ml-7 relative' key={index}>
+                    <li className='ms-7 relative' key={index}>
                       <CircleIcon
                         height={8}
                         className='absolute -start-[1.65rem] top-2 text-slate-500/90'
