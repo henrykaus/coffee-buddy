@@ -6,6 +6,13 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'January 2026',
   },
   {
+    title: 'Wrong Message',
+    date: 'Jan. 31, 2026',
+    fixes: [
+      'Fixed issue where incorrect message would be displayed when no results were found during a search.',
+    ],
+  },
+  {
     title: 'Teeny Tiny Changes',
     date: 'Jan. 13, 2026',
     fixes: [

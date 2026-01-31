@@ -249,9 +249,9 @@ export default function CoffeeList(props: CoffeeListProps) {
         {coffeeVisits.length ? (
           <CoffeeGrid items={coffeeVisits} onEditClick={setActiveVisit} />
         ) : (
-          <div className='sticky top-[calc(50%-28px)] mx-auto text-center'>
+          <div className='sticky top-[calc(50%)] -translate-y-1/2 mx-auto text-center'>
             <p className='font-semibold text-xl text-slate-500'>No visits</p>
-            {query.length >= 0 && (
+            {query.length === 0 && (
               <p className='text-lg text-slate-400'>
                 Click the + button to get started
               </p>
