@@ -3,6 +3,17 @@ import {PatchNotes} from '@/app/lib/types';
 export const PatchNoteContents: PatchNotes[] = [
   {
     divider: true,
+    title: 'February 2026',
+  },
+  {
+    title: 'Money Field',
+    date: 'Feb. 1, 2026',
+    fixes: [
+      'Fixed issue where a price such as 3.20 or 4.50 was formatted as 3.2 or 4.5 respectively in the price input field.',
+    ],
+  },
+  {
+    divider: true,
     title: 'January 2026',
   },
   {

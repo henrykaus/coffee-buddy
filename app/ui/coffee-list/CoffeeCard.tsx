@@ -5,7 +5,7 @@ import {Visit} from '@/app/lib/types';
 import {OrderType} from '@/app/lib/enums';
 import {CoffeeBeanIcon, EditIcon, MugIcon, ToGoCupIcon} from '@/app/ui/icons';
 import clsx from 'clsx';
-import {getDateForUser, getPriceForDisplay} from '@/app/server/common';
+import {formatDateForUser, transformPriceForCard} from '@/app/server/common';
 import Collapsible from '@/app/ui/common/Collapsible';
 
 interface CoffeeCardProps {
@@ -89,9 +89,9 @@ export default function CoffeeCard(props: CoffeeCardProps) {
       </Collapsible>
       <div className='flex justify-between items-baseline'>
         {visit.date && (
-          <p className='text-sm'>Visited {getDateForUser(visit.date)}</p>
+          <p className='text-sm'>Visited {formatDateForUser(visit.date)}</p>
         )}
-        <p className='justify-self-end'>{getPriceForDisplay(visit.price)}</p>
+        <p className='justify-self-end'>{transformPriceForCard(visit.price)}</p>
       </div>
     </article>
   );

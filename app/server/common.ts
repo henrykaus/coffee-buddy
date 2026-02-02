@@ -23,20 +23,20 @@ export const getValidSession = async () => {
   return sessionRaw;
 };
 
-export const getVisitForClient = (
+export const transformVisitForClient = (
   dbVisit: VisitWithShop,
   reconId?: string,
 ): Visit => {
   return {
     id: dbVisit.id,
     reconId: reconId,
-    date: dbVisit.date ? getDateForClient(dbVisit.date) : null,
+    date: dbVisit.date ? transformDateForClient(dbVisit.date) : null,
     notes: dbVisit.notes,
     drink: dbVisit.drink,
     shopName: dbVisit.shop.name,
     shopId: dbVisit.shop.googleId,
     orderType: getOrderType(dbVisit.orderType),
-    price: getPriceForUser(dbVisit.price),
+    price: formatPriceForUser(dbVisit.price),
     rating: dbVisit.rating,
     size: dbVisit.size,
   };
@@ -78,17 +78,17 @@ export const getVisitFromFormData = (formData: FormData): State => {
 };
 
 // FORMAT: 4.45 -> 445
-export const getPriceForDatabase = (priceFromUser: number) => {
+export const formatPriceForDatabase = (priceFromUser: number) => {
   return Math.floor(priceFromUser * 100);
 };
 
-// FORMAT: 445 -> '4.45' | 450 -> '4.5'
-export const getPriceForUser = (priceFromDatabase: number) => {
+// FORMAT: 445 -> 4.45 | 450 -> 4.5
+export const formatPriceForUser = (priceFromDatabase: number) => {
   return Number.parseFloat((priceFromDatabase / 100).toFixed(2));
 };
 
-// FORMAT: 445 -> '$4.45' | 400 -> '$4'
-export const getPriceForDisplay = (priceFromDatabase: number) => {
+// FORMAT: 4.45 -> '$4.45' | 4 -> '$4' | 4.5 -> '$4.50'
+export const transformPriceForCard = (priceFromDatabase: number) => {
   const priceToDisplay =
     priceFromDatabase % 1 === 0
       ? priceFromDatabase
@@ -96,13 +96,18 @@ export const getPriceForDisplay = (priceFromDatabase: number) => {
   return `$${priceToDisplay}`;
 };
 
+// FORMAT: 4.45 -> '4.45' | 4 -> '4' | 4.5 -> '4.50'
+export const transformPriceForInput = (priceFromDatabase: number) => {
+  return priceFromDatabase.toFixed(2);
+};
+
 // Format: YYYY-MM-DD
-export const getDateForClient = (dateFromDatabase: Date) => {
+export const transformDateForClient = (dateFromDatabase: Date) => {
   return dateFromDatabase.toISOString().split('T')[0];
 };
 
 // Format: M/D/YYYY
-export const getDateForUser = (dateForClient: string) => {
+export const formatDateForUser = (dateForClient: string) => {
   const dateParts = dateForClient.split('-');
   return `${dateParts[1].replace(/^0*/, '')}/${dateParts[2].replace(/^0*/, '')}/${dateParts[0]}`;
 };

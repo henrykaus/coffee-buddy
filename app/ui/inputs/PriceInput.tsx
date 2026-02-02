@@ -1,15 +1,18 @@
 import {ChangeEvent, useState} from 'react';
+import {transformPriceForInput} from '@/app/server/common';
 
 interface PriceInputProps {
   className?: string;
-  defaultValue?: number | string;
+  defaultValue?: number;
   onChange?: (price: string) => void;
 }
 
 export default function PriceInput(props: PriceInputProps) {
   const {className, defaultValue, onChange} = props;
 
-  const [value, setValue] = useState(defaultValue ?? '');
+  const [value, setValue] = useState(
+    defaultValue === undefined ? '' : transformPriceForInput(defaultValue),
+  );
 
   const handleNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;

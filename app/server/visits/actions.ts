@@ -6,9 +6,9 @@ import {Visit} from '@/app/lib/types';
 import {getUser} from '@/app/server/users/actions';
 import {
   generateErrorForClient,
-  getPriceForDatabase,
+  formatPriceForDatabase,
   getValidSession,
-  getVisitForClient,
+  transformVisitForClient,
   logError,
 } from '@/app/server/common';
 import {CreateVisit, UpdateVisit} from '@/app/server/schemas';
@@ -95,7 +95,7 @@ export const createVisit = async (
         size: size,
         drink: drink,
         rating: rating,
-        price: getPriceForDatabase(price),
+        price: formatPriceForDatabase(price),
         date: date ? new Date(date) : null,
         notes: notes,
         orderType: orderType,
@@ -121,7 +121,7 @@ export const createVisit = async (
       },
     });
 
-    return {visit: getVisitForClient(dbVisit, reconId)};
+    return {visit: transformVisitForClient(dbVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
 
@@ -154,7 +154,7 @@ export const getVisit = async (id: string): Promise<State> => {
       throw new Error(`Visit with ID ${id} was not found.`);
     }
 
-    return {visit: getVisitForClient(dbVisit)};
+    return {visit: transformVisitForClient(dbVisit)};
   } catch (error: unknown) {
     logError(error);
     return generateErrorForClient(error, `getting visit with ID ${id}`);
@@ -183,7 +183,7 @@ export const listVisits = async (): Promise<Visit[]> => {
       },
     });
 
-    const visits = dbVisits.map((visit) => getVisitForClient(visit));
+    const visits = dbVisits.map((visit) => transformVisitForClient(visit));
     return visits;
   } catch (error: unknown) {
     logError(error);
@@ -247,7 +247,7 @@ export const updateVisit = async (
         size: size,
         drink: drink,
         rating: rating,
-        price: getPriceForDatabase(price),
+        price: formatPriceForDatabase(price),
         date: date ? new Date(date) : null,
         notes: notes,
         orderType: orderType,
@@ -273,7 +273,7 @@ export const updateVisit = async (
       },
     });
 
-    return {visit: getVisitForClient(rawVisit, reconId)};
+    return {visit: transformVisitForClient(rawVisit, reconId)};
   } catch (error: unknown) {
     logError(error);
 
@@ -303,7 +303,7 @@ export const deleteVisit = async (id: string): Promise<State> => {
       },
     });
 
-    return {visit: getVisitForClient(dbVisit)};
+    return {visit: transformVisitForClient(dbVisit)};
   } catch (error: unknown) {
     logError(error);
     return generateErrorForClient(
@@ -354,7 +354,7 @@ export const searchVisits = async (query: string): Promise<Visit[]> => {
       },
     });
 
-    const visits = rawVisits.map((visit) => getVisitForClient(visit));
+    const visits = rawVisits.map((visit) => transformVisitForClient(visit));
     return visits;
   } catch (error: unknown) {
     logError(error);
