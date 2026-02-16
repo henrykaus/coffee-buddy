@@ -38,7 +38,7 @@ export default function Toast(props: ToastProps) {
   return show ? (
     <article
       className={clsx(
-        'flex gap-3 items-center text-lg leading-snug rounded-lg shadow-lg mx-4 px-4 py-3.5 fixed top-5 z-10 w-[calc(100%-2rem)] whitespace-pre-wrap',
+        'flex gap-3 items-center text-lg leading-snug rounded-lg shadow-lg mx-4 px-4 py-3.5 fixed top-5 start-0 z-10 w-[calc(100%-2rem)] whitespace-pre-wrap',
         {
           'bg-red-200 text-red-700': type === ToastType.Error,
           'bg-green-200 text-emerald-700': type === ToastType.Success,
@@ -48,7 +48,7 @@ export default function Toast(props: ToastProps) {
       )}
     >
       <ToastIcon icon={type} />
-      <p className='my-[1px]'>{children}</p>
+      <p className='my-px'>{children}</p>
     </article>
   ) : null;
 }
