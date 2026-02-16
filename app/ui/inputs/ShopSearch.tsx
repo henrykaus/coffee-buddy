@@ -166,27 +166,31 @@ export default function ShopSearch(props: ShopSearchProps) {
         readOnly={searchInputState === ShopSearchState.SelectedShop}
         required
       />
-      <ul
-        className='absolute top-[1.8em] w-full bg-white border-2 border-slate-300 rounded-b-xl shadow-lg z-10 overflow-y-auto'
+      <div
+        className='absolute top-[1.8em] w-full bg-white border-2 border-slate-300 rounded-b-xl shadow-lg z-10 overflow-hidden'
         hidden={shops.length === 0}
-        ref={dropdownRef}
-        style={dropdownHeight}
       >
-        {shops.map((shop: Shop) => (
-          <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
-            <button
-              className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-start h-12.75'
-              onClick={() => handleSelection(shop)}
-            >
-              <p className='flex-1/4 leading-tight'>{shop.name}</p>
-              <span className='text-sm font-normal text-slate-500 text-end leading-tight tracking-tight'>
-                <p>{formatSpecificLocation(shop)}</p>
-                <p>{formatBroadLocation(shop)}</p>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+        <ul
+          className='overflow-y-auto'
+          ref={dropdownRef}
+          style={dropdownHeight}
+        >
+          {shops.map((shop: Shop) => (
+            <li key={shop.id} className='last:[&>button]:rounded-b-xl'>
+              <button
+                className='w-full flex gap-2 justify-between items-center p-2 text-base hover:bg-slate-100 active:bg-slate-100 transition text-start h-12.75'
+                onClick={() => handleSelection(shop)}
+              >
+                <p className='flex-1/4 leading-tight'>{shop.name}</p>
+                <span className='text-sm font-normal text-slate-500 text-end leading-tight tracking-tight'>
+                  <p>{formatSpecificLocation(shop)}</p>
+                  <p>{formatBroadLocation(shop)}</p>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
       {searchInputState === ShopSearchState.SelectedShop && (
         <button
           className='absolute transition end-2 top-[0.31rem] text-slate-500 rounded-md bg-slate-300 p-[0.1rem]
