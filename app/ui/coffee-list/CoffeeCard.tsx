@@ -30,7 +30,7 @@ export default function CoffeeCard(props: CoffeeCardProps) {
   return (
     <article
       className={clsx(
-        'border-2 border-slate-200 pb-2 pt-3 px-3 rounded-md text-lg text-slate-700 transition cursor-pointer bg-(--background)',
+        'border-2 border-slate-200 pb-1 pt-3 px-3 rounded-md text-lg text-slate-700 transition cursor-pointer bg-(--background)',
         {
           'shadow-lg hover:shadow-lg active:shadow-lg': isExpanded,
           'hover:shadow-sm active:shadow-sm': !isExpanded,
@@ -89,7 +89,9 @@ export default function CoffeeCard(props: CoffeeCardProps) {
       </Collapsible>
       <div className='flex justify-between items-baseline'>
         {visit.date && (
-          <p className='text-sm'>Visited {formatDateForUser(visit.date)}</p>
+          <p className='text-sm leading-[1.9rem]'>
+            Visited {formatDateForUser(visit.date)}
+          </p>
         )}
         {visit.price !== undefined && (
           <p className='justify-self-end'>
