@@ -75,13 +75,6 @@ export default function VisitPopup(props: VisitPopupProps) {
           drinkIsValid: value !== null && value !== undefined && value !== '',
         });
         break;
-      case VisitFormField.Price: {
-        setRequiredFieldState({
-          ...requiredFieldState,
-          priceIsValid: value !== null && value !== undefined && value !== '',
-        });
-        break;
-      }
       // For non-required fields, we won't run a validation until submission
       default:
         break;
@@ -129,15 +122,8 @@ export default function VisitPopup(props: VisitPopupProps) {
   };
 
   const canSave = useMemo(
-    () =>
-      requiredFieldState.shopIsValid &&
-      requiredFieldState.drinkIsValid &&
-      requiredFieldState.priceIsValid,
-    [
-      requiredFieldState.drinkIsValid,
-      requiredFieldState.priceIsValid,
-      requiredFieldState.shopIsValid,
-    ],
+    () => requiredFieldState.shopIsValid && requiredFieldState.drinkIsValid,
+    [requiredFieldState.drinkIsValid, requiredFieldState.shopIsValid],
   );
 
   const actions = useMemo(
@@ -189,13 +175,7 @@ export default function VisitPopup(props: VisitPopupProps) {
           placeholder={orderType !== OrderType.CoffeeBeans ? 'Drink' : 'Roast'}
         />
         <div className='flex gap-3'>
-          <PriceInput
-            className={inputClasses}
-            defaultValue={visit?.price}
-            onChange={(price: string) =>
-              handleRequiredFieldChange(price, VisitFormField.Price)
-            }
-          />
+          <PriceInput className={inputClasses} defaultValue={visit?.price} />
           <OrderTypeToggle
             initialValue={visit?.orderType}
             onChange={(orderType: OrderType) => setOrderType(orderType)}

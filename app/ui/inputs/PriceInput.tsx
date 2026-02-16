@@ -54,7 +54,6 @@ export default function PriceInput(props: PriceInputProps) {
         className={className}
         onChange={handleNumberChange}
         onBlur={handleBlur}
-        required
       />
     </span>
   );

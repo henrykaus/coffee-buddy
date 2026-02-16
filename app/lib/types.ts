@@ -9,11 +9,11 @@ export interface Visit {
   id: string;
   reconId?: string; // This should only be used to reconcile between client and db visit records
   userId?: string;
-  date: string | null;
-  notes: string | null;
+  date?: string;
+  notes?: string;
   drink: string;
   orderType: OrderType;
-  price: number;
+  price?: number;
   rating: number;
   shopName: string;
   shopId: string;
@@ -68,5 +68,4 @@ export interface PatchNotes {
 export interface RequiredVisitFieldsValidity {
   shopIsValid: boolean;
   drinkIsValid: boolean;
-  priceIsValid: boolean;
 }

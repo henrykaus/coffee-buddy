@@ -91,7 +91,11 @@ export default function CoffeeCard(props: CoffeeCardProps) {
         {visit.date && (
           <p className='text-sm'>Visited {formatDateForUser(visit.date)}</p>
         )}
-        <p className='justify-self-end'>{transformPriceForCard(visit.price)}</p>
+        {visit.price !== undefined && (
+          <p className='justify-self-end'>
+            {transformPriceForCard(visit.price)}
+          </p>
+        )}
       </div>
     </article>
   );

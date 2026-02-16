@@ -23,10 +23,13 @@ const VisitSchema = z.object({
     .number()
     .min(-1, {message: 'The rating must be between 0 and 5.'})
     .max(5, {message: 'The rating must be between 0 and 5.'}),
-  price: z.coerce.number().min(0, {
-    message: 'The price must be greater than or equal to $0.',
-  }),
-  date: z.ostring(),
+  price: z.union([
+    z.literal('').transform(() => undefined),
+    z.coerce.number().min(0, {
+      message: 'The price must be greater than or equal to $0.',
+    }),
+  ]),
+  date: z.string().optional(),
   notes: z.string().min(0).max(500, {
     message: 'The shop notes must be 500 characters or less.',
   }),

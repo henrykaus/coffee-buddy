@@ -30,8 +30,8 @@ export const transformVisitForClient = (
   return {
     id: dbVisit.id,
     reconId: reconId,
-    date: dbVisit.date ? transformDateForClient(dbVisit.date) : null,
-    notes: dbVisit.notes,
+    date: transformDateForClient(dbVisit.date),
+    notes: dbVisit.notes ?? undefined,
     drink: dbVisit.drink,
     shopName: dbVisit.shop.name,
     shopId: dbVisit.shop.googleId,
@@ -69,8 +69,8 @@ export const getVisitFromFormData = (formData: FormData): State => {
     drink: validatedFields.data.drink,
     rating: validatedFields.data.rating,
     price: validatedFields.data.price,
-    date: validatedFields.data.date ?? null,
-    notes: validatedFields.data.notes ?? null,
+    date: validatedFields.data.date,
+    notes: validatedFields.data.notes,
     orderType: getOrderType(validatedFields.data?.orderType),
   };
 
@@ -78,32 +78,34 @@ export const getVisitFromFormData = (formData: FormData): State => {
 };
 
 // FORMAT: 4.45 -> 445
-export const formatPriceForDatabase = (priceFromUser: number) => {
-  return Math.floor(priceFromUser * 100);
+export const formatPriceForDatabase = (priceFromUser?: number) => {
+  return priceFromUser !== undefined ? Math.floor(priceFromUser * 100) : null;
 };
 
 // FORMAT: 445 -> 4.45 | 450 -> 4.5
-export const formatPriceForUser = (priceFromDatabase: number) => {
-  return Number.parseFloat((priceFromDatabase / 100).toFixed(2));
+export const formatPriceForUser = (priceFromDatabase: number | null) => {
+  return priceFromDatabase
+    ? Number.parseFloat((priceFromDatabase / 100).toFixed(2))
+    : undefined;
 };
 
 // FORMAT: 4.45 -> '$4.45' | 4 -> '$4' | 4.5 -> '$4.50'
-export const transformPriceForCard = (priceFromDatabase: number) => {
+export const transformPriceForCard = (priceFromServer: number) => {
   const priceToDisplay =
-    priceFromDatabase % 1 === 0
-      ? priceFromDatabase
-      : priceFromDatabase.toFixed(2);
+    priceFromServer % 1 === 0 ? priceFromServer : priceFromServer.toFixed(2);
   return `$${priceToDisplay}`;
 };
 
 // FORMAT: 4.45 -> '4.45' | 4 -> '4' | 4.5 -> '4.50'
-export const transformPriceForInput = (priceFromDatabase: number) => {
-  return priceFromDatabase.toFixed(2);
+export const transformPriceForInput = (priceFromServer: number) => {
+  return priceFromServer.toFixed(2);
 };
 
 // Format: YYYY-MM-DD
-export const transformDateForClient = (dateFromDatabase: Date) => {
-  return dateFromDatabase.toISOString().split('T')[0];
+export const transformDateForClient = (dateFromDatabase: Date | null) => {
+  return dateFromDatabase
+    ? dateFromDatabase.toISOString().split('T')[0]
+    : undefined;
 };
 
 // Format: M/D/YYYY

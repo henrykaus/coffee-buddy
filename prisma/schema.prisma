@@ -28,7 +28,7 @@ model Visit {
   notes     String?
   drink     String
   orderType String
-  price     Int
+  price     Int?
   rating    Int
   size      Int
   shop      Shop      @relation(fields: [shopId], references: [id])

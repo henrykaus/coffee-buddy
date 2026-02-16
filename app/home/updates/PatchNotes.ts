@@ -6,6 +6,15 @@ export const PatchNoteContents: PatchNotes[] = [
     title: 'February 2026',
   },
   {
+    title: 'Free Coffee?',
+    date: 'Feb. 16, 2026',
+    features: ['Removed the price requirement for visits.'],
+    fixes: [
+      'Fixed issue where the toast popup would run off-screen on desktop.',
+      'Security and performance upgrades.',
+    ],
+  },
+  {
     title: 'Money Field',
     date: 'Feb. 1, 2026',
     fixes: [

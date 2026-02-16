@@ -20,7 +20,7 @@ export const deleteUserData = async () => {
       },
     });
 
-    console.log(`Delete user ${deletedUser.email} with id ${deletedUser.id}`);
+    console.log(`Deleted user ${deletedUser.email} with id ${deletedUser.id}`);
   } catch (error: unknown) {
     logError(error);
     return undefined;
